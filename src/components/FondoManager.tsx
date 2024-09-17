@@ -17,7 +17,14 @@ interface FondoDetails {
     codigoInterfaz: string;
 }
 
-const List: React.FC = () => {
+/**
+ * Component for managing and displaying a list of fondos, their associated files,
+ * and the content of a selected file. Allows users to select a fondo, view its details,
+ * select related files, and download the content of a file.
+ *
+ * @returns {JSX.Element} The fondo management component.
+ */
+const List: React.FC = (): JSX.Element => {
     const [selectedFondo, setSelectedFondo] = useState<number | undefined>(undefined);
     const [files, setFiles] = useState<string[]>([]);
     const [fondoDetails, setFondoDetails] = useState<FondoDetails | null>(null);
@@ -61,7 +68,11 @@ const List: React.FC = () => {
 
     return (
         <div>
-            <FondoSelector fondos={mockFondos.data} onSelect={handleFondoSelect} selectedFondo={selectedFondo} />
+            <FondoSelector
+                fondos={mockFondos.data}
+                onSelect={handleFondoSelect}
+                selectedFondo={selectedFondo}
+            />
             {selectedFondo && fondoDetails && (
                 <>
                     <FondoDetails
