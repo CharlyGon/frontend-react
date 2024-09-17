@@ -1,19 +1,13 @@
 import React from 'react';
-import { mockData } from './data/mockData';
+import List from './components/FondoManager';
 
 const App: React.FC = () => {
-  return (
-    <div style={{ padding: '20px' }}>
-      <h1>Lista de Usuarios</h1>
-      <ul>
-        {mockData.map((user) => (
-          <li key={user.id}>
-            <strong>Nombre:</strong> {user.name}, <strong>Email:</strong> {user.email}, <strong>Edad:</strong> {user.age}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    return (
+        <div style={{ padding: '20px' }}>
+            <h1>Lista de Fondos</h1>
+            <List />
+        </div>
+    );
 };
 
 export default App;
