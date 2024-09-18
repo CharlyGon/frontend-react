@@ -1,0 +1,97 @@
+/* Sidebar style */
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: #f4f4f4;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+.sidebar.closed {
+  width: 60px;
+}
+
+/* Menu list styles */
+.toggle-button {
+  font-size: 32px;
+  padding: 11px;
+  cursor: pointer;
+  text-align: center;
+  background-color: #fff;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 60px 0 0 0;
+}
+
+.sidebar ul li {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+.sidebar ul li:hover {
+  background-color: #e0f0ff;
+  border-left: 4px solid #007bff;
+}
+
+/* Efecto hover para íconos y texto */
+.sidebar ul li:hover i,
+.sidebar ul li:hover span {
+  color: #0a21a0;
+  font-weight: bold;
+}
+
+/* Menu link styles */
+.sidebar ul li a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Icon styles */
+.sidebar ul li i,
+.sidebar ul li .svg-inline--fa {
+  margin-right: 20px;
+  font-size: 28px;
+  transition: transform 0.3s ease;
+}
+
+/* Text transitions when opening/closing the sidebar */
+.sidebar ul li span {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Text hidden when the sidebar is closed */
+.sidebar.closed ul li span {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect when the sidebar is closed */
+.sidebar.closed ul li:hover .svg-inline--fa {
+  color: #0a21a0;
+}
+
+/* Change the color of the icon when hovering while the sidebar is closed */
+.sidebar.closed ul li:hover i {
+  color: #0a21a0;
+}

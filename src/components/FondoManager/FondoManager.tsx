@@ -3,15 +3,15 @@ import FondoSelector from "./FondoSelector";
 import FondoDetails from "./FondoDetails";
 import FileSelector from "./FileSelector";
 import FileContent from "./FileContent";
-import { mockFondos } from "../data/mockData";
+import { mockFondos } from "../../data/mockData";
 import {
     fetchFilesForFondo,
     fetchFondoDetails,
     fetchFileContent,
     downloadFile
-} from "../services/fileService";
+} from "../../services/fileService";
 
-interface FondoDetails {
+interface FondoDetailss {
     identificadorFondo: string;
     tipoRescate: string;
     codigoInterfaz: string;
@@ -27,7 +27,7 @@ interface FondoDetails {
 const List: React.FC = (): JSX.Element => {
     const [selectedFondo, setSelectedFondo] = useState<number | undefined>(undefined);
     const [files, setFiles] = useState<string[]>([]);
-    const [fondoDetails, setFondoDetails] = useState<FondoDetails | null>(null);
+    const [fondoDetails, setFondoDetails] = useState<FondoDetailss | null>(null);
     const [loadingFiles, setLoadingFiles] = useState(false);
     const [loadingFondoDetails, setLoadingFondoDetails] = useState(false);
     const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
@@ -67,7 +67,8 @@ const List: React.FC = (): JSX.Element => {
     };
 
     return (
-        <div>
+        <div style={{ padding: "20px", backgroundColor: "#f9f9f9", borderRadius: "5px" }}>
+            <h2>Gestión de Fondos</h2>
             <FondoSelector
                 fondos={mockFondos.data}
                 onSelect={handleFondoSelect}

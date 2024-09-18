@@ -1,0 +1,40 @@
+/* General Header styles */
+.header {
+    height: 60px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% - 200px);
+    transition: width 0.3s ease, margin-left 0.3s ease;
+    z-index: 100;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Setting the Header when the sidebar is open */
+.sidebar-open {
+    margin-left: 200px;
+}
+
+/* Header adjustment when the sidebar is closed */
+.sidebar-closed {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+}
+
+/* Style for the user information section */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+/* Style for the user name */
+.user-name {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
