@@ -1,7 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import './Header.css';
+import "./Header.css";
+import logoPellegrini from "../../assets/logoPellegrini.png";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
     isSidebarOpen: boolean;
@@ -19,9 +21,23 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen }: HeaderProps): JSX.Elem
 
     return (
         <header className={`header ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+            <div className="logo-container">
+                <Link to="/">
+                    <img
+                        src={logoPellegrini}
+                        alt="Company Logo"
+                        className="company-logo"
+                    />
+                </Link>
+            </div>
             <div className="user-info">
-                <FontAwesomeIcon icon={faUserCircle} size="2x" />
-                <span className="user-name">{userName}</span>
+                <FontAwesomeIcon
+                    icon={faUserCircle}
+                    className="user-icon"
+                />
+                <span className="user-name">
+                    {userName}
+                </span>
             </div>
         </header>
     );
