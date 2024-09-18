@@ -29,9 +29,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     return (
         <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
             <div >
-                <button className="toggle-button" onClick={toggleSidebar} aria-label="Toggle sidebar">
-        <FontAwesomeIcon icon={faBars} />
-    </button>
+                <button
+                    className="toggle-button"
+                    onClick={toggleSidebar}
+                    aria-label="Toggle sidebar">
+                    <FontAwesomeIcon icon={faBars} />
+                </button>
             </div>
             <ul>
                 <li>
@@ -52,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                         {isOpen && <span>User's</span>}
                     </Link>
                 </li>
-                <li>
+                <li className="settings">
                     <Link to="/settings">
                         <FontAwesomeIcon icon={faCog} />
                         {isOpen && <span>Settings</span>}

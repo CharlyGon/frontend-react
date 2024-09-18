@@ -1,5 +1,7 @@
 /* Sidebar style */
 .sidebar {
+  display: flex;
+  flex-direction: column; /* Flexbox para alinear los elementos verticalmente */
   width: 200px;
   height: 100vh;
   background-color: #f4f4f4;
@@ -31,7 +33,10 @@
 .sidebar ul {
   list-style: none;
   padding: 0;
-  margin: 60px 0 0 0;
+  margin: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar ul li {
@@ -94,4 +99,9 @@
 /* Change the color of the icon when hovering while the sidebar is closed */
 .sidebar.closed ul li:hover i {
   color: #0a21a0;
+}
+
+/* Estilo para el ítem de "Settings" */
+.sidebar ul li.settings {
+  margin-top: auto;
 }

@@ -4,7 +4,7 @@ import List from "./components/FondoManager/FondoManager";
 import Sidebar from "./layouts/sidebar/Sidebar";
 import Header from "./layouts/header/Header";
 import Welcome from "./components/Welcome";
-import Body from "./components/Body"; 
+import Body from "./components/Body";
 
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
