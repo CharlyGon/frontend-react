@@ -1,14 +1,18 @@
 /* Styles for the main body content */
 .body-content {
-    margin-top: 60px;
-    margin-left: 200px;
     padding: 20px;
+    margin-top: 60px;
     min-height: calc(100vh - 60px);
     background-color: #f9f9f9;
-    transition: margin-left 0.3s ease;
+    transition: margin-left 0.3s;
 }
 
-/* Body settings when the sidebar is closed */
+/* Margin adjustment when the sidebar is closed */
 .main-content.sidebar-closed .body-content {
     margin-left: 60px;
+}
+
+/* Margin adjustment when the sidebar is open */
+.main-content.sidebar-open .body-content {
+    margin-left:60px;
 }

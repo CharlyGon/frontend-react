@@ -1,7 +1,7 @@
 /* General Header styles */
 .header {
     height: 60px;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: space-between;

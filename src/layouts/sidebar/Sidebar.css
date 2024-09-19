@@ -23,7 +23,7 @@
   padding: 11px;
   cursor: pointer;
   text-align: center;
-  background-color: #fff;
+  background-color: #f9f9f9;
   border: none;
   border-bottom: 1px solid #ddd;
   width: 100%;
@@ -101,7 +101,7 @@
   color: #0a21a0;
 }
 
-/* Estilo para el ítem de "Settings" */
+/* Style for the "Settings" item*/
 .sidebar ul li.settings {
   margin-top: auto;
 }

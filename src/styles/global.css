@@ -13,4 +13,23 @@ body {
 .app {
     display: flex;
     height: 100vh;
+    position: relative;
+}
+
+.main-content {
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+    padding: 20px;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+}
+
+/* Adjust when the sidebar is open */
+.sidebar-open .main-content {
+    margin-left: 200px;
+}
+
+/* Adjust when the sidebar is closed */
+.sidebar-closed .main-content {
+    margin-left: 60px;
 }
