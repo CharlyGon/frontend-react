@@ -5,6 +5,7 @@ import Sidebar from "./layouts/sidebar/Sidebar";
 import Header from "./layouts/header/Header";
 import Welcome from "./components/Welcome";
 import Body from "./components/Body";
+import SupportWidget from "./components/widget/Widget";
 
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
@@ -26,6 +27,7 @@ const App: React.FC = () => {
                         </Routes>
                     </Body>
                 </div>
+                <SupportWidget />
             </div>
         </Router>
     );

@@ -1,0 +1,188 @@
+/* Main container for the chat widget */
+.chat-widget-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Chat button (minimized state) */
+.chat-button {
+  width: 70px;
+  height: 70px;
+  background-color: #0a21a0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  z-index: 1001;
+  border: none;
+}
+
+/* Hover effect on the chat button */
+.chat-button:hover {
+  background-color: #f0f0f1;
+  transform: scale(1.1);
+}
+
+/* Icon inside the chat button */
+.chat-icon {
+  font-size: 36px;
+  color: white;
+}
+
+/* Icon color change on hover */
+.chat-button:hover .chat-icon {
+  color: #091b86;
+}
+
+/* Chat box (opened state) */
+.chat-box {
+  width: 300px;
+  height: 400px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-top: 50px;
+  animation: fadeIn 0.5s forwards;
+}
+
+/* Chat button when the chat box is open */
+.chat-widget-container.open .chat-button {
+  position: absolute;
+  top: -30px;
+  right: calc(50% - 30px);
+  animation: spin 1s ease-in-out;
+  z-index: 1002;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+
+/* Rotation animation for the button when chat is opened */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Chat header */
+.chat-header {
+  background-color: #0a21a0;
+  padding: 15px;
+  border-radius: 10px 10px 0 0;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Chat body */
+.chat-body {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+/* Chat footer */
+.chat-footer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border-radius: 0 0 10px 10px;
+}
+
+/* Input container for message and send button */
+.message-input-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding: 5px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  margin-right: 10px;
+}
+
+/* Message input field */
+.message-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Send button */
+.send-button {
+  background-color: #0a21a0;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect on the send button */
+.send-button:hover {
+  background-color: #fbfbfd;
+}
+
+/* Change the icon color when the send button is hovered */
+.send-button:hover .send-icon {
+  color: #0a21a0;
+}
+
+/* Send icon style */
+.send-icon {
+  font-size: 20px;
+  color: white;
+  animation: rotateIcon 10s ease-in-out infinite;
+}
+
+/* Fade in animation when the widget opens */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slow and elegant rotation for the send icon */
+@keyframes rotateIcon {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
