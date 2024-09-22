@@ -1,7 +1,7 @@
 /* Sidebar style */
 .sidebar {
   display: flex;
-  flex-direction: column; /* Flexbox para alinear los elementos verticalmente */
+  flex-direction: column;
   width: 200px;
   height: 100vh;
   background-color: #f4f4f4;
@@ -104,4 +104,20 @@
 /* Style for the "Settings" item*/
 .sidebar ul li.settings {
   margin-top: auto;
+}
+
+/*
+Custom styles specifically for the "Logs" menu item.
+These were added because the alignment for the icon and text in the "Logs" section
+was different from the rest of the sidebar items, and a special adjustment was required.
+If any changes are made to the icons or layout in the future,
+double-check if these adjustments are still necessary.
+*/
+.menu-logs {
+  font-size: 28px;
+  margin-left: 5px;
+}
+
+.span-logs {
+  margin-left: 5px;
 }

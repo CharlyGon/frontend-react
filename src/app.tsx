@@ -1,11 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import List from "./components/FondoManager/FondoManager";
+import FondoManager from "./components/FondoManager/FondoManager";
 import Sidebar from "./layouts/sidebar/Sidebar";
 import Header from "./layouts/header/Header";
 import Welcome from "./components/Welcome";
 import Body from "./components/Body";
 import SupportWidget from "./components/widget/Widget";
+import Logs from "./components/Logs/Logs";
 
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
@@ -23,7 +24,8 @@ const App: React.FC = () => {
                     <Body>
                         <Routes>
                             <Route path="/" element={<Welcome />} />
-                            <Route path="/dashboard" element={<List />} />
+                            <Route path="/dashboard" element={<FondoManager />} />
+                            <Route path="/logs" element={<Logs />} />
                         </Routes>
                     </Body>
                 </div>

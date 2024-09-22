@@ -5,11 +5,11 @@ import {
     faTachometerAlt,
     faPiggyBank,
     faCog,
-    faUserCog
+    faUserCog,
+    faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
-
 
 interface SidebarProps {
     isOpen: boolean;
@@ -25,7 +25,7 @@ interface SidebarProps {
  * @param {Function} props.toggleSidebar - Function to toggle sidebar open/closed state.
  * @returns {JSX.Element} Sidebar with toggle button and navigation links.
  */
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }: SidebarProps): JSX.Element => {
     return (
         <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
             <div >
@@ -43,18 +43,31 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                         {isOpen && <span>Dashboard</span>}
                     </Link>
                 </li>
+
                 <li>
                     <Link to="/funds">
                         <FontAwesomeIcon icon={faPiggyBank} />
                         {isOpen && <span>Funds</span>}
                     </Link>
                 </li>
+
+                <li>
+                    <Link to="/logs">
+                        <FontAwesomeIcon
+                            icon={faClipboardList}
+                            className="menu-logs"
+                        />
+                        {isOpen && <span className="span-logs">Logs</span>}
+                    </Link>
+                </li>
+
                 <li>
                     <Link to="/settings-users">
                         <FontAwesomeIcon icon={faUserCog} />
                         {isOpen && <span>User's</span>}
                     </Link>
                 </li>
+
                 <li className="settings">
                     <Link to="/settings">
                         <FontAwesomeIcon icon={faCog} />
