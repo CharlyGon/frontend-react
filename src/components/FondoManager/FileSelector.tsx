@@ -41,11 +41,16 @@ const FileSelector: React.FC<FileSelectorProps> = (
 
     return (
         <div>
-            <select onChange={handleChange} value={selectedFile}>
-                <option value="">-- Selecciona un archivo --</option>
+            <select
+                onChange={handleChange}
+                value={selectedFile}
+            >
+                <option value="">
+                    -- Selecciona un archivo --
+                </option>
+
                 {files.map((file, index) => (
-                    // Cambiar el key por el nombre del archivo
-                    <option key={index} value={file}>
+                    <option key={file} value={file}>
                         {file}
                     </option>
                 ))}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FondoSelector from "./FondoSelector";
 import FondoDetails from "./FondoDetails";
 import FileSelector from "./FileSelector";
@@ -10,6 +10,7 @@ import {
     fetchFileContent,
     downloadFile
 } from "../../services/fileService";
+import "./FondoManager.css";
 
 interface FondoDetailss {
     identificadorFondo: string;
@@ -24,80 +25,104 @@ interface FondoDetailss {
  *
  * @returns {JSX.Element} The fondo management component.
  */
-const List: React.FC = (): JSX.Element => {
+const FondoManager: React.FC = (): JSX.Element => {
     const [selectedFondo, setSelectedFondo] = useState<number | undefined>(undefined);
-    const [files, setFiles] = useState<string[]>([]);
     const [fondoDetails, setFondoDetails] = useState<FondoDetailss | null>(null);
-    const [loadingFiles, setLoadingFiles] = useState(false);
-    const [loadingFondoDetails, setLoadingFondoDetails] = useState(false);
+    const [files, setFiles] = useState<string[]>([]);
     const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
     const [fileContent, setFileContent] = useState<string | null>(null);
+
+    const [loadingFiles, setLoadingFiles] = useState(false);
+    const [loadingFondoDetails, setLoadingFondoDetails] = useState(false);
     const [loadingFileContent, setLoadingFileContent] = useState(false);
 
-    const handleFondoSelect = async (codFondo: number) => {
-        setSelectedFondo(codFondo);
-        setLoadingFiles(true);
-        setLoadingFondoDetails(true);
+    // Load background details and files when selecting a background
+    useEffect(() => {
+        if (selectedFondo !== undefined) {
+            setLoadingFiles(true);
+            setLoadingFondoDetails(true);
+            Promise.all([
+                fetchFilesForFondo(selectedFondo),
+                fetchFondoDetails(selectedFondo),
+            ]).then(([filesData, fondoDetailsData]) => {
+                setFiles(filesData);
+                setFondoDetails(fondoDetailsData);
+                setLoadingFiles(false);
+                setLoadingFondoDetails(false);
+            });
+        }
+    }, [selectedFondo]);
 
-        const [files, fondoDetails] = await Promise.all([
-            fetchFilesForFondo(codFondo),
-            fetchFondoDetails(codFondo),
-        ]);
+    // Load contents of selected file
+    useEffect(() => {
+        if (selectedFile) {
+            setLoadingFileContent(true);
+            fetchFileContent(selectedFile).then((content) => {
+                setFileContent(content);
+                setLoadingFileContent(false);
+            });
+        }
+    }, [selectedFile]);
 
-        setFiles(files);
-        setFondoDetails(fondoDetails);
-
-        setLoadingFiles(false);
-        setLoadingFondoDetails(false);
-    };
-
-    const handleFileSelect = async (fileName: string) => {
-        setSelectedFile(fileName);
-        setLoadingFileContent(true);
-
-        const content = await fetchFileContent(fileName);
-        setFileContent(content);
-        setLoadingFileContent(false);
-    };
-
+    // Handle file download
     const handleDownload = () => {
         if (selectedFile && fileContent) {
-            downloadFile(fileContent, `${selectedFile}.txt`, 'text/plain');
+            downloadFile(fileContent, `${selectedFile}.txt`, "text/plain");
         }
     };
 
     return (
-        <div style={{ padding: "20px", backgroundColor: "#f9f9f9", borderRadius: "5px" }}>
-            <h2>Gestión de Fondos</h2>
-            <FondoSelector
-                fondos={mockFondos.data}
-                onSelect={handleFondoSelect}
-                selectedFondo={selectedFondo}
-            />
+        <div className="fondo-manager-container">
+            <h2 className="fondo-manager-title">Gestión de Fondos</h2>
+
+            {/* Sección del selector de fondo */}
+            <div className="card">
+                <h4 className="card-title">Selecciona un fondo</h4>
+                <FondoSelector
+                    fondos={mockFondos.data}
+                    onSelect={setSelectedFondo}
+                    selectedFondo={selectedFondo}
+                />
+            </div>
+
             {selectedFondo && fondoDetails && (
                 <>
-                    <FondoDetails
-                        fondoDetails={fondoDetails}
-                        loading={loadingFondoDetails}
-                    />
+                    {/* Detalles del fondo */}
+                    <div className="card">
+                        <h4 className="card-title">Detalles del Fondo</h4>
+                        <FondoDetails
+                            fondoDetails={fondoDetails}
+                            loading={loadingFondoDetails}
+                        />
+                    </div>
 
-                    <FileSelector
-                        files={files}
-                        onSelect={handleFileSelect}
-                        loading={loadingFiles}
-                        selectedFile={selectedFile}
-                    />
+                    {/* Sección del selector de archivo */}
+                    <div className="card">
+                        <h4 className="card-title">Selecciona un Archivo</h4>
+                        <FileSelector
+                            files={files}
+                            onSelect={setSelectedFile}
+                            loading={loadingFiles}
+                            selectedFile={selectedFile}
+                        />
+                    </div>
 
-                    <FileContent
-                        fileContent={fileContent}
-                        selectedFile={selectedFile}
-                        loading={loadingFileContent}
-                        onDownload={handleDownload}
-                    />
+                    {/* Contenido del archivo */}
+                    {selectedFile && (
+                        <div className="card">
+                            <h4 className="file-content-title">Contenido del Archivo</h4>
+                            <FileContent
+                                fileContent={fileContent}
+                                selectedFile={selectedFile}
+                                loading={loadingFileContent}
+                                onDownload={handleDownload}
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </div>
     );
 };
 
-export default List;
+export default FondoManager;

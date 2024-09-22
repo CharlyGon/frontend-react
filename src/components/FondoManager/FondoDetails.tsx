@@ -35,7 +35,6 @@ const FondoDetails: React.FC<FondoDetailsProps> = (
 
     return (
         <div>
-            <h3>Detalles del Fondo:</h3>
             <p><strong>Identificador Fondo:</strong>
                 {fondoDetails.identificadorFondo}</p>
             <p><strong>Tipo de Rescate:</strong>

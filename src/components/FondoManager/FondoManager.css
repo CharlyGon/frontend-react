@@ -1,0 +1,125 @@
+/* Main container */
+.fondo-manager-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Centered title */
+.fondo-manager-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* General style for the cards */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for content inside the cards */
+.card-content {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Title inside the cards */
+.card-title {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+    color: #0a21a0;
+    margin-bottom: 10px;
+}
+
+/* Style for the dropdown (selector) */
+.file-selector-dropdown {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.2s ease-in-out;
+}
+
+.file-selector-dropdown:hover,
+.file-selector-dropdown:focus {
+    border-color: #0a21a0;
+    outline: none;
+}
+
+/* Download button with modern design */
+.download-button {
+    background-color: #0a21a0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
+}
+
+.download-button:hover {
+    background-color: #2841d1;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Download button icon */
+.download-button-icon {
+    font-size: 18px;
+}
+
+/* Preformatted text style for the file content */
+.file-content-pre {
+    padding: 15px;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    overflow-x: auto;
+    background-color: #f4f4f4;
+}
+
+/* Spacing and text alignment */
+.card p,
+.file-content-pre {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+/* Container for file content */
+.file-content-container {
+    margin-top: 20px;
+}
+
+/* Title for the selected file */
+.file-content-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}

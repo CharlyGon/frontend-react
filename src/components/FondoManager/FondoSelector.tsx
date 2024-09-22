@@ -32,9 +32,15 @@ const FondoSelector: React.FC<FondoSelectorProps> = (
 
     return (
         <div>
-            <label htmlFor="fondoSelect">Selecciona un fondo:</label>
-            <select id="fondoSelect" onChange={handleChange} value={selectedFondo}>
-                <option value="">-- Selecciona un fondo --</option>
+            <select
+                id="fondoSelect"
+                onChange={handleChange}
+                value={selectedFondo}>
+
+                <option value="">
+                    -- Selecciona un fondo --
+                </option>
+
                 {fondos.map((fondo) => (
                     <option
                         key={fondo.codFondo}

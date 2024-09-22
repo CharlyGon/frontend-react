@@ -1,3 +1,5 @@
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 interface FileContentProps {
@@ -35,14 +37,28 @@ const FileContent: React.FC<FileContentProps> = (
     }
 
     return (
-        <div style={{ marginTop: "20px" }}>
-            <h4>Archivo seleccionado: {selectedFile}</h4>
-            <pre style={{ backgroundColor: "#f4f4f4", padding: "10px", borderRadius: "5px", overflowX: "auto" }}>
+        <div className="file-content-container">
+            <h4
+                className="file-content-title"
+            >
+                Archivo seleccionado: {selectedFile}
+            </h4>
+            <pre className="file-content-pre">
                 {fileContent}
             </pre>
-            <button onClick={onDownload}>Descargar archivo</button>
+            <button
+                className="download-button"
+                onClick={onDownload}
+            >
+                <FontAwesomeIcon
+                    icon={faDownload}
+                    className="download-button-icon"
+                />
+                Descargar archivo
+            </button>
         </div>
     );
 };
+
 
 export default FileContent;
