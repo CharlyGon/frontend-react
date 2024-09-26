@@ -1,4 +1,6 @@
-import React from "react";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 
 interface FileSelectorProps {
     files: string[];
@@ -27,9 +29,16 @@ const FileSelector: React.FC<FileSelectorProps> = (
         selectedFile
     }: FileSelectorProps): JSX.Element => {
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [showSearch, setShowSearch] = useState(false);
+
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         onSelect(event.target.value);
     };
+
+    const filteredFiles = files.filter(file =>
+        file.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     if (loading) {
         return <p>Cargando archivos...</p>;
@@ -40,22 +49,41 @@ const FileSelector: React.FC<FileSelectorProps> = (
     }
 
     return (
-        <div>
-            <select
-                onChange={handleChange}
-                value={selectedFile}
-                className="custom-dropdown"
-            >
-                <option value="">
-                    -- Selecciona un archivo --
-                </option>
-
-                {files.map((file, index) => (
-                    <option key={file} value={file}>
-                        {file}
+        <div className="file-selector-container">
+            <div className="file-selector-input-wrapper">
+                <select
+                    onChange={handleChange}
+                    value={selectedFile}
+                    className="custom-dropdown"
+                >
+                    <option value="">
+                        -- Selecciona un archivo --
                     </option>
-                ))}
-            </select>
+
+                    {filteredFiles.map((file) => (
+                        <option key={file} value={file}>
+                            {file}
+                        </option>
+                    ))}
+                </select>
+                <button
+                    className="search-button"
+                    onClick={() => setShowSearch(!showSearch)}
+                    aria-label="Search file"
+                >
+                    <FontAwesomeIcon icon={faSearch} />
+                </button>
+            </div>
+
+            {showSearch && (
+                <input
+                    type="text"
+                    className="search-input"
+                    placeholder="Buscar archivo..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            )}
         </div>
     );
 };
