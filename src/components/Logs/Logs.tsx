@@ -24,6 +24,7 @@ const Logs: React.FC = (): JSX.Element => {
 
   const [isUserScrolling, setIsUserScrolling] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [logInterval, setLogInterval] = useState(1000); // Default: 1 second
 
   /**
   * Determines the CSS class based on the log message content.
@@ -90,10 +91,42 @@ const Logs: React.FC = (): JSX.Element => {
     };
   }, []);
 
+  /**
+   * Handle interval change for log updates.
+   */
+  const handleIntervalChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    const value = parseInt(event.target.value, 10);
+    setLogInterval(value);
+  };
+
   return (
     <div className="logs-wrapper">
-      <h2 className="logs-title">Real-time Logs</h2>
+      <h2
+        className="logs-title">
+        Real-time Logs
+      </h2>
+
       <div className="logs-container-wrapper">
+
+        {/* Selector for log update interval */}
+        {logs.length > 0 && (
+          <div className="log-interval-selector">
+            <label htmlFor="log-interval">
+              Update logs every:
+            </label>
+            <select
+              id="log-interval"
+              onChange={handleIntervalChange}
+              value={logInterval}
+            >
+              <option value={1000}>1 second</option>
+              <option value={10000}>10 seconds</option>
+              <option value={300000}>5 minutes</option>
+            </select>
+          </div>
+        )}
+
+        {/* Logs output container */}
         <div className="logs-output" ref={logsContainerRef}>
           {logs.length === 0 ? (
             <div className="no-logs-container">
@@ -109,8 +142,13 @@ const Logs: React.FC = (): JSX.Element => {
           )}
           <div ref={logsEndRef} />
         </div>
+
+        {/* Scroll to bottom button */}
         {showScrollButton && (
-          <button className="scroll-to-bottom-btn" onClick={() => scrollToBottom(true)}>
+          <button
+            className="scroll-to-bottom-btn"
+            onClick={() => scrollToBottom(true)}
+          >
             <FontAwesomeIcon icon={faArrowDown} />
           </button>
         )}

@@ -163,3 +163,41 @@
 .scroll-to-bottom-btn.hidden {
   display: none;
 }
+
+/* Styling for the log update interval selector */
+.log-interval-selector {
+  margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.log-interval-selector label {
+  font-size: 16px;
+  margin-right: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Styling the select input */
+.log-interval-selector select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  appearance: none; /* Remove default styling */
+  cursor: pointer;
+}
+
+/* On hover and focus states */
+.log-interval-selector select:hover,
+.log-interval-selector select:focus {
+  border-color: #007bff;
+  background-color: #ffffff;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
