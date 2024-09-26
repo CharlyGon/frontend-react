@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import useWebSocket from '../hooks/useWebSocket';
 import './Logs.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface Log {
   id: string;
@@ -94,14 +94,21 @@ const Logs: React.FC = (): JSX.Element => {
     <div className="logs-container-wrapper">
       <div className="logs-container">
         <h2>Real-time Logs</h2>
+
         <div
           className="logs-output"
-          ref={logsContainerRef}
-        >
+          ref={logsContainerRef}>
           {logs.length === 0 ? (
-            <p>No logs available.</p>
+            <div
+              className="no-logs-container">
+              <FontAwesomeIcon
+                icon={faExclamationCircle}
+                className="no-logs-icon"
+              />
+              <p>No logs available.</p>
+            </div>
           ) : (
-            logs.map((log: Log) => (
+            logs.map((log) => (
               <div
                 key={log.id}
                 className={getLogClass(log)}

@@ -28,13 +28,21 @@
 .logs-output {
   max-height: 700px;
   max-width: 1000px;
+  padding: 20px;
   overflow-y: auto;
-  padding-right: 15px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  border: 1px solid #e0e0e0;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  display: block;
+  /* Flexbox para centrar el contenido */
+  justify-content: center;
+  /* Alinear horizontalmente */
+  align-items: center;
+  /* Alinear verticalmente */
+  position: relative;
+  /* Para permitir el uso de posición absoluta en los hijos si es necesario */
 }
 
 /* Styling for each log entry */
@@ -76,6 +84,58 @@
 .log-info {
   border-left-color: #6be486;
   background-color: #dbffe3;
+}
+
+/* Container for the "No logs available" message */
+.no-logs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style for the warning icon */
+.no-logs-icon {
+  font-size: 36px;
+  color: #ff9800;
+  margin-bottom: 10px;
+  animation: pulse 2s infinite;
+}
+
+/* Style for the "No logs available" text */
+.no-logs-container p {
+  font-size: 18px;
+  color: #666;
+  margin: 0;
+}
+
+/* Keyframe animation to create a pulsating effect for the warning icon */
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.05);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Button to scroll to the latest log */
