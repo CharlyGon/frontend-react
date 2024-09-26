@@ -189,7 +189,7 @@
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  appearance: none; /* Remove default styling */
+  appearance: none;
   cursor: pointer;
 }
 

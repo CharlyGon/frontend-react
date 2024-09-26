@@ -44,6 +44,7 @@ const FileSelector: React.FC<FileSelectorProps> = (
             <select
                 onChange={handleChange}
                 value={selectedFile}
+                className="custom-dropdown"
             >
                 <option value="">
                     -- Selecciona un archivo --

@@ -33,9 +33,10 @@ const FondoSelector: React.FC<FondoSelectorProps> = (
     return (
         <div>
             <select
-                id="fondoSelect"
                 onChange={handleChange}
-                value={selectedFondo}>
+                value={selectedFondo}
+                className="custom-dropdown"
+                >
 
                 <option value="">
                     -- Selecciona un fondo --
