@@ -18,13 +18,21 @@ const App: React.FC = () => {
     return (
         <Router>
             <div className="app">
-                <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-                <Header isSidebarOpen={isSidebarOpen} />
-                <div className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+                <Sidebar
+                    isOpen={isSidebarOpen}
+                    toggleSidebar={toggleSidebar}
+                />
+                <Header
+                    isSidebarOpen={isSidebarOpen}
+                />
+                <div
+                    className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
+                >
                     <Body>
                         <Routes>
                             <Route path="/" element={<Welcome />} />
-                            <Route path="/dashboard" element={<FondoManager />} />
+                            <Route path="/dashboard" />
+                            <Route path="/funds" element={<FondoManager />} />
                             <Route path="/logs" element={<Logs />} />
                         </Routes>
                     </Body>

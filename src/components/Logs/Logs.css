@@ -1,27 +1,41 @@
-/* Main container for logs section */
-.logs-container-wrapper {
-  position: relative;
+/* General wrapper for logs section */
+.logs-wrapper {
   max-width: 1200px;
   margin: 20px auto;
-  padding: 20px;
-  background-color: #f0f4f8;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif;
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  padding-bottom: 80px;
+  align-items: center;
 }
 
-/* Title styling for the logs section */
-.logs-container h2 {
+/* Title styling for logs section, now outside of the logs container */
+.logs-title {
   font-size: 28px;
   margin-bottom: 25px;
   color: #333;
   text-align: center;
   font-weight: bold;
   letter-spacing: 1px;
+}
+
+/* Main container for logs section */
+.logs-container-wrapper {
+  position: relative;
+  width: 90%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 80px;/* Added padding to make space for the scroll button */
+  transition: box-shadow 0.3s ease;
+}
+
+/* Hover effect for the logs container */
+.logs-container-wrapper:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
 }
 
 /* Container for the logs output */
@@ -36,13 +50,10 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
   display: block;
-  /* Flexbox para centrar el contenido */
   justify-content: center;
-  /* Alinear horizontalmente */
   align-items: center;
-  /* Alinear verticalmente */
   position: relative;
-  /* Para permitir el uso de posición absoluta en los hijos si es necesario */
+  width: 100%;
 }
 
 /* Styling for each log entry */
@@ -92,6 +103,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 20px auto;
 }
 
 /* Style for the warning icon */
@@ -110,27 +122,13 @@
 }
 
 /* Keyframe animation to create a pulsating effect for the warning icon */
-@-webkit-keyframes pulse {
-  0% {
-    -webkit-transform: scale(1);
-  }
-
-  50% {
-    -webkit-transform: scale(1.05);
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-  }
-}
-
 @keyframes pulse {
   0% {
     transform: scale(1);
   }
 
   50% {
-    transform: scale(1.05);
+    transform: scale(1.35);
   }
 
   100% {

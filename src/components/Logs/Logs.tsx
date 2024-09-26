@@ -91,44 +91,30 @@ const Logs: React.FC = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="logs-container-wrapper">
-      <div className="logs-container">
-        <h2>Real-time Logs</h2>
-
-        <div
-          className="logs-output"
-          ref={logsContainerRef}>
+    <div className="logs-wrapper">
+      <h2 className="logs-title">Real-time Logs</h2>
+      <div className="logs-container-wrapper">
+        <div className="logs-output" ref={logsContainerRef}>
           {logs.length === 0 ? (
-            <div
-              className="no-logs-container">
-              <FontAwesomeIcon
-                icon={faExclamationCircle}
-                className="no-logs-icon"
-              />
+            <div className="no-logs-container">
+              <FontAwesomeIcon icon={faExclamationCircle} className="no-logs-icon" />
               <p>No logs available.</p>
             </div>
           ) : (
             logs.map((log) => (
-              <div
-                key={log.id}
-                className={getLogClass(log)}
-              >
+              <div key={log.id} className={getLogClass(log)}>
                 {log.message}
               </div>
             ))
           )}
           <div ref={logsEndRef} />
         </div>
+        {showScrollButton && (
+          <button className="scroll-to-bottom-btn" onClick={() => scrollToBottom(true)}>
+            <FontAwesomeIcon icon={faArrowDown} />
+          </button>
+        )}
       </div>
-
-      {showScrollButton && (
-        <button
-          className="scroll-to-bottom-btn"
-          onClick={() => scrollToBottom(true)}
-          aria-label="Scroll to latest log">
-          <FontAwesomeIcon icon={faArrowDown} />
-        </button>
-      )}
     </div>
   );
 };
