@@ -1,0 +1,107 @@
+/* Main container for logs section */
+.logs-container-wrapper {
+  position: relative;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f0f4f8;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 80px;
+}
+
+/* Title styling for the logs section */
+.logs-container h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #333;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Container for the logs output */
+.logs-output {
+  max-height: 700px;
+  max-width: 1000px;
+  overflow-y: auto;
+  padding-right: 15px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin: 0 auto;
+}
+
+/* Styling for each log entry */
+.log-entry {
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-left: 6px solid;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Hover effect for log entries */
+.log-entry:hover {
+  background-color: #d3e0fc;
+  transform: scale(1.02);
+  border-left-color: #1565c0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for error logs */
+.log-error {
+  border-left-color: #e57373;
+  background-color: #ffebee;
+}
+
+/* Styling for warning logs */
+.log-warning {
+  border-left-color: #ffb74d;
+  background-color: #fff3e0;
+}
+
+/* Styling for info logs */
+.log-info {
+  border-left-color: #6be486;
+  background-color: #dbffe3;
+}
+
+/* Button to scroll to the latest log */
+.scroll-to-bottom-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  opacity: 0.6;
+  z-index: 1000;
+}
+
+.scroll-to-bottom-btn:hover {
+  background-color: #0056b3;
+  opacity: 1
+}
+
+.scroll-to-bottom-btn.hidden {
+  display: none;
+}

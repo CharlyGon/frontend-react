@@ -1,12 +1,129 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import useWebSocket from '../hooks/useWebSocket';
+import './Logs.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
-const Logs: React.FC = () => {
-    return (
-        <div>
-            <h2>Logs</h2>
+interface Log {
+  id: string;
+  message: string;
+}
 
+/**
+ * Logs component that displays real-time log messages.
+ * Connects to a WebSocket server to receive log updates.
+ * Automatically scrolls to the latest log message.
+ * Provides a button to manually scroll to the latest log.
+ *
+ * @returns {JSX.Element} Logs component with real-time log messages.
+ */
+const Logs: React.FC = (): JSX.Element => {
+  const logs = useWebSocket('ws://localhost:8080') as Log[];
+  const logsEndRef = useRef<HTMLDivElement | null>(null);
+  const logsContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  /**
+  * Determines the CSS class based on the log message content.
+  */
+  const getLogClass = (log: Log): string => {
+    const message = log.message.toLowerCase();
+
+    if (message.includes('error')) return 'log-entry log-error';
+    if (message.includes('warning')) return 'log-entry log-warning';
+
+    return 'log-entry log-info';
+  };
+
+  /**
+    * Automatically scroll to the latest log.
+    * It can be forced when the user clicks the button.
+    */
+  const scrollToBottom = (forceScroll = false): void => {
+    if (logsEndRef.current && logsContainerRef.current) {
+      const shouldScroll = !isUserScrolling || forceScroll;
+
+      if (shouldScroll) {
+        logsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
+      }
+    }
+  };
+
+  /**
+   * Handle the scroll event of the container.
+   * Detects if the user is manually scrolling.
+   */
+  const handleScroll = (): void => {
+    if (!logsContainerRef.current) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = logsContainerRef.current;
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+
+    setIsUserScrolling(!isAtBottom);
+    setShowScrollButton(!isAtBottom); // Mostrar el botón solo si no está al final
+  };
+
+  /**
+   * Effect to automatically scroll to the latest log whenever logs are updated.
+   */
+  useEffect(() => {
+    scrollToBottom();
+  }, [logs]);
+
+  /**
+   * Effect to add and clean up the scroll event when the component is mounted.
+   */
+  useEffect(() => {
+    const container = logsContainerRef.current;
+
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="logs-container-wrapper">
+      <div className="logs-container">
+        <h2>Real-time Logs</h2>
+        <div
+          className="logs-output"
+          ref={logsContainerRef}
+        >
+          {logs.length === 0 ? (
+            <p>No logs available.</p>
+          ) : (
+            logs.map((log: Log) => (
+              <div
+                key={log.id}
+                className={getLogClass(log)}
+              >
+                {log.message}
+              </div>
+            ))
+          )}
+          <div ref={logsEndRef} />
         </div>
-    );
+      </div>
+
+      {showScrollButton && (
+        <button
+          className="scroll-to-bottom-btn"
+          onClick={() => scrollToBottom(true)}
+          aria-label="Scroll to latest log">
+          <FontAwesomeIcon icon={faArrowDown} />
+        </button>
+      )}
+    </div>
+  );
 };
 
 export default Logs;
