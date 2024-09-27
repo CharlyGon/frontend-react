@@ -20,10 +20,10 @@
     margin-left: 200px;
 }
 
-/* Header adjustment when the sidebar is closed */
+/* Header adjustment when the sidebar is closed toggle-button */
 .sidebar-closed {
-    margin-left: 60px;
-    width: calc(100% - 60px);
+    margin-left: 80px;
+    width: calc(100% - 80px);
 }
 
 /* Style for the user information section */

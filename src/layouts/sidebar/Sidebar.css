@@ -14,13 +14,13 @@
 }
 
 .sidebar.closed {
-  width: 60px;
+  width: 80px;
 }
 
 /* Menu list styles */
 .toggle-button {
   font-size: 32px;
-  padding: 11px;
+  padding: 1px;
   cursor: pointer;
   text-align: center;
   background-color: #f9f9f9;
@@ -28,6 +28,10 @@
   border-bottom: 1px solid #ddd;
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
 }
 
 .sidebar ul {

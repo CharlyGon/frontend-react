@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }: SidebarProps
                 <button
                     className="toggle-button"
                     onClick={toggleSidebar}
-                    aria-label="Toggle sidebar">
+                >
                     <FontAwesomeIcon icon={faBars} />
                 </button>
             </div>
