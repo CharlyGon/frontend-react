@@ -67,6 +67,7 @@
   display: flex;
   align-items: center;
   white-space: nowrap;
+  min-height: 40px;
 }
 
 /* Icon styles */
@@ -75,6 +76,7 @@
   margin-right: 20px;
   font-size: 28px;
   transition: transform 0.3s ease;
+  line-height: 28px;
 }
 
 /* Text transitions when opening/closing the sidebar */
@@ -82,6 +84,8 @@
   opacity: 1;
   transform: translateX(0);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  line-height: 1.2;
 }
 
 /* Text hidden when the sidebar is closed */

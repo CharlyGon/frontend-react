@@ -5,8 +5,8 @@ import {
     faTachometerAlt,
     faPiggyBank,
     faCog,
-    faUserCog,
     faClipboardList,
+    faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
@@ -62,9 +62,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }: SidebarProps
                 </li>
 
                 <li>
-                    <Link to="/settings-users">
-                        <FontAwesomeIcon icon={faUserCog} />
-                        {isOpen && <span>User's</span>}
+                    <Link to="/search-transactions">
+                        <FontAwesomeIcon icon={faSearch} />
+                        {isOpen && <span >Search<br />Transactions</span>}
                     </Link>
                 </li>
 
