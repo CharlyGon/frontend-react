@@ -34,6 +34,15 @@
   height: 60px;
 }
 
+/* Settings for icon rotation */
+.icon-toggle {
+  transition: transform 0.5s ease;
+}
+
+.icon-toggle.rotate {
+  transform: rotate(180deg);
+}
+
 .sidebar ul {
   list-style: none;
   padding: 0;

@@ -7,6 +7,7 @@ import {
     faCog,
     faClipboardList,
     faSearch,
+    faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
@@ -33,7 +34,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }: SidebarProps
                     className="toggle-button"
                     onClick={toggleSidebar}
                 >
-                    <FontAwesomeIcon icon={faBars} />
+                    <FontAwesomeIcon
+                        icon={isOpen ? faTimes : faBars}
+                        className={`icon-toggle ${isOpen ? 'rotate' : ''}`}
+                    />
                 </button>
             </div>
             <ul>
