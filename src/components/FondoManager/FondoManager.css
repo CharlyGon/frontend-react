@@ -6,15 +6,6 @@
     background-color: #f9f9f9;
 }
 
-/* Centered title */
-.fondo-manager-title {
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: #333;
-}
-
 /* General style for the cards */
 .card {
     background-color: #ffffff;

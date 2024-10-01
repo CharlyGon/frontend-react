@@ -1,10 +1,9 @@
 /* General wrapper for logs section */
 .logs-wrapper {
-  max-width: 1200px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+ max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
 }
 
 /* Title styling for logs section, now outside of the logs container */
@@ -20,8 +19,8 @@
 /* Main container for logs section */
 .logs-container-wrapper {
   position: relative;
-  width: 90%;
-  margin: 20px auto;
+  width: 100%;
+  margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 12px;

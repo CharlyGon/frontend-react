@@ -7,6 +7,7 @@ import Welcome from "./components/Welcome";
 import Body from "./components/Body";
 import SupportWidget from "./components/widget/Widget";
 import Logs from "./components/Logs/Logs";
+import TransactionSearch from "./components/TransactionSearch/TransactionSearch";
 
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
@@ -34,6 +35,7 @@ const App: React.FC = () => {
                             <Route path="/dashboard" />
                             <Route path="/funds" element={<FondoManager />} />
                             <Route path="/logs" element={<Logs />} />
+                            <Route path="/search-transactions" element={<TransactionSearch />} />
                         </Routes>
                     </Body>
                 </div>
