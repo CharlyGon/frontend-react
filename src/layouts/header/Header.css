@@ -47,10 +47,25 @@
 
 /* Logo style */
 .company-logo {
-    height: 30px;
+    height: 55px;
 }
 
 /* User icon style */
 .user-icon {
     font-size: 32px;
+}
+
+/* Responsive behavior for small screens */
+@media (max-width: 768px) {
+    .header {
+        width: 100%;
+        margin-left: 0;
+        transition: width 0.3s ease, margin-left 0.3s ease;
+    }
+
+    .sidebar-open,
+    .sidebar-closed {
+        margin-left: 0;
+        width: 100%;
+    }
 }

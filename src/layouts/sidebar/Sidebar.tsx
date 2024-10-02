@@ -28,58 +28,69 @@ interface SidebarProps {
  */
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }: SidebarProps): JSX.Element => {
     return (
-        <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
-            <div >
-                <button
-                    className="toggle-button"
-                    onClick={toggleSidebar}
-                >
-                    <FontAwesomeIcon
-                        icon={isOpen ? faTimes : faBars}
-                        className={`icon-toggle ${isOpen ? 'rotate' : ''}`}
-                    />
-                </button>
-            </div>
-            <ul>
-                <li>
-                    <Link to="/dashboard">
-                        <FontAwesomeIcon icon={faTachometerAlt} />
-                        {isOpen && <span>Dashboard</span>}
-                    </Link>
-                </li>
-
-                <li>
-                    <Link to="/funds">
-                        <FontAwesomeIcon icon={faPiggyBank} />
-                        {isOpen && <span>Funds</span>}
-                    </Link>
-                </li>
-
-                <li>
-                    <Link to="/logs">
+        <>
+            <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+                <div>
+                    <button
+                        className="toggle-button"
+                        onClick={toggleSidebar}
+                    >
                         <FontAwesomeIcon
-                            icon={faClipboardList}
-                            className="menu-logs"
+                            icon={isOpen ? faTimes : faBars}
+                            className={`icon-toggle ${isOpen ? 'rotate' : ''}`}
                         />
-                        {isOpen && <span className="span-logs">Logs</span>}
-                    </Link>
-                </li>
+                    </button>
+                </div>
 
-                <li>
-                    <Link to="/search-transactions">
-                        <FontAwesomeIcon icon={faSearch} />
-                        {isOpen && <span >Search<br />Transactions</span>}
-                    </Link>
-                </li>
+                <ul>
+                    <li>
+                        <Link to="/dashboard">
+                            <FontAwesomeIcon icon={faTachometerAlt} />
+                            {isOpen && <span>Dashboard</span>}
+                        </Link>
+                    </li>
 
-                <li className="settings">
-                    <Link to="/settings">
-                        <FontAwesomeIcon icon={faCog} />
-                        {isOpen && <span>Settings</span>}
-                    </Link>
-                </li>
-            </ul>
-        </div>
+                    <li>
+                        <Link to="/funds">
+                            <FontAwesomeIcon icon={faPiggyBank} />
+                            {isOpen && <span>Funds</span>}
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link to="/logs">
+                            <FontAwesomeIcon
+                                icon={faClipboardList}
+                                className="menu-logs"
+                            />
+                            {isOpen && <span className="span-logs">Logs</span>}
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link to="/search-transactions">
+                            <FontAwesomeIcon icon={faSearch} />
+                            {isOpen && <span >Search<br />Transactions</span>}
+                        </Link>
+                    </li>
+
+                    <li className="settings">
+                        <Link to="/settings">
+                            <FontAwesomeIcon icon={faCog} />
+                            {isOpen && <span>Settings</span>}
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+
+            {/* Show overlay only on small screens */}
+            {isOpen && window.innerWidth <= 768 && (
+                <button
+                    className="overlay"
+                    onClick={toggleSidebar}
+                ></button>
+            )}
+        </>
     );
 };
 

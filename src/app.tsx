@@ -10,7 +10,7 @@ import Logs from "./components/Logs/Logs";
 import TransactionSearch from "./components/TransactionSearch/TransactionSearch";
 
 const App: React.FC = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);

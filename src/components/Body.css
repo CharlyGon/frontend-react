@@ -6,13 +6,3 @@
     background-color: #f9f9f9;
     transition: margin-left 0.3s;
 }
-
-/* Margin adjustment when the sidebar is closed */
-.main-content.sidebar-closed .body-content {
-    margin-left: 200px;
-}
-
-/* Margin adjustment when the sidebar is open */
-.main-content.sidebar-open .body-content {
-    margin-left:80px;
-}

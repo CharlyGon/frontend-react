@@ -138,3 +138,62 @@ double-check if these adjustments are still necessary.
 .span-logs {
   margin-left: 5px;
 }
+
+/* Responsive styles for the sidebar */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+  }
+
+  .sidebar.closed {
+    left: -15%;
+  }
+
+  .sidebar.closed:hover {
+    left: 0;
+  }
+
+  /* Prevent hover effect when the sidebar is open */
+  .sidebar.open {
+    left: 0;
+    pointer-events: auto;
+  }
+
+  .main-content {
+    margin-left: 0;
+    transition: margin-left 0.3s ease-in-out;
+  }
+
+  /* Show overlay when the sidebar is open */
+  .sidebar.open + .overlay {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+}
+
+/* Overlay to darken the background when the sidebar is open */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Show overlay when the sidebar is open */
+.sidebar.open + .overlay {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
