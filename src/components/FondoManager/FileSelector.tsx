@@ -1,6 +1,9 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+import React, { useCallback, useState } from "react";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 interface FileSelectorProps {
     files: string[];
@@ -31,14 +34,26 @@ const FileSelector: React.FC<FileSelectorProps> = (
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showSearch, setShowSearch] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
+    const [showCalendar, setShowCalendar] = useState(false);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
         onSelect(event.target.value);
+    }, [onSelect]);
+
+    const toggleCalendar = useCallback(() => {
+        setShowCalendar(prev => !prev);
+    }, []);
+
+    const handleSearchByDate = () => {
+        console.log("Buscando archivos para la fecha:", selectedDate?.format('YYYY-MM-DD'));
     };
 
     const filteredFiles = files.filter(file =>
         file.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const formattedDate = selectedDate?.format('YYYY-MM-DD') || '';
 
     if (loading) {
         return <p>Cargando archivos...</p>;
@@ -59,13 +74,17 @@ const FileSelector: React.FC<FileSelectorProps> = (
                     <option value="">
                         -- Selecciona un archivo --
                     </option>
-
                     {filteredFiles.map((file) => (
-                        <option key={file} value={file}>
+                        <option
+                            key={file}
+                            value={file}
+                        >
                             {file}
                         </option>
                     ))}
                 </select>
+
+                {/* Search button */}
                 <button
                     className="search-button"
                     onClick={() => setShowSearch(!showSearch)}
@@ -73,6 +92,45 @@ const FileSelector: React.FC<FileSelectorProps> = (
                 >
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
+
+                {/* Calendar button */}
+                <button
+                    className="calendar-button"
+                    onClick={toggleCalendar}
+                    aria-label="open calendar"
+                >
+                    <FontAwesomeIcon icon={faCalendarAlt} />
+                </button>
+
+                {/* Calendar */}
+                {showCalendar && (
+                    <div className="calendar-container">
+                        <LocalizationProvider
+                            dateAdapter={AdapterDayjs}
+                        >
+                            <DateCalendar
+                                value={selectedDate}
+                                onChange={(newValue) => setSelectedDate(newValue)}
+                                showDaysOutsideCurrentMonth
+                                fixedWeekNumber={6}
+                            />
+                        </LocalizationProvider>
+                        <div className="calendar-actions">
+                            <input
+                                type="text"
+                                value={formattedDate}
+                                readOnly
+                                className="selected-date-input"
+                            />
+                            <button
+                                className="search-by-date-button"
+                                onClick={handleSearchByDate}
+                            >
+                                Buscar por fecha
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {showSearch && (

@@ -151,7 +151,7 @@ double-check if these adjustments are still necessary.
   }
 
   .sidebar.closed {
-    left: -15%;
+    left: -12%;
   }
 
   .sidebar.closed:hover {
