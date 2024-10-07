@@ -33,20 +33,31 @@ const FondoManager: React.FC = (): JSX.Element => {
     const [page, setPage] = useState(1);
     const [hasMoreFondos, setHasMoreFondos] = useState(true);
 
-    // load the funds
+    const isFondoDuplicate = (existingFondos: Fondo[], newFondo: Fondo): boolean => {
+        return existingFondos.some((fondo) => fondo.id === newFondo.id);
+    }
+
+    // Load the next page of funds
     const loadFondos = async (page: number) => {
         setLoadingFondos(true);
         try {
-            const nuevosFondos = await fetchFondos(page);
+            const newFondos = await fetchFondos(page);
+
+            if (!newFondos || newFondos.length === 0) {
+                setHasMoreFondos(false);
+                return;
+            }
+
             setFondos((prevFondos) => {
-                const fondosUnicos = nuevosFondos.filter((nuevoFondo) =>
-                    !prevFondos.some((fondo) => fondo.id === nuevoFondo.id)
+                const uniqueFondos = newFondos.filter((newFondo) =>
+                    !isFondoDuplicate(prevFondos, newFondo)
                 );
-                return [...prevFondos, ...fondosUnicos];
+                return [...prevFondos, ...uniqueFondos];
             });
-            setHasMoreFondos(nuevosFondos.length > 0);
+            setHasMoreFondos(newFondos.length > 0);
+
         } catch (error) {
-            console.error("Error fetching fondos:", error);
+            console.error("Error fetching fondos: ", error);
         } finally {
             setLoadingFondos(false);
         }
