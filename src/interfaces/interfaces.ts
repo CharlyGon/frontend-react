@@ -38,3 +38,9 @@ export interface FondoSelectorProps {
     loadingFondos: boolean;
 }
 
+export interface FileSelectorProps {
+    files: Array<{ nombre: string }>;
+    onSelect: (fileName: string) => void;
+    loading: boolean;
+    selectedFile?: string;
+}

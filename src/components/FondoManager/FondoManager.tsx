@@ -5,12 +5,13 @@ import FileSelector from "./FileSelector";
 import FileContent from "./FileContent";
 import {
     fetchFilesForFondo,
+    fetchFileById,
     downloadFile,
-    fetchFileContent,
 } from "../../services/fileService";
 import "./FondoManager.css";
 import { Fondo } from "../../interfaces/interfaces";
 import { fetchFondos } from "../../services/fondoService";
+import dayjs from "dayjs";
 
 /**
  * Component for managing and displaying a list of fondos, their associated files,
@@ -22,7 +23,7 @@ import { fetchFondos } from "../../services/fondoService";
 const FondoManager: React.FC = (): JSX.Element => {
     const [fondos, setFondos] = useState<Fondo[]>([]);
     const [selectedFondo, setSelectedFondo] = useState<Fondo | null>(null);
-    const [files, setFiles] = useState<string[]>([]);
+    const [files, setFiles] = useState<Array<{ id: string; nombre: string }>>([]);
     const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
     const [fileContent, setFileContent] = useState<string | null>(null);
 
@@ -72,24 +73,45 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     // Load files related to the selected background
     useEffect(() => {
-        if (selectedFondo) {
-            setLoadingFiles(true);
-            fetchFilesForFondo(selectedFondo.id).then((filesData) => {
-                setFiles(filesData);
-                setLoadingFiles(false);
-            });
-        }
+        const fetchFiles = async () => {
+            if (selectedFondo) {
+                setLoadingFiles(true);
+                //const fechaActual = dayjs().format('YYYY-MM-DD'); // Fecha actual
+                const fechaActual = "2024-10-04"; // Fecha de ejemplo
+                try {
+                    const filesData = await fetchFilesForFondo(fechaActual, selectedFondo.identificadorFondo);
+                    setFiles(filesData.map((file: { id: string; nombre: string }) => ({
+                        id: file.id,
+                        nombre: file.nombre
+                    })));
+                } catch (error) {
+                    console.error("Error fetching files:", error);
+                } finally {
+                    setLoadingFiles(false);
+                }
+            }
+        };
+
+        fetchFiles();
     }, [selectedFondo]);
 
     // Load the contents of the selected file
     useEffect(() => {
-        if (selectedFile) {
-            setLoadingFileContent(true);
-            fetchFileContent(selectedFile).then((content) => {
-                setFileContent(content);
-                setLoadingFileContent(false);
-            });
-        }
+        const fetchFileContentById = async () => {
+            if (selectedFile) {
+                setLoadingFileContent(true);
+                try {
+                    const fileData = await fetchFileById(selectedFile);
+                    setFileContent(fileData.nombre); // Aquí puedes ajustar lo que quieras mostrar
+                } catch (error) {
+                    console.error("Error fetching file content:", error);
+                } finally {
+                    setLoadingFileContent(false);
+                }
+            }
+        };
+
+        fetchFileContentById();
     }, [selectedFile]);
 
     // Handle the file download

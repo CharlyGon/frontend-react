@@ -4,13 +4,7 @@ import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import React, { useCallback, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
-
-interface FileSelectorProps {
-    files: string[];
-    onSelect: (fileName: string) => void;
-    loading: boolean;
-    selectedFile?: string;
-}
+import { FileSelectorProps } from "../../interfaces/interfaces";
 
 /**
  * Component for selecting a file from a list of files.
@@ -49,11 +43,12 @@ const FileSelector: React.FC<FileSelectorProps> = (
         console.log("Buscando archivos para la fecha:", selectedDate?.format('YYYY-MM-DD'));
     };
 
-    const filteredFiles = files.filter(file =>
-        file.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredFiles = files
+        .map(file => (typeof file === 'string' ? file : file.nombre))
+        .filter(file => file.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    const formattedDate = selectedDate?.format('YYYY-MM-DD') || '';
+
+    const formattedDate = selectedDate?.format('YYYY-MM-DD') ?? '';
 
     if (loading) {
         return <p>Cargando archivos...</p>;

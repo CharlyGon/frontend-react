@@ -1,4 +1,4 @@
-import { mockFondos, mockFiles, mockFileContent } from "../data/mockData";
+import { mockFileContent } from "../data/mockData";
 
 /**
  * Download a file
@@ -14,24 +14,43 @@ export const downloadFile = (content: string, fileName: string, fileType: string
     link.click();
 };
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 /**
- * Get files associated with a background
- * @param {number} codFondo - Background code
- * @returns {Promise<string[]>} - List of files associated with the background
+ * Fetch the files for a given fondo on a specific date.
+ * @param fecha - Date of the request
+ * @param identificadorFondo - The fondo identifier
  */
-export const fetchFilesForFondo = async (codFondo: number): Promise<string[]> => {
-    const fondoData = mockFiles.data.find((f) => f.codFondo === codFondo);
-    return fondoData ? fondoData.files : [];
+export const fetchFilesForFondo = async (fecha: string, identificadorFondo: string) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/Archivo/pagination?Fecha=${fecha}&IdentificadorFondo=${identificadorFondo}`);
+        if (!response.ok) {
+            throw new Error("Error fetching files");
+        }
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.error("Error fetching files for fondo:", error);
+        throw error;
+    }
 };
 
 /**
- * Get the details of a background
- * @param {number} codFondo - Background code
- * @returns {Promise<any>} - Background details
-*/
-export const fetchFondoDetails = async (codFondo: number): Promise<any> => {
-    const fondoDetails = mockFondos.data.find((f) => f.codFondo === codFondo);
-    return fondoDetails || {};
+ * Fetch a file by its ID to get more details.
+ * @param id - The ID of the file
+ */
+export const fetchFileById = async (id: string) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/Archivo/id?Id=${id}`);
+        if (!response.ok) {
+            throw new Error("Error fetching file by ID");
+        }
+        const data = await response.json();
+        return data; // Return file details
+    } catch (error) {
+        console.error("Error fetching file by ID:", error);
+        throw error;
+    }
 };
 
 /**
