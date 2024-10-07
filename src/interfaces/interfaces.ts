@@ -39,8 +39,15 @@ export interface FondoSelectorProps {
 }
 
 export interface FileSelectorProps {
-    files: Array<{ nombre: string }>;
-    onSelect: (fileName: string) => void;
+    files: Array<{ id: string; nombre: string }>;
+    onSelect: (fileId: string) => void;
     loading: boolean;
     selectedFile?: string;
+}
+
+export interface FileContentProps {
+    fileContent: string | null;
+    selectedFile: string | undefined;
+    loading: boolean;
+    onDownload: () => void;
 }

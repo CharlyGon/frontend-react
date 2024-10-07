@@ -69,12 +69,12 @@ const FileSelector: React.FC<FileSelectorProps> = (
                     <option value="">
                         -- Selecciona un archivo --
                     </option>
-                    {filteredFiles.map((file) => (
+                    {files.map((file) => (
                         <option
-                            key={file}
-                            value={file}
+                            key={file.id} // Aquí estamos usando el 'id'
+                            value={file.id} // El valor será el 'id'
                         >
-                            {file}
+                            {file.nombre} {/* Aquí mostramos el nombre */}
                         </option>
                     ))}
                 </select>

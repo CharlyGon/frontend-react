@@ -5,8 +5,9 @@ import FileSelector from "./FileSelector";
 import FileContent from "./FileContent";
 import {
     fetchFilesForFondo,
-    fetchFileById,
+    fetchFileContentById,
     downloadFile,
+    fetchFileById,
 } from "../../services/fileService";
 import "./FondoManager.css";
 import { Fondo } from "../../interfaces/interfaces";
@@ -76,10 +77,10 @@ const FondoManager: React.FC = (): JSX.Element => {
         const fetchFiles = async () => {
             if (selectedFondo) {
                 setLoadingFiles(true);
-                //const fechaActual = dayjs().format('YYYY-MM-DD'); // Fecha actual
-                const fechaActual = "2024-10-04"; // Fecha de ejemplo
+                //const currentDate = dayjs().format('YYYY-MM-DD'); // Fecha actual
+                const currentDate = "2024-10-04";
                 try {
-                    const filesData = await fetchFilesForFondo(fechaActual, selectedFondo.identificadorFondo);
+                    const filesData = await fetchFilesForFondo(currentDate, selectedFondo.identificadorFondo);
                     setFiles(filesData.map((file: { id: string; nombre: string }) => ({
                         id: file.id,
                         nombre: file.nombre
@@ -97,12 +98,17 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     // Load the contents of the selected file
     useEffect(() => {
-        const fetchFileContentById = async () => {
+        const fetchFileContent = async () => {
             if (selectedFile) {
                 setLoadingFileContent(true);
                 try {
-                    const fileData = await fetchFileById(selectedFile);
-                    setFileContent(fileData.nombre); // Aquí puedes ajustar lo que quieras mostrar
+                    const fileContentData = await fetchFileContentById(selectedFile);
+                    if (fileContentData && fileContentData.length > 0) {
+                        const combinedContent = fileContentData.join("\n");
+                        setFileContent(combinedContent);
+                    } else {
+                        setFileContent("No content available for this file.");
+                    }
                 } catch (error) {
                     console.error("Error fetching file content:", error);
                 } finally {
@@ -111,7 +117,7 @@ const FondoManager: React.FC = (): JSX.Element => {
             }
         };
 
-        fetchFileContentById();
+        fetchFileContent();
     }, [selectedFile]);
 
     // Handle the file download

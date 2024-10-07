@@ -1,13 +1,7 @@
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-
-interface FileContentProps {
-    fileContent: string | null;
-    selectedFile: string | undefined;
-    loading: boolean;
-    onDownload: () => void;
-}
+import { FileContentProps } from "../../interfaces/interfaces";
 
 /**
  * Component for displaying the content of a selected file.
@@ -27,7 +21,7 @@ const FileContent: React.FC<FileContentProps> = (
         selectedFile,
         loading,
         onDownload
-    }) => {
+    }: FileContentProps): JSX.Element | null => {
     if (loading) {
         return <p>Cargando contenido del archivo...</p>;
     }
