@@ -3,20 +3,14 @@ import FondoSelector from "./FondoSelector";
 import FondoDetails from "./FondoDetails";
 import FileSelector from "./FileSelector";
 import FileContent from "./FileContent";
-import { mockFondos } from "../../data/mockData";
 import {
     fetchFilesForFondo,
-    fetchFondoDetails,
+    downloadFile,
     fetchFileContent,
-    downloadFile
 } from "../../services/fileService";
 import "./FondoManager.css";
-
-interface FondoDetailss {
-    identificadorFondo: string;
-    tipoRescate: string;
-    codigoInterfaz: string;
-}
+import { Fondo } from "../../interfaces/interfaces";
+import { fetchFondos } from "../../services/fondoService";
 
 /**
  * Component for managing and displaying a list of fondos, their associated files,
@@ -26,34 +20,57 @@ interface FondoDetailss {
  * @returns {JSX.Element} The fondo management component.
  */
 const FondoManager: React.FC = (): JSX.Element => {
-    const [selectedFondo, setSelectedFondo] = useState<number | undefined>(undefined);
-    const [fondoDetails, setFondoDetails] = useState<FondoDetailss | null>(null);
+    const [fondos, setFondos] = useState<Fondo[]>([]);
+    const [selectedFondo, setSelectedFondo] = useState<Fondo | null>(null);
     const [files, setFiles] = useState<string[]>([]);
     const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
     const [fileContent, setFileContent] = useState<string | null>(null);
 
+    const [loadingFondos, setLoadingFondos] = useState(false);
     const [loadingFiles, setLoadingFiles] = useState(false);
-    const [loadingFondoDetails, setLoadingFondoDetails] = useState(false);
     const [loadingFileContent, setLoadingFileContent] = useState(false);
 
-    // Load background details and files when selecting a background
+    const [page, setPage] = useState(1);
+    const [hasMoreFondos, setHasMoreFondos] = useState(true);
+
+    // load the funds
+    const loadFondos = async (page: number) => {
+        setLoadingFondos(true);
+        try {
+            const nuevosFondos = await fetchFondos(page);
+            setFondos((prevFondos) => {
+                const fondosUnicos = nuevosFondos.filter((nuevoFondo) =>
+                    !prevFondos.some((fondo) => fondo.id === nuevoFondo.id)
+                );
+                return [...prevFondos, ...fondosUnicos];
+            });
+            setHasMoreFondos(nuevosFondos.length > 0);
+        } catch (error) {
+            console.error("Error fetching fondos:", error);
+        } finally {
+            setLoadingFondos(false);
+        }
+    };
+
+    // Effect to load the first page of funds
     useEffect(() => {
-        if (selectedFondo !== undefined) {
+        if (page > 1 || fondos.length === 0) {
+            loadFondos(page);
+        }
+    }, [page]);
+
+    // Load files related to the selected background
+    useEffect(() => {
+        if (selectedFondo) {
             setLoadingFiles(true);
-            setLoadingFondoDetails(true);
-            Promise.all([
-                fetchFilesForFondo(selectedFondo),
-                fetchFondoDetails(selectedFondo),
-            ]).then(([filesData, fondoDetailsData]) => {
+            fetchFilesForFondo(selectedFondo.id).then((filesData) => {
                 setFiles(filesData);
-                setFondoDetails(fondoDetailsData);
                 setLoadingFiles(false);
-                setLoadingFondoDetails(false);
             });
         }
     }, [selectedFondo]);
 
-    // Load contents of selected file
+    // Load the contents of the selected file
     useEffect(() => {
         if (selectedFile) {
             setLoadingFileContent(true);
@@ -64,7 +81,7 @@ const FondoManager: React.FC = (): JSX.Element => {
         }
     }, [selectedFile]);
 
-    // Handle file download
+    // Handle the file download
     const handleDownload = () => {
         if (selectedFile && fileContent) {
             downloadFile(fileContent, `${selectedFile}.txt`, "text/plain");
@@ -73,32 +90,50 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     return (
         <div className="fondo-manager-container">
-            <h2 className="fondo-manager-title">Gestión de Fondos</h2>
+            <h2 className="fondo-manager-title">
+                Gestión de Fondos
+            </h2>
 
-            {/* Sección del selector de fondo */}
+            {/* Background selector section */}
             <div className="card">
-                <h4 className="card-title">Selecciona un fondo</h4>
+                <h4 className="card-title">
+                    Selecciona un fondo
+                </h4>
                 <FondoSelector
-                    fondos={mockFondos.data}
-                    onSelect={setSelectedFondo}
-                    selectedFondo={selectedFondo}
+                    fondos={fondos}
+                    onSelect={(fondoId: number) => {
+                        const fondo = fondos.find(f => f.id === fondoId) || null;
+                        setSelectedFondo(fondo);
+                    }}
+                    selectedFondo={selectedFondo ? selectedFondo.id : undefined}
+                    loadMoreFondos={() => {
+                        if (hasMoreFondos) {
+                            setPage((prevPage) => prevPage + 1);
+                        }
+                    }}
+                    hasMoreFondos={hasMoreFondos}
+                    loadingFondos={loadingFondos}
                 />
             </div>
 
-            {selectedFondo && fondoDetails && (
+            {selectedFondo && (
                 <>
-                    {/* Detalles del fondo */}
+                    {/* Details of the fund */}
                     <div className="card">
-                        <h4 className="card-title">Detalles del Fondo</h4>
+                        <h4 className="card-title">
+                            Detalles del Fondo
+                        </h4>
                         <FondoDetails
-                            fondoDetails={fondoDetails}
-                            loading={loadingFondoDetails}
+                            fondoDetails={selectedFondo}
+                            loading={false}
                         />
                     </div>
 
-                    {/* Sección del selector de archivo */}
+                    {/* File selector section */}
                     <div className="card">
-                        <h4 className="card-title">Selecciona un Archivo</h4>
+                        <h4 className="card-title">
+                            Selecciona un Archivo
+                        </h4>
                         <FileSelector
                             files={files}
                             onSelect={setSelectedFile}
@@ -107,10 +142,12 @@ const FondoManager: React.FC = (): JSX.Element => {
                         />
                     </div>
 
-                    {/* Contenido del archivo */}
+                    {/* Contents of the file */}
                     {selectedFile && (
                         <div className="card">
-                            <h4 className="file-content-title">Contenido del Archivo</h4>
+                            <h4 className="file-content-title">
+                                Contenido del Archivo
+                            </h4>
                             <FileContent
                                 fileContent={fileContent}
                                 selectedFile={selectedFile}

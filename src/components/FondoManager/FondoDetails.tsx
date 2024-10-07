@@ -1,13 +1,5 @@
 import React from "react";
-
-interface FondoDetailsProps {
-    fondoDetails: {
-        identificadorFondo: string;
-        tipoRescate: string;
-        codigoInterfaz: string
-    };
-    loading: boolean;
-}
+import { FondoDetailsProps } from "../../interfaces/interfaces";
 
 /**
  * Component for displaying the details of a selected fondo.
@@ -35,12 +27,24 @@ const FondoDetails: React.FC<FondoDetailsProps> = (
 
     return (
         <div>
-            <p><strong>Identificador Fondo:</strong>
-                {fondoDetails.identificadorFondo}</p>
-            <p><strong>Tipo de Rescate:</strong>
-                {fondoDetails.tipoRescate}</p>
-            <p><strong>Código de Interfaz:</strong>
-                {fondoDetails.codigoInterfaz}</p>
+            <p>
+                <strong>
+                    Identificador Fondo:
+                </strong>
+                {fondoDetails.identificadorFondo}
+            </p>
+            <p>
+                <strong>
+                    Tipo de Rescate:
+                </strong>
+                {fondoDetails.tipoRescate}
+            </p>
+            <p>
+                <strong>
+                    Código de Interfaz:
+                </strong>
+                {fondoDetails.codigoInterfaz}
+            </p>
         </div>
     );
 };
