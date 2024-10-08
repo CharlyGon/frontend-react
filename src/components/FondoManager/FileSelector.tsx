@@ -2,8 +2,8 @@ import { faCalendarAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import React, { useCallback, useState } from "react";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs, { Dayjs } from 'dayjs';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { FileSelectorProps } from "../../interfaces/interfaces";
 
 /**
@@ -31,6 +31,8 @@ const FileSelector: React.FC<FileSelectorProps> = (
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
     const [showCalendar, setShowCalendar] = useState(false);
 
+    const formattedDate = selectedDate?.format("YYYY-MM-DD") ?? "";
+
     const handleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
         onSelect(event.target.value);
     }, [onSelect]);
@@ -40,15 +42,8 @@ const FileSelector: React.FC<FileSelectorProps> = (
     }, []);
 
     const handleSearchByDate = () => {
-        console.log("Buscando archivos para la fecha:", selectedDate?.format('YYYY-MM-DD'));
+        console.log("Buscando archivos para la fecha:", formattedDate);
     };
-
-    const filteredFiles = files
-        .map(file => (typeof file === 'string' ? file : file.nombre))
-        .filter(file => file.toLowerCase().includes(searchTerm.toLowerCase()));
-
-
-    const formattedDate = selectedDate?.format('YYYY-MM-DD') ?? '';
 
     if (loading) {
         return <p>Cargando archivos...</p>;
@@ -71,10 +66,10 @@ const FileSelector: React.FC<FileSelectorProps> = (
                     </option>
                     {files.map((file) => (
                         <option
-                            key={file.id} // Aquí estamos usando el 'id'
-                            value={file.id} // El valor será el 'id'
+                            key={file.id}
+                            value={file.id}
                         >
-                            {file.nombre} {/* Aquí mostramos el nombre */}
+                            {file.nombre}
                         </option>
                     ))}
                 </select>
@@ -110,6 +105,7 @@ const FileSelector: React.FC<FileSelectorProps> = (
                                 fixedWeekNumber={6}
                             />
                         </LocalizationProvider>
+
                         <div className="calendar-actions">
                             <input
                                 type="text"
@@ -117,6 +113,7 @@ const FileSelector: React.FC<FileSelectorProps> = (
                                 readOnly
                                 className="selected-date-input"
                             />
+
                             <button
                                 className="search-by-date-button"
                                 onClick={handleSearchByDate}

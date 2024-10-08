@@ -13,6 +13,7 @@ import { FileContentProps } from "../../interfaces/interfaces";
  *   - selectedFile: The name of the currently selected file.
  *   - loading: Boolean indicating whether the file content is being loaded.
  *   - onDownload: Callback function to handle file download.
+ *   - fileContentRef: Reference to the container for infinite scrolling.
  * @returns {JSX.Element | null} The file content display component, or null if no file is selected.
  */
 const FileContent: React.FC<FileContentProps> = (
@@ -20,11 +21,9 @@ const FileContent: React.FC<FileContentProps> = (
         fileContent,
         selectedFile,
         loading,
-        onDownload
+        onDownload,
+        fileContentRef
     }: FileContentProps): JSX.Element | null => {
-    if (loading) {
-        return <p>Cargando contenido del archivo...</p>;
-    }
 
     if (!selectedFile || !fileContent) {
         return null;
@@ -32,27 +31,33 @@ const FileContent: React.FC<FileContentProps> = (
 
     return (
         <div className="file-content-container">
-            <h4
-                className="file-content-title"
+            <pre
+                className="file-content-pre"
+                ref={fileContentRef}
             >
-                Archivo seleccionado: {selectedFile}
-            </h4>
-            <pre className="file-content-pre">
                 {fileContent}
             </pre>
-            <button
-                className="download-button"
-                onClick={onDownload}
-            >
-                <FontAwesomeIcon
-                    icon={faDownload}
-                    className="download-button-icon"
-                />
-                Descargar archivo
-            </button>
+
+            <div className="file-content-actions">
+                <button
+                    className="download-button"
+                    onClick={onDownload}
+                >
+                    <FontAwesomeIcon
+                        icon={faDownload}
+                        className="download-button-icon"
+                    />
+                    Descargar archivo
+                </button>
+
+                {loading && (
+                    <p className="loading-indicator">
+                        Cargando contenido...
+                    </p>
+                )}
+            </div>
         </div>
     );
 };
-
 
 export default FileContent;

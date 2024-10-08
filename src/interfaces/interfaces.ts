@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 export interface Fondo {
     id: number;
     identificadorFondo: string;
@@ -50,4 +52,5 @@ export interface FileContentProps {
     selectedFile: string | undefined;
     loading: boolean;
     onDownload: () => void;
+    fileContentRef:RefObject<HTMLPreElement>;
 }

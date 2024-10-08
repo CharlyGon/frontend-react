@@ -13,6 +13,7 @@ export const downloadFile = (content: string, fileName: string, fileType: string
 };
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const DEFAULT_PAGE_SIZE = process.env.DEFAULT_PAGE_SIZE ? parseInt(process.env.DEFAULT_PAGE_SIZE) : 50;
 
 /**
  * Fetch the files for a given fondo on a specific date.
@@ -66,7 +67,7 @@ export const fetchFileById = async (fileId: string): Promise<any> => {
  * @param {number}pageIndex - The page index (starting from 1)
  * @returns {Promise<string[]>} - A promise that resolves with the file content if successful.
  */
-export const fetchFileContentById = async (fileId: string, pageSize: number = 50, pageIndex: number = 1) => {
+export const fetchFileContentById = async (fileId: string, pageSize: number = DEFAULT_PAGE_SIZE, pageIndex: number = 1) => {
     try {
         const response = await fetch(`${API_BASE_URL}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`);
         if (!response.ok) {

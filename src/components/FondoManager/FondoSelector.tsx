@@ -37,17 +37,15 @@ const FondoSelector: React.FC<FondoSelectorProps> = ({
     };
 
     return (
-        <div>
+        <div className="fondo-selector-container">
             <select
+                className="custom-dropdown"
                 onChange={handleChange}
                 value={selectedFondo}
-                className="custom-dropdown"
                 size={3}
                 ref={dropdownRef}
             >
-                <option value="" disabled>
-                    -- Selecciona un fondo --
-                </option>
+
                 {fondos.map((fondo) => (
                     <option
                         key={fondo.id}
@@ -57,7 +55,12 @@ const FondoSelector: React.FC<FondoSelectorProps> = ({
                     </option>
                 ))}
             </select>
-            {loadingFondos && <p>Cargando más fondos...</p>}
+
+            <div className="fondo-actions">
+                <p className="loading-indicator">
+                    {loadingFondos ? "Cargando fondos..." : <>&nbsp;</>}
+                </p>
+            </div>
         </div>
     );
 };
