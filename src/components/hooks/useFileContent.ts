@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchFileContentById } from "../../services/fileService";
+import { UseFileContentResult } from "../../interfaces/interfaces";
 
 /**
  * Custom hook to manage file content fetching and pagination.
@@ -10,14 +11,9 @@ import { fetchFileContentById } from "../../services/fileService";
  *
  * @param {string | undefined} selectedFile - The ID of the selected file to fetch content for.
  * @param {number} pageSize - The number of lines to fetch per page.
- * @returns {{
-*   fileContent: string[],
-*   loadingFileContent: boolean,
-*   hasMoreFileContent: boolean,
-*   setFilePage: (page: number) => void
-* }} - Returns the file content, loading state, and pagination controls.
-*/
-export const useFileContent = (selectedFile: string | undefined, pageSize: number) => {
+ * @returns {UseFileContentResult} - Returns the file content, loading state, and pagination controls.
+ */
+export const useFileContent = (selectedFile: string | undefined, pageSize: number):UseFileContentResult => {
     const [fileContent, setFileContent] = useState<string[]>([]);
     const [loadingFileContent, setLoadingFileContent] = useState(false);
     const [filePage, setFilePage] = useState(1);

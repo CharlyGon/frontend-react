@@ -72,3 +72,22 @@ export enum HealthStatusEnum {
     Healthy = 'Healthy',
     Unhealthy = 'Unhealthy',
 }
+
+export interface UseFondosResult {
+    fondos: Fondo[];
+    loadingFondos: boolean;
+    hasMoreFondos: boolean;
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface UseFilesResult {
+    files: Array<{ id: string; nombre: string }>;
+    loadingFiles: boolean;
+}
+
+export interface UseFileContentResult {
+    fileContent: string[];
+    loadingFileContent: boolean;
+    hasMoreFileContent: boolean;
+    setFilePage: React.Dispatch<React.SetStateAction<number>>;
+}

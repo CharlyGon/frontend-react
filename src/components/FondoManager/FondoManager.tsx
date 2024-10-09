@@ -1,16 +1,16 @@
-import React, { useState, useRef } from 'react';
-import FondoSelector from './FondoSelector';
-import FondoDetails from './FondoDetails';
-import FileSelector from './FileSelector';
-import FileContent from './FileContent';
-import { useFondos } from '../hooks/useFondos';
-import { useFiles } from '../hooks/useFiles';
-import { useFileContent } from '../hooks/useFileContent';
-import './FondoManager.css';
-import { Fondo } from '../../interfaces/interfaces';
-import { downloadFile } from '../../services/fileService';
-import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
-import { Config } from '../../config';
+import React, { useState, useRef } from "react";
+import FondoSelector from "./FondoSelector";
+import FondoDetails from "./FondoDetails";
+import FileSelector from "./FileSelector";
+import FileContent from "./FileContent";
+import { useFondos } from "../hooks/useFondos";
+import { useFiles } from "../hooks/useFiles";
+import { useFileContent } from "../hooks/useFileContent";
+import "./FondoManager.css";
+import { Fondo } from "../../interfaces/interfaces";
+import { downloadFile } from "../../services/fileService";
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
+import { Config } from "../../config";
 
 const FondoManager: React.FC = (): JSX.Element => {
     const { fondos, loadingFondos, hasMoreFondos, setPage } = useFondos();
@@ -24,7 +24,7 @@ const FondoManager: React.FC = (): JSX.Element => {
         loadingFileContent,
         hasMoreFileContent,
         setFilePage,
-    } = useFileContent(selectedFile,Config.DEFAULT_PAGE_SIZE);
+    } = useFileContent(selectedFile, Config.DEFAULT_PAGE_SIZE);
 
     const fileContentRef = useRef<HTMLPreElement>(null);
 
@@ -37,7 +37,7 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     const handleDownload = () => {
         if (selectedFile && fileContent.length > 0) {
-            downloadFile(fileContent.join('\n'), `${selectedFile}.txt`, 'text/plain');
+            downloadFile(fileContent.join("\n"), `${selectedFile}.txt`, "text/plain");
         }
     };
 
@@ -76,7 +76,7 @@ const FondoManager: React.FC = (): JSX.Element => {
                         <div className="card">
                             <h4 className="file-content-title">Contenido del Archivo</h4>
                             <FileContent
-                                fileContent={fileContent ? fileContent.join('\n') : null}
+                                fileContent={fileContent ? fileContent.join("\n") : null}
                                 selectedFile={selectedFile}
                                 loading={loadingFileContent}
                                 onDownload={handleDownload}
