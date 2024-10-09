@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FondoManager from "./components/FondoManager/FondoManager";
 import Sidebar from "./layouts/sidebar/Sidebar";
 import Header from "./layouts/header/Header";
-import Welcome from "./components/Welcome";
 import Body from "./components/Body";
 import SupportWidget from "./components/widget/Widget";
 import Logs from "./components/Logs/Logs";
 import TransactionSearch from "./components/TransactionSearch/TransactionSearch";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
@@ -31,8 +31,7 @@ const App: React.FC = () => {
                 >
                     <Body>
                         <Routes>
-                            <Route path="/" element={<Welcome />} />
-                            <Route path="/dashboard" />
+                            <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/funds" element={<FondoManager />} />
                             <Route path="/logs" element={<Logs />} />
                             <Route path="/search-transactions" element={<TransactionSearch />} />

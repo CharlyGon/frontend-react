@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen }: HeaderProps): JSX.Elem
     return (
         <header className={`header ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
             <div className="logo-container">
-                <Link to="/">
+                <Link to="/dashboard">
                     <img
                         src={logoPellegrini}
                         alt="Company Logo"
@@ -30,6 +30,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen }: HeaderProps): JSX.Elem
                     />
                 </Link>
             </div>
+
             <div className="user-info">
                 <FontAwesomeIcon
                     icon={faUserCircle}

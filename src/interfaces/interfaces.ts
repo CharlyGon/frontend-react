@@ -52,5 +52,23 @@ export interface FileContentProps {
     selectedFile: string | undefined;
     loading: boolean;
     onDownload: () => void;
-    fileContentRef:RefObject<HTMLPreElement>;
+    fileContentRef: RefObject<HTMLPreElement>;
+}
+
+export interface HealthEntry {
+    status: string;
+    duration: string;
+}
+
+export interface HealthStatus {
+    status: string;
+    totalDuration: string;
+    entries: {
+        [key: string]: HealthEntry;
+    };
+}
+
+export enum HealthStatusEnum {
+    Healthy = 'Healthy',
+    Unhealthy = 'Unhealthy',
 }

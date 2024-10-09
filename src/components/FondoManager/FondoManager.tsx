@@ -12,6 +12,7 @@ import "./FondoManager.css";
 import { Fondo } from "../../interfaces/interfaces";
 import { fetchFondos } from "../../services/fondoService";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
+import dayjs from "dayjs";
 
 const DEFAULT_PAGE_SIZE = parseInt(process.env.DEFAULT_PAGE_SIZE ?? "50", 10);
 
