@@ -58,9 +58,10 @@ export interface FileContentProps {
 export interface HealthEntry {
     status: string;
     duration: string;
+    description?: string;
 }
 
-export interface HealthStatus {
+export interface HealthStatusService {
     status: string;
     totalDuration: string;
     entries: {
@@ -68,10 +69,21 @@ export interface HealthStatus {
     };
 }
 
-export enum HealthStatusEnum {
+export enum HealthState {
     Healthy = 'Healthy',
     Unhealthy = 'Unhealthy',
 }
+
+export enum StatusColor {
+    Healthy = "green",
+    Warning = "yellow",
+    Unhealthy = "red",
+}
+
+export enum HttpStatusCode {
+    OK = 200,
+    SERVICE_UNAVAILABLE = 503
+};
 
 export interface UseFondosResult {
     fondos: Fondo[];
@@ -90,4 +102,13 @@ export interface UseFileContentResult {
     loadingFileContent: boolean;
     hasMoreFileContent: boolean;
     setFilePage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface ServiceCardProps {
+    entryKey: string;
+    status: string;
+    duration: string;
+    description?: string;
+    isExpanded: boolean;
+    toggleExpand: () => void;
 }

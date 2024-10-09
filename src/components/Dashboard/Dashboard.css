@@ -17,7 +17,7 @@
 
 /* General status box styling (both healthy and unhealthy states) */
 .status-box {
-  padding: 20px;
+  padding: 30px;
   margin-bottom: 30px;
   border-radius: 8px;
   text-align: center;
@@ -43,6 +43,10 @@
   justify-content: center;
 }
 
+.service-card.error-expanded {
+  height: auto;
+}
+
 /* Card design for each service */
 .service-card {
   background-color: white;
@@ -53,6 +57,7 @@
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
+  height: 200px;
 }
 
 /* Hover effect on service cards */
@@ -134,4 +139,60 @@
 
 .unhealthy {
   color: red;
+}
+
+/* Tarjeta deslizante para mostrar detalles del error */
+.error-details {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 10px;
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Cuando se expande la tarjeta */
+.service-card.expanded .error-details {
+  height: auto;
+  opacity: 1;
+}
+
+/* Solo la tarjeta con contenido adicional se expande */
+.error-details p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Animación solo para la tarjeta que se despliega */
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  to {
+    max-height: 300px;
+    opacity: 1;
+  }
+}
+
+/* Expandimos solo las tarjetas que tengan error */
+.service-card.expanded {
+  height: auto;
+}
+
+.expand-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.expand-button:hover {
+  background-color: #0056b3;
 }

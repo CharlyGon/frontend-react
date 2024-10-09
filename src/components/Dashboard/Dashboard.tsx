@@ -1,50 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-import { HealthStatus, HealthStatusEnum } from "../../interfaces/interfaces";
+import { HealthStatusService } from "../../interfaces/interfaces";
 import { fetchHealthData } from "../../services/healthService";
-import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// Get color based on the state of service
-const getStatusColor = (status: string): string => (status === HealthStatusEnum.Healthy ? "green" : "red");
-
-// Calculate bar color based on duration
-const getDurationColor = (duration: string): string => {
-  const ms = parseFloat(duration.split(":")[2]);
-  if (ms < 100) return "green";
-  if (ms < 500) return "yellow";
-  return "red";
-};
-
-// Calculate the width of the bar based on the duration
-const getDurationWidth = (duration: string): number => {
-  const ms = parseFloat(duration.split(":")[2]);
-  const scaleFactor = 200;
-  const minWidth = 5;
-  const maxWidth = 300;
-  return Math.max(Math.min(ms * scaleFactor, maxWidth), minWidth);
-};
-
-// Get the status icon based on the service status
-const getStatusIcon = (status: HealthStatusEnum): JSX.Element => (
-  <FontAwesomeIcon
-    icon={status === HealthStatusEnum.Healthy ? faCheckCircle : faTimesCircle}
-    className={`status-icon ${status === HealthStatusEnum.Healthy ? 'healthy' : 'unhealthy'}`}
-  />
-);
+import ServiceCard from "./ServiceCard";
 
 /**
- * Dashboard component that displays the health status of various services.
+ * Dashboard component for displaying the health status of multiple services.
  *
- * This component fetches health data from an API and displays the general system status
- * along with individual statuses for each service (e.g., API, database).
- *
- * @returns {JSX.Element} A React component that renders the system health dashboard.
+ * This component fetches health data from an API and shows the general system status
+ * as well as individual statuses for each service. It allows expanding service cards
+ * to show additional error details when applicable.
+ * @returns {JSX.Element} The dashboard component.
  */
 const Dashboard: React.FC = (): JSX.Element => {
-  const [healthData, setHealthData] = useState<HealthStatus | null>(null);
+  const [healthData, setHealthData] = useState<HealthStatusService | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [expandedServices, setExpandedServices] = useState<Record<string, boolean>>({});
 
+  // Effect that fetches health data when the component mounts.
   useEffect(() => {
     const loadHealthData = async () => {
       try {
@@ -76,39 +49,37 @@ const Dashboard: React.FC = (): JSX.Element => {
     );
   }
 
+  const toggleExpandService = (serviceKey: string) => {
+    setExpandedServices((prev) => ({
+      ...prev,
+      [serviceKey]: !prev[serviceKey],
+    }));
+  };
+
   return (
     <div className="dashboard-container">
       <h2 className="dashboard-title">System Health Dashboard</h2>
 
-      {/* General health */}
+      {/* Display general system health status */}
       <div className={`status-box ${healthData.status.toLowerCase()}`}>
         <h3>General Status: {healthData.status}</h3>
         <p>Total Duration: {healthData.totalDuration}</p>
       </div>
 
-      {/* Services entries */}
+      {/* Display health status for each service */}
       <div className="services-container">
         {Object.keys(healthData.entries).map((entryKey) => {
-          const { status, duration } = healthData.entries[entryKey];
-
+          const { status, duration, description } = healthData.entries[entryKey];
           return (
-            <div
+            <ServiceCard
               key={entryKey}
-              className="service-card"
-            >
-              <h4>{entryKey}</h4>
-              <p>Status: <span style={{ color: getStatusColor(status) }}>{status} {getStatusIcon(status as HealthStatusEnum)}</span></p>
-              <p>Duration: {duration}</p>
-              <div className="duration-container">
-                <div
-                  className="duration-bar"
-                  style={{
-                    width: `${getDurationWidth(duration)}px`,
-                    backgroundColor: getDurationColor(duration),
-                  }}
-                />
-              </div>
-            </div>
+              entryKey={entryKey}
+              status={status}
+              duration={duration}
+              description={description}
+              isExpanded={!!expandedServices[entryKey]}
+              toggleExpand={() => toggleExpandService(entryKey)}
+            />
           );
         })}
       </div>

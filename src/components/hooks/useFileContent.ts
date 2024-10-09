@@ -13,7 +13,7 @@ import { UseFileContentResult } from "../../interfaces/interfaces";
  * @param {number} pageSize - The number of lines to fetch per page.
  * @returns {UseFileContentResult} - Returns the file content, loading state, and pagination controls.
  */
-export const useFileContent = (selectedFile: string | undefined, pageSize: number):UseFileContentResult => {
+export const useFileContent = (selectedFile: string | undefined, pageSize: number): UseFileContentResult => {
     const [fileContent, setFileContent] = useState<string[]>([]);
     const [loadingFileContent, setLoadingFileContent] = useState(false);
     const [filePage, setFilePage] = useState(1);
@@ -23,6 +23,7 @@ export const useFileContent = (selectedFile: string | undefined, pageSize: numbe
         if (!selectedFile) return;
 
         setLoadingFileContent(true);
+
         try {
             const fileContentData = await fetchFileContentById(selectedFile, pageSize, page);
             if (fileContentData.length > 0) {
