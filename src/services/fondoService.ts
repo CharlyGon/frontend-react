@@ -1,9 +1,9 @@
 import { Fondo } from '../interfaces/interfaces';
+import { Config } from '../config';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const DEFAULT_FONDOS_PAGE_SIZE = parseInt(process.env.REACT_APP_DEFAULT_FONDOS_PAGE_SIZE ?? "5", 10);
+const API_BASE_URL = Config.API_BASE_URL;
 
-export const fetchFondos = async (page: number, pageSize: number =DEFAULT_FONDOS_PAGE_SIZE): Promise<Fondo[]> => {
+export const fetchFondos = async (page: number, pageSize: number = Config.DEFAULT_FONDOS_PAGE_SIZE): Promise<Fondo[]> => {
     try {
         const response = await fetch(`${API_BASE_URL}/Fondo/pagination?pageIndex=${page}&pageSize=${pageSize}`);
         if (!response.ok) {

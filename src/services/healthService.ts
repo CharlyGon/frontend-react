@@ -1,7 +1,8 @@
+import { Config } from "../config";
 import { HealthStatus } from "../interfaces/interfaces";
 
 export const fetchHealthData = async (): Promise<HealthStatus> => {
-    const API_URL = process.env.REACT_APP_HEALTH_API_URL;
+    const API_URL = Config.API_URL_HEALTH;
 
     if (!API_URL) {
         throw new Error('API URL is not defined');

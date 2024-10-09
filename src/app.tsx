@@ -31,6 +31,7 @@ const App: React.FC = () => {
                 >
                     <Body>
                         <Routes>
+                            <Route path="/" element={<Dashboard />} />
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/funds" element={<FondoManager />} />
                             <Route path="/logs" element={<Logs />} />

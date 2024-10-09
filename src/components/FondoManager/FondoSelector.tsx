@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import useInfiniteScroll from "../hooks/useInfiniteScroll";
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { FondoSelectorProps } from "../../interfaces/interfaces";
 
 /**

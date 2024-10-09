@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen }: HeaderProps): JSX.Elem
     return (
         <header className={`header ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
             <div className="logo-container">
-                <Link to="/dashboard">
+                <Link to="/">
                     <img
                         src={logoPellegrini}
                         alt="Company Logo"

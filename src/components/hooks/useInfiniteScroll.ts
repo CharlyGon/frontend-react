@@ -13,7 +13,7 @@ import { UseInfiniteScrollProps } from "../../interfaces/interfaces";
  *   - loading: Boolean indicating if data is currently being loaded.
  *   - offset: Distance from the bottom of the container to trigger loading more (default is 5px).
  */
-const useInfiniteScroll = ({
+export const useInfiniteScroll = ({
     containerRef,
     loadMore,
     hasMore,
@@ -41,5 +41,3 @@ const useInfiniteScroll = ({
         };
     }, [hasMore, loading, offset]);
 };
-
-export default useInfiniteScroll;

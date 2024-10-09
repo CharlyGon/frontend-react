@@ -13,7 +13,7 @@ export const downloadFile = (content: string, fileName: string, fileType: string
 };
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const DEFAULT_PAGE_SIZE = process.env.DEFAULT_PAGE_SIZE ? parseInt(process.env.DEFAULT_PAGE_SIZE) : 50;
+const DEFAULT_PAGE_SIZE = parseInt(process.env.REACT_APP_DEFAULT_PAGE_SIZE ?? "50", 10);
 
 /**
  * Fetch the files for a given fondo on a specific date.
