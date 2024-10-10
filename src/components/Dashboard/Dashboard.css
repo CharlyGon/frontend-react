@@ -124,14 +124,6 @@
   margin-top: 20px;
 }
 
-/* Styling for the loading message */
-.loading-message {
-  color: #666;
-  text-align: center;
-  font-style: italic;
-  margin-top: 20px;
-}
-
 /* Colors for healthy and unhealthy status */
 .healthy {
   color: green;

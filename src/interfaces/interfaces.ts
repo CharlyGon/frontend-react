@@ -90,6 +90,7 @@ export interface UseFondosResult {
     loadingFondos: boolean;
     hasMoreFondos: boolean;
     setPage: React.Dispatch<React.SetStateAction<number>>;
+    errorFondos: string | null;
 }
 
 export interface UseFilesResult {

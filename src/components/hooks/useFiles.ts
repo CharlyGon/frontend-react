@@ -20,7 +20,7 @@ export const useFiles = (selectedFondo: string | null): UseFilesResult => {
         setLoadingFiles(true);
         try {
             //const currentDate = dayjs().format("YYYY-MM-DD");
-            const currentDate = "2024-10-04";  // Example date
+           const currentDate = "2024-10-09";  // Example date
 
             const filesData = await fetchFilesForFondo(currentDate, selectedFondo);
 

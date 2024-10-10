@@ -44,7 +44,7 @@ const Dashboard: React.FC = (): JSX.Element => {
     return (
       <div className="dashboard-container">
         <h2 className="dashboard-title">System Health Dashboard</h2>
-        <div className="loading-message">Loading health data...</div>
+        <div className="loading-message">Retrieving system health status, please hold on...</div>
       </div>
     );
   }
