@@ -1,5 +1,6 @@
 import React from "react";
 import { FondoDetailsProps } from "../../interfaces/interfaces";
+import "./FondoDetails.css";
 
 /**
  * Component for displaying the details of a selected fondo.
@@ -18,33 +19,27 @@ const FondoDetails: React.FC<FondoDetailsProps> = (
     }: FondoDetailsProps): JSX.Element => {
 
     if (loading) {
-        return <p>Cargando detalles del fondo...</p>;
+        return <p className="loading-message">Cargando detalles del fondo...</p>;
     }
 
     if (!fondoDetails) {
-        return <p>No se encontraron detalles para este fondo.</p>;
+        return <p className="fallback-message">No se encontraron detalles para este fondo.</p>;
     }
 
     return (
-        <div>
-            <p>
-                <strong>
-                    Identificador Fondo:
-                </strong>
-                {fondoDetails.identificadorFondo}
-            </p>
-            <p>
-                <strong>
-                    Tipo de Rescate:
-                </strong>
-                {fondoDetails.tipoRescate}
-            </p>
-            <p>
-                <strong>
-                    Código de Interfaz:
-                </strong>
-                {fondoDetails.codigoInterfaz}
-            </p>
+        <div className="fund-details-container">
+            <div className="fund-detail-item">
+                <span className="fund-detail-label">Identificador Fondo:</span>
+                <span className="fund-detail-value">{fondoDetails.identificadorFondo}</span>
+            </div>
+            <div className="fund-detail-item">
+                <span className="fund-detail-label">Tipo de Rescate:</span>
+                <span className="fund-detail-value">{fondoDetails.tipoRescate}</span>
+            </div>
+            <div className="fund-detail-item">
+                <span className="fund-detail-label">Código de Interfaz:</span>
+                <span className="fund-detail-value">{fondoDetails.codigoInterfaz}</span>
+            </div>
         </div>
     );
 };

@@ -42,6 +42,7 @@ const FileSelector: React.FC<FileSelectorProps> = (
 
     return (
         <div className="file-selector-container">
+
             {/* Search button and input together */}
             <div className="search-wrapper">
                 <button
