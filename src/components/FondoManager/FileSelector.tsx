@@ -67,7 +67,8 @@ const FileSelector: React.FC<FileSelectorProps> = (
             {/* Calendar icon and date input together */}
             <div className="calendar-date-wrapper">
                 <button
-                    className="calendar-button"
+                   className={`calendar-button ${showSearch ? "highlight-calendar" : ""}`}
+
                     onClick={toggleCalendar}
                     aria-label="open calendar"
                 >
