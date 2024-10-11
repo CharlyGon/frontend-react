@@ -50,7 +50,7 @@ const FondoManager: React.FC = (): JSX.Element => {
         loadingFileContent,
         hasMoreFileContent,
         setFilePage,
-    } = useFileContent(selectedFile, Config.DEFAULT_PAGE_SIZE);
+    } = useFileContent(selectedFile, selectedDate, Config.DEFAULT_PAGE_SIZE);
     const fileContentRef = useRef<HTMLPreElement>(null);
 
     const { initialLoading, showError } = useInitialLoading(loadingFondos, fondos, errorFondos);

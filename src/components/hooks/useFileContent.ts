@@ -10,10 +10,15 @@ import { UseFileContentResult } from "../../interfaces/interfaces";
  * when needed and resets the content when a new file is selected.
  *
  * @param {string | undefined} selectedFile - The ID of the selected file to fetch content for.
+ * @param {string | null} selectedDate - The selected date to filter the file content.
  * @param {number} pageSize - The number of lines to fetch per page.
  * @returns {UseFileContentResult} - Returns the file content, loading state, and pagination controls.
  */
-export const useFileContent = (selectedFile: string | undefined, pageSize: number): UseFileContentResult => {
+export const useFileContent = (
+    selectedFile: string | undefined,
+    selectedDate: string | null,
+    pageSize: number
+): UseFileContentResult => {
     const [fileContent, setFileContent] = useState<string[]>([]);
     const [loadingFileContent, setLoadingFileContent] = useState(false);
     const [filePage, setFilePage] = useState(1);
@@ -25,7 +30,7 @@ export const useFileContent = (selectedFile: string | undefined, pageSize: numbe
         setLoadingFileContent(true);
 
         try {
-            const fileContentData = await fetchFileContentById(selectedFile, pageSize, page);
+            const fileContentData = await fetchFileContentById(selectedFile, selectedDate ?? undefined, pageSize, page);
             if (fileContentData.length > 0) {
                 setFileContent((prevContent) => [...prevContent, ...fileContentData]);
             } else {

@@ -81,18 +81,35 @@ export const fetchFileById = async (fileId: string): Promise<any> => {
 };
 
 /**
- * Fetch the content of a file by its ID with pagination.
- * @param {string} fileId - The ID of the file
- * @param {number}pageSize - The number of records per page
- * @param {number}pageIndex - The page index (starting from 1)
+ * Fetch the content of a file by its ID with pagination, filtered by date.
+ * @param {string} fileId - The ID of the file.
+ * @param {string} [date] - Optional date to filter the file content.
+ * @param {number} [pageSize=DEFAULT_PAGE_SIZE] - The number of records per page.
+ * @param {number} [pageIndex=1] - The page index (starting from 1).
  * @returns {Promise<string[]>} - A promise that resolves with the file content if successful.
  */
-export const fetchFileContentById = async (fileId: string, pageSize: number = DEFAULT_PAGE_SIZE, pageIndex: number = 1) => {
+export const fetchFileContentById = async (
+    fileId: string,
+    date?: string,
+    pageSize: number = DEFAULT_PAGE_SIZE,
+    pageIndex: number = 1
+): Promise<string[]> => {
     try {
-        const response = await fetch(`${API_BASE_URL}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`);
+        // Construct URL with optional date parameter
+        let url = `${API_BASE_URL}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`;
+
+        // Add date to URL if provided
+        if (date) {
+            url += `&Fecha=${date}`;
+
+            console.log("URL: ", url);
+        }
+
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error("Error fetching file content");
         }
+
         const data = await response.json();
         return data.data.map((item: { linea: string }) => item.linea);
     } catch (error) {
