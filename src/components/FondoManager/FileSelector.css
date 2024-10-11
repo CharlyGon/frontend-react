@@ -128,20 +128,32 @@
     box-shadow: none;
 }
 
+/* Animation for the calendar appearance */
+@keyframes calendarSlideIn {
+    0% {
+        opacity: 0;
+        transform: translate(20px, -50%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, -50%);
+    }
+}
+
 /* General Calendar container style */
-/* Calendar container with absolute positioning */
 .calendar-container {
     position: absolute;
-    top: 10%;
-    left: 105%;
-    transform: translateY(-20%);
+    top: 47%;
+    transform: translateY(-50%);
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     background-color: white;
     border-radius: 8px;
-    z-index: 100;
+    z-index: 10;
     transition: transform 0.3s ease;
     padding: 10px;
-    width: auto;
+    left: calc(100% + 10px);
+    animation: calendarSlideIn 0.8s ease-in-out;
 }
 
 /* Style for the dropdown (selector) */
