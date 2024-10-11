@@ -84,14 +84,14 @@ const FileSelector: React.FC<FileSelectorProps> = (
 
             {/* Calendar component that appears when clicking the calendar button */}
             {showCalendar && (
-                <div className="calendar-container">
+                <div className={`calendar-container ${showCalendar ? 'show-calendar' : ''}`}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateCalendar
                             value={dayjs(selectedDate)}
                             onChange={(newValue) => {
                                 if (newValue) {
                                     setSelectedDate(newValue.format("YYYY-MM-DD"));
-                                    setShowCalendar(false); // Close calendar when date is selected
+                                    setShowCalendar(false);
                                 }
                             }}
                             showDaysOutsideCurrentMonth
