@@ -1,40 +1,52 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { fetchFilesForFondo } from "../../services/fileService";
-import dayjs from "dayjs";
 import { UseFilesResult } from "../../interfaces/interfaces";
 
 /**
- * Custom hook to fetch and manage files related to a selected fondo.
+ * Custom hook to fetch and manage files related to a selected fondo and date.
  * Handles the loading state and error handling for fetching files.
  *
  * @param {string | null} selectedFondo - The identifier for the selected fondo.
+ * @param {string | null} selectedDate - The selected date to filter files.
  * @returns {UseFilesResult} - An object containing the list of files and a loading state.
  */
-export const useFiles = (selectedFondo: string | null): UseFilesResult => {
+export const useFiles = (selectedFondo: string | null, selectedDate: string | null): UseFilesResult => {
     const [files, setFiles] = useState<Array<{ id: string; nombre: string }>>([]);
     const [loadingFiles, setLoadingFiles] = useState(false);
 
+    const activeRequest = useRef<boolean>(false);
+
     const loadFiles = useCallback(async () => {
-        if (!selectedFondo) return;
+        if (!selectedFondo || !selectedDate) return;
 
         setLoadingFiles(true);
+        activeRequest.current = true;
+
         try {
-            //const currentDate = dayjs().format("YYYY-MM-DD");
-           const currentDate = "2024-10-09";  // Example date
-
-            const filesData = await fetchFilesForFondo(currentDate, selectedFondo);
-
-            setFiles(filesData.map(({ id, nombre }: { id: string; nombre: string }) => ({ id, nombre })));
+            const filesData = await fetchFilesForFondo(selectedDate, selectedFondo);
+            if (activeRequest.current) {
+                setFiles(filesData.map(({ id, nombre }: { id: string; nombre: string }) => ({ id, nombre })));
+            }
         } catch (error) {
-            console.error("Error fetching files:", error);
+            if (activeRequest.current) {
+                console.error("Error fetching files:", error);
+            }
         } finally {
-            setLoadingFiles(false);
+            if (activeRequest.current) {
+                setLoadingFiles(false);
+            }
         }
-    }, [selectedFondo]);
+    }, [selectedFondo, selectedDate]);
 
+    // Effect to load files when fondo or date changes
     useEffect(() => {
         loadFiles();
-    }, [selectedFondo, loadFiles]);
+
+        // Cleanup function to cancel previous requests if component unmounts or dependencies change
+        return () => {
+            activeRequest.current = false;
+        };
+    }, [loadFiles]);
 
     return { files, loadingFiles };
 };

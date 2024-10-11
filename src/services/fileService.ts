@@ -16,18 +16,38 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const DEFAULT_PAGE_SIZE = parseInt(process.env.REACT_APP_DEFAULT_PAGE_SIZE ?? "50", 10);
 
 /**
- * Fetch the files for a given fondo on a specific date.
+ * Fetches the files for a given fondo on a specific date and optionally by file name.
+ * Constructs the API URL dynamically based on the parameters provided.
+ * Handles errors gracefully and logs them for debugging purposes.
  *
- * @param {string} date - Date of the request
- * @param {string} identifyingFond - The fondo identifier
- * @returns {Promise<any>} - A promise that resolves with the files if successful.
+ * @param {string} date - The date for which files are being requested.
+ * @param {string} identifyingFond - The identifier of the fondo to fetch files for.
+ * @param {string} [fileName] - (Optional) The name of the file to search for.
+ * @returns {Promise<any>} A promise that resolves with the list of files if the request is successful.
  */
-export const fetchFilesForFondo = async (date: string, identifyingFond: string): Promise<any> => {
+export const fetchFilesForFondo = async (
+    date: string,
+    identifyingFond: string,
+    fileName?: string
+): Promise<any> => {
     try {
-        const response = await fetch(`${API_BASE_URL}/Archivo/pagination?Fecha=${date}&IdentificadorFondo=${identifyingFond}`);
-        if (!response.ok) {
-            throw new Error("Error fetching files");
+        const queryParams = new URLSearchParams({
+            Fecha: date,
+            IdentificadorFondo: identifyingFond,
+        });
+
+        if (fileName) {
+            queryParams.append("Nombre", fileName);
         }
+
+        const url = `${API_BASE_URL}/Archivo/pagination?${queryParams.toString()}`;
+
+        // Fetch the data from the constructed URL
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Error fetching files: ${response.statusText}`);
+        }
+
         const data = await response.json();
         return data.data;
     } catch (error) {

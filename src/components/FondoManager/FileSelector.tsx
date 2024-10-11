@@ -1,10 +1,10 @@
 import { faCalendarAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
 import { FileSelectorProps } from "../../interfaces/interfaces";
+import dayjs, { Dayjs } from "dayjs";
 
 /**
  * Component for selecting a file from a list of files.
@@ -16,33 +16,37 @@ import { FileSelectorProps } from "../../interfaces/interfaces";
  *   - onSelect: Callback function to handle file selection.
  *   - loading: Boolean indicating whether the file data is being loaded.
  *   - selectedFile: The currently selected file (optional).
+ *   - selectedDate: The currently selected date.
+ *   - setSelectedDate: Function to update the selected date.
  * @returns {JSX.Element} The file selector component.
  */
-const FileSelector: React.FC<FileSelectorProps> = (
-    {
-        files,
-        onSelect,
-        loading,
-        selectedFile
-    }: FileSelectorProps): JSX.Element => {
+const FileSelector: React.FC<FileSelectorProps> = ({
+    files,
+    onSelect,
+    loading,
+    selectedFile,
+    selectedDate,
+    setSelectedDate,
+}: FileSelectorProps): JSX.Element => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showSearch, setShowSearch] = useState(false);
-    const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
     const [showCalendar, setShowCalendar] = useState(false);
 
-    const formattedDate = selectedDate?.format("YYYY-MM-DD") ?? "";
+    // Effect to format the date only when selectedDate changes
+    const formattedDate = selectedDate ?? dayjs().format("YYYY-MM-DD");
 
-    const handleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-        onSelect(event.target.value);
-    }, [onSelect]);
+    // Toggle calendar visibility
+    const toggleCalendar = () => {
+        setShowCalendar((prev) => !prev);
+    };
 
-    const toggleCalendar = useCallback(() => {
-        setShowCalendar(prev => !prev);
-    }, []);
-
-    const handleSearchByDate = () => {
-        console.log("Buscando archivos para la fecha:", formattedDate);
+    // Close calendar when a date is selected
+    const handleDateChange = (newValue: Dayjs | null) => {
+        if (newValue) {
+            setSelectedDate(newValue.format("YYYY-MM-DD"));
+            setShowCalendar(false);
+        }
     };
 
     if (loading) {
@@ -55,35 +59,30 @@ const FileSelector: React.FC<FileSelectorProps> = (
 
     return (
         <div className="file-selector-container">
-            <div className="file-selector-input-wrapper">
-                <select
-                    onChange={handleChange}
-                    value={selectedFile}
-                    className="custom-dropdown"
-                >
-                    <option value="">
-                        -- Selecciona un archivo --
-                    </option>
-                    {files.map((file) => (
-                        <option
-                            key={file.id}
-                            value={file.id}
-                        >
-                            {file.nombre}
-                        </option>
-                    ))}
-                </select>
 
-                {/* Search button */}
+            {/* Search button and input together */}
+            <div className="search-wrapper">
                 <button
                     className="search-button"
-                    onClick={() => setShowSearch(!showSearch)}
+                    onClick={() => setShowSearch((prev) => !prev)}
                     aria-label="Search file"
                 >
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
 
-                {/* Calendar button */}
+                {showSearch && (
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Buscar archivo..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                )}
+            </div>
+
+            {/* Calendar icon and date input together */}
+            <div className="calendar-date-wrapper">
                 <button
                     className="calendar-button"
                     onClick={toggleCalendar}
@@ -92,48 +91,42 @@ const FileSelector: React.FC<FileSelectorProps> = (
                     <FontAwesomeIcon icon={faCalendarAlt} />
                 </button>
 
-                {/* Calendar */}
-                {showCalendar && (
-                    <div className="calendar-container">
-                        <LocalizationProvider
-                            dateAdapter={AdapterDayjs}
-                        >
-                            <DateCalendar
-                                value={selectedDate}
-                                onChange={(newValue) => setSelectedDate(newValue)}
-                                showDaysOutsideCurrentMonth
-                                fixedWeekNumber={6}
-                            />
-                        </LocalizationProvider>
-
-                        <div className="calendar-actions">
-                            <input
-                                type="text"
-                                value={formattedDate}
-                                readOnly
-                                className="selected-date-input"
-                            />
-
-                            <button
-                                className="search-by-date-button"
-                                onClick={handleSearchByDate}
-                            >
-                                Buscar por fecha
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            {showSearch && (
                 <input
                     type="text"
-                    className="search-input"
-                    placeholder="Buscar archivo..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={formattedDate}
+                    readOnly
+                    className="selected-date-input"
+                    aria-label="Selected date"
                 />
+            </div>
+
+            {/* Calendar component that appears when clicking the calendar button */}
+            {showCalendar && (
+                <div className="calendar-container">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateCalendar
+                            value={dayjs(selectedDate)}
+                            onChange={handleDateChange}
+                            showDaysOutsideCurrentMonth
+                            fixedWeekNumber={6}
+                        />
+                    </LocalizationProvider>
+                </div>
             )}
+
+            {/* Dropdown to select a file */}
+            <select
+                onChange={(e) => onSelect(e.target.value)}
+                value={selectedFile}
+                className="custom-dropdown"
+            >
+                <option value="">-- Selecciona un archivo --</option>
+                {files.map((file) => (
+                    <option key={file.id} value={file.id}>
+                        {file.nombre}
+                    </option>
+                ))}
+            </select>
         </div>
     );
 };

@@ -45,6 +45,8 @@ export interface FileSelectorProps {
     onSelect: (fileId: string) => void;
     loading: boolean;
     selectedFile?: string;
+    selectedDate: string | null;
+    setSelectedDate: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export interface FileContentProps {

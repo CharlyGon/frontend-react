@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import FondoSelector from "./FondoSelector";
 import FondoDetails from "./FondoDetails";
 import FileSelector from "./FileSelector";
@@ -7,11 +7,13 @@ import { useFondos } from "../hooks/useFondos";
 import { useFiles } from "../hooks/useFiles";
 import { useFileContent } from "../hooks/useFileContent";
 import "./FondoManager.css";
+import "./FileSelector.css";
 import { Fondo } from "../../interfaces/interfaces";
 import { downloadFile } from "../../services/fileService";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { Config } from "../../config";
 import { useInitialLoading } from "../hooks/useInitialLoading";
+import dayjs from "dayjs";
 
 /**
  * FondoManager component
@@ -35,14 +37,14 @@ import { useInitialLoading } from "../hooks/useInitialLoading";
  *
  * @returns {JSX.Element} - The FondoManager component which renders the UI for managing investment funds.
  */
-
-
 const FondoManager: React.FC = (): JSX.Element => {
     const { fondos, loadingFondos, hasMoreFondos, setPage, errorFondos } = useFondos();
     const [selectedFondo, setSelectedFondo] = useState<Fondo | null>(null);
     const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
+    //const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format("YYYY-MM-DD"));
+    const [selectedDate, setSelectedDate] = useState<string | null>("2024-10-09"); //! Mantener para pruebas
 
-    const { files, loadingFiles } = useFiles(selectedFondo ? selectedFondo.identificadorFondo : null);
+    const { files, loadingFiles } = useFiles(selectedFondo ? selectedFondo.identificadorFondo : null, selectedDate);
     const {
         fileContent,
         loadingFileContent,
@@ -55,26 +57,34 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     useInfiniteScroll({
         containerRef: fileContentRef,
-        loadMore: () => setFilePage((prevPage) => prevPage + 1),
+        loadMore: useCallback(() => setFilePage((prevPage) => prevPage + 1), [setFilePage]),
         hasMore: hasMoreFileContent,
         loading: loadingFileContent,
     });
 
-    const handleDownload = () => {
+    const handleDownload = useCallback(() => {
         if (selectedFile && fileContent.length > 0) {
             downloadFile(fileContent.join("\n"), `${selectedFile}.txt`, "text/plain");
         }
-    };
+    }, [selectedFile, fileContent]);
 
     return (
         <div className="fondo-manager-container">
             <h2 className="fondo-manager-title">Gestión de Fondos</h2>
 
             {/* Initial loading message */}
-            {initialLoading && <div className="loading-message">Loading investment funds, please wait...</div>}
+            {initialLoading && (
+                <div className="loading-message">
+                    Loading investment funds, please wait...
+                </div>
+            )}
 
             {/* Error message */}
-            {showError && <div className="error-message">{showError}</div>}
+            {showError && (
+                <div className="error-message">
+                    {showError}
+                </div>
+            )}
 
             {/* Fondo Selector */}
             {!initialLoading && !showError && (
@@ -105,7 +115,14 @@ const FondoManager: React.FC = (): JSX.Element => {
                     {/* File Selector */}
                     <div className="card">
                         <h4 className="card-title">Selecciona un Archivo</h4>
-                        <FileSelector files={files} onSelect={setSelectedFile} loading={loadingFiles} selectedFile={selectedFile} />
+                        <FileSelector
+                            files={files}
+                            onSelect={setSelectedFile}
+                            loading={loadingFiles}
+                            selectedFile={selectedFile}
+                            selectedDate={selectedDate}
+                            setSelectedDate={setSelectedDate}
+                        />
                     </div>
 
                     {/* File Content */}
