@@ -115,3 +115,21 @@ export interface ServiceCardProps {
     isExpanded: boolean;
     toggleExpand: () => void;
 }
+
+// Representa la estructura del contenido de cada archivo (un fondo)
+export interface FondoFile {
+    id: string;
+    identificadorFondo: string;
+    fecha: string;  // Puedes cambiar a tipo Date si prefieres manejar fechas como objetos de fecha
+    nombre: string;
+    orden: number;
+}
+
+// Representa la respuesta completa del backend cuando se solicitan archivos de un fondo
+export interface FileResponse {
+    count: number;
+    pageSize: number;
+    pageIndex: number;
+    data: FondoFile[];
+    pageCount: number;
+}

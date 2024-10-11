@@ -1,3 +1,5 @@
+import { FileResponse } from "../interfaces/interfaces";
+
 /**
  * Download a file
  * @param {string} content - File content
@@ -23,13 +25,13 @@ const DEFAULT_PAGE_SIZE = parseInt(process.env.REACT_APP_DEFAULT_PAGE_SIZE ?? "5
  * @param {string} date - The date for which files are being requested.
  * @param {string} identifyingFond - The identifier of the fondo to fetch files for.
  * @param {string} [fileName] - (Optional) The name of the file to search for.
- * @returns {Promise<any>} A promise that resolves with the list of files if the request is successful.
+ * @returns {Promise<FileResponse>} A promise that resolves with the list of files if the request is successful.
  */
 export const fetchFilesForFondo = async (
     date: string,
     identifyingFond: string,
     fileName?: string
-): Promise<any> => {
+): Promise<FileResponse> => {
     try {
         const queryParams = new URLSearchParams({
             Fecha: date,
@@ -48,8 +50,7 @@ export const fetchFilesForFondo = async (
             throw new Error(`Error fetching files: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        return data.data;
+        return await response.json();
     } catch (error) {
         console.error("Error fetching files for fondo:", error);
         throw error;
@@ -101,8 +102,6 @@ export const fetchFileContentById = async (
         // Add date to URL if provided
         if (date) {
             url += `&Fecha=${date}`;
-
-            console.log("URL: ", url);
         }
 
         const response = await fetch(url);

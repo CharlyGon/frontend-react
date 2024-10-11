@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { fetchFilesForFondo } from "../../services/fileService";
-import { UseFilesResult } from "../../interfaces/interfaces";
+import { FondoFile, UseFilesResult } from "../../interfaces/interfaces";
 
 /**
  * Custom hook to fetch and manage files related to a selected fondo and date.
@@ -25,7 +25,10 @@ export const useFiles = (selectedFondo: string | null, selectedDate: string | nu
         try {
             const filesData = await fetchFilesForFondo(selectedDate, selectedFondo);
             if (activeRequest.current) {
-                setFiles(filesData.map(({ id, nombre }: { id: string; nombre: string }) => ({ id, nombre })));
+                setFiles(filesData.data.map((file: FondoFile) => ({
+                    id: file.id,
+                    nombre: file.nombre,
+                })));
             }
         } catch (error) {
             if (activeRequest.current) {
