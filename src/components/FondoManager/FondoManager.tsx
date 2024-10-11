@@ -41,7 +41,7 @@ const FondoManager: React.FC = (): JSX.Element => {
     const { fondos, loadingFondos, hasMoreFondos, setPage, errorFondos } = useFondos();
     const [selectedFondo, setSelectedFondo] = useState<Fondo | null>(null);
     const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
-    //const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format("YYYY-MM-DD"));
+      //const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format("YYYY-MM-DD"));
     const [selectedDate, setSelectedDate] = useState<string | null>("2024-10-09"); //! Mantener para pruebas
 
     const { files, loadingFiles } = useFiles(selectedFondo ? selectedFondo.identificadorFondo : null, selectedDate);
@@ -68,78 +68,90 @@ const FondoManager: React.FC = (): JSX.Element => {
         }
     }, [selectedFile, fileContent]);
 
+    const renderInitialLoading = () => (
+        initialLoading && (
+            <div className="loading-message">
+                Loading investment funds, please wait...
+            </div>
+        )
+    );
+
+    const renderError = () => (
+        showError && (
+            <div className="error-message">
+                {showError}
+            </div>
+        )
+    );
+
+    const renderFondoSelector = () => (
+        !initialLoading && !showError && (
+            <div className="card">
+                <h4 className="card-title">Selecciona un fondo</h4>
+                <FondoSelector
+                    fondos={fondos}
+                    onSelect={(fondoId: number) => {
+                        const fondo = fondos.find((f) => f.id === fondoId) || null;
+                        setSelectedFondo(fondo);
+                    }}
+                    selectedFondo={selectedFondo ? selectedFondo.id : undefined}
+                    loadMoreFondos={() => setPage((prevPage) => prevPage + 1)}
+                    hasMoreFondos={hasMoreFondos}
+                    loadingFondos={loadingFondos}
+                />
+            </div>
+        )
+    );
+
+    const renderFondoDetails = () => (
+        selectedFondo && (
+            <div className="card">
+                <h4 className="card-title">Detalles del Fondo</h4>
+                <FondoDetails fondoDetails={selectedFondo} loading={false} />
+            </div>
+        )
+    );
+
+    const renderFileSelector = () => (
+        selectedFondo && (
+            <div className="card">
+                <h4 className="card-title">Selecciona un Archivo</h4>
+                <FileSelector
+                    files={files}
+                    onSelect={setSelectedFile}
+                    loading={loadingFiles}
+                    selectedFile={selectedFile}
+                    selectedDate={selectedDate}
+                    setSelectedDate={setSelectedDate}
+                />
+            </div>
+        )
+    );
+
+    const renderFileContent = () => (
+        selectedFile && (
+            <div className="card">
+                <h4 className="file-content-title">Contenido del Archivo</h4>
+                <FileContent
+                    fileContent={fileContent ? fileContent.join("\n") : null}
+                    selectedFile={selectedFile}
+                    loading={loadingFileContent}
+                    onDownload={handleDownload}
+                    fileContentRef={fileContentRef}
+                />
+            </div>
+        )
+    );
+
     return (
         <div className="fondo-manager-container">
             <h2 className="fondo-manager-title">Gestión de Fondos</h2>
-
-            {/* Initial loading message */}
-            {initialLoading && (
-                <div className="loading-message">
-                    Loading investment funds, please wait...
-                </div>
-            )}
-
-            {/* Error message */}
-            {showError && (
-                <div className="error-message">
-                    {showError}
-                </div>
-            )}
-
-            {/* Fondo Selector */}
-            {!initialLoading && !showError && (
-                <div className="card">
-                    <h4 className="card-title">Selecciona un fondo</h4>
-                    <FondoSelector
-                        fondos={fondos}
-                        onSelect={(fondoId: number) => {
-                            const fondo = fondos.find((f) => f.id === fondoId) || null;
-                            setSelectedFondo(fondo);
-                        }}
-                        selectedFondo={selectedFondo ? selectedFondo.id : undefined}
-                        loadMoreFondos={() => setPage((prevPage) => prevPage + 1)}
-                        hasMoreFondos={hasMoreFondos}
-                        loadingFondos={loadingFondos}
-                    />
-                </div>
-            )}
-
-            {selectedFondo && (
-                <>
-                    {/* Fondo Details Card */}
-                    <div className="card">
-                        <h4 className="card-title">Detalles del Fondo</h4>
-                        <FondoDetails fondoDetails={selectedFondo} loading={false} />
-                    </div>
-
-                    {/* File Selector */}
-                    <div className="card">
-                        <h4 className="card-title">Selecciona un Archivo</h4>
-                        <FileSelector
-                            files={files}
-                            onSelect={setSelectedFile}
-                            loading={loadingFiles}
-                            selectedFile={selectedFile}
-                            selectedDate={selectedDate}
-                            setSelectedDate={setSelectedDate}
-                        />
-                    </div>
-
-                    {/* File Content */}
-                    {selectedFile && (
-                        <div className="card">
-                            <h4 className="file-content-title">Contenido del Archivo</h4>
-                            <FileContent
-                                fileContent={fileContent ? fileContent.join("\n") : null}
-                                selectedFile={selectedFile}
-                                loading={loadingFileContent}
-                                onDownload={handleDownload}
-                                fileContentRef={fileContentRef}
-                            />
-                        </div>
-                    )}
-                </>
-            )}
+            {renderInitialLoading()}
+            {renderError()}
+            {renderFondoSelector()}
+            {renderFondoDetails()}
+            {renderFileSelector()}
+            {renderFileContent()}
         </div>
     );
 };

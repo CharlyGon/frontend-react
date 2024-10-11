@@ -4,7 +4,7 @@ import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import React, { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { FileSelectorProps } from "../../interfaces/interfaces";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 /**
  * Component for selecting a file from a list of files.
@@ -20,51 +20,33 @@ import dayjs, { Dayjs } from "dayjs";
  *   - setSelectedDate: Function to update the selected date.
  * @returns {JSX.Element} The file selector component.
  */
-const FileSelector: React.FC<FileSelectorProps> = ({
-    files,
-    onSelect,
-    loading,
-    selectedFile,
-    selectedDate,
-    setSelectedDate,
-}: FileSelectorProps): JSX.Element => {
+const FileSelector: React.FC<FileSelectorProps> = (
+    {
+        files,
+        onSelect,
+        loading,
+        selectedFile,
+        selectedDate,
+        setSelectedDate,
+    }: FileSelectorProps): JSX.Element => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showSearch, setShowSearch] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
 
-    // Effect to format the date only when selectedDate changes
     const formattedDate = selectedDate ?? dayjs().format("YYYY-MM-DD");
 
-    // Toggle calendar visibility
     const toggleCalendar = () => {
-        setShowCalendar((prev) => !prev);
+        setShowCalendar(prev => !prev);
     };
-
-    // Close calendar when a date is selected
-    const handleDateChange = (newValue: Dayjs | null) => {
-        if (newValue) {
-            setSelectedDate(newValue.format("YYYY-MM-DD"));
-            setShowCalendar(false);
-        }
-    };
-
-    if (loading) {
-        return <p>Cargando archivos...</p>;
-    }
-
-    if (files.length === 0) {
-        return <p>No se encontraron archivos para este fondo.</p>;
-    }
 
     return (
         <div className="file-selector-container">
-
             {/* Search button and input together */}
             <div className="search-wrapper">
                 <button
                     className="search-button"
-                    onClick={() => setShowSearch((prev) => !prev)}
+                    onClick={() => setShowSearch(!showSearch)}
                     aria-label="Search file"
                 >
                     <FontAwesomeIcon icon={faSearch} />
@@ -106,7 +88,12 @@ const FileSelector: React.FC<FileSelectorProps> = ({
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateCalendar
                             value={dayjs(selectedDate)}
-                            onChange={handleDateChange}
+                            onChange={(newValue) => {
+                                if (newValue) {
+                                    setSelectedDate(newValue.format("YYYY-MM-DD"));
+                                    setShowCalendar(false); // Close calendar when date is selected
+                                }
+                            }}
                             showDaysOutsideCurrentMonth
                             fixedWeekNumber={6}
                         />
@@ -114,19 +101,33 @@ const FileSelector: React.FC<FileSelectorProps> = ({
                 </div>
             )}
 
-            {/* Dropdown to select a file */}
+            {/* File selection dropdown */}
             <select
                 onChange={(e) => onSelect(e.target.value)}
                 value={selectedFile}
                 className="custom-dropdown"
             >
-                <option value="">-- Selecciona un archivo --</option>
+                <option
+                    value=""
+                    className="default-option"
+                >
+                    --- Selecciona un archivo ---
+                </option>
                 {files.map((file) => (
                     <option key={file.id} value={file.id}>
                         {file.nombre}
                     </option>
                 ))}
             </select>
+
+            {/* Display message when no files are found */}
+            <div className="no-files-message-wrapper">
+                {!loading && files.length === 0 && (
+                    <p className="no-files-message">
+                        No se encontraron archivos para este fondo.
+                    </p>
+                )}
+            </div>
         </div>
     );
 };
