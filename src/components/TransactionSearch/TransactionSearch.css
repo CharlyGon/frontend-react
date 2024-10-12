@@ -1,67 +1,105 @@
-.transaction-search-container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-}
-
-/* General styles for searching transactions */
-.transaction-search-wrapper {
-   width: 100%;
-}
-
-/* Card to contain the search field and the button */
-.transaction-search-card {
+.main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    transition: box-shadow 0.4s ease;
 }
 
-.transaction-search-card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Styles for search input */
-.transaction-search-input {
-    padding: 15px;
+.operation-number-wrapper {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    font-size: 16px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    outline: none;
-    transition: border-color 0.3s ease;
-    background-color: #f9f9f9;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Ajustar según el diseño deseado */
+    margin-bottom: 20px; /* Espacio adicional debajo del wrapper */
 }
 
-.transaction-search-input:focus {
-    border-color: #007bff;
+.transaction-search-title {
+    text-align: center; /* Alinea el título al centro */
+    margin-bottom: 10px; /* Espacio entre el título y el contenedor de búsqueda */
+}
+
+.operation-number-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente el contenido */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.transaction-search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 .transaction-search-button {
-    padding: 12px 20px;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 150px;
+    transition: background-color 0.3s ease;
 }
 
 .transaction-search-button:hover {
     background-color: #0056b3;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Agrupar los resultados y los contenedores de la derecha */
+.results-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 30px;
+    gap: 20px; /* Espacio entre el resultado y los contenedores de la derecha */
+}
+
+/* Contenedor del Resultado Obtenido */
+.result-container {
+    flex-basis: 60%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result-content {
+    height: 150px;
+    border-top: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+/* Contenedores de la derecha */
+.right-containers {
+    flex-basis: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Información del Archivo */
+.file-info-container,
+.details-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details-container p {
+    margin: 5px 0;
 }

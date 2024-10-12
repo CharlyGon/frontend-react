@@ -4,7 +4,6 @@ import {
     faBars,
     faTachometerAlt,
     faPiggyBank,
-    faCog,
     faClipboardList,
     faSearch,
     faTimes,
