@@ -74,12 +74,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }: SidebarProps
                         </Link>
                     </li>
 
-                    <li className="settings">
-                        <Link to="/settings">
-                            <FontAwesomeIcon icon={faCog} />
-                            {isOpen && <span>Settings</span>}
-                        </Link>
-                    </li>
+                    {/*This settings link is currently commented out but will be used in future updates when settings functionality is implemented. */}
+                    {/* <li className="settings">
+                            <Link to="/settings">
+                                <FontAwesomeIcon icon={faCog} />
+                                {isOpen && <span>Settings</span>}
+                            </Link>
+                        </li> */}
                 </ul>
             </div>
 
