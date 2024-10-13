@@ -41,7 +41,7 @@ export const useFileContent = (
         } finally {
             setLoadingFileContent(false);
         }
-    }, [selectedFile, pageSize]);
+    }, [selectedFile, selectedDate, pageSize]);
 
     useEffect(() => {
         if (selectedFile) {
