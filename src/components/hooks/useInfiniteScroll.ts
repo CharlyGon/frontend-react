@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { UseInfiniteScrollProps } from "../../interfaces/interfaces";
 
 /**
@@ -20,14 +20,15 @@ export const useInfiniteScroll = ({
     loading,
     offset = 5
 }: UseInfiniteScrollProps) => {
-    const handleScroll = () => {
+
+    const handleScroll = useCallback(() => {
         if (containerRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
             if (scrollTop + clientHeight >= scrollHeight - offset && hasMore && !loading) {
                 loadMore();
             }
         }
-    };
+    }, [containerRef, hasMore, loading, offset, loadMore]);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -39,5 +40,5 @@ export const useInfiniteScroll = ({
                 container.removeEventListener("scroll", handleScroll);
             }
         };
-    }, [hasMore, loading, offset]);
+    }, [containerRef, handleScroll]);
 };
