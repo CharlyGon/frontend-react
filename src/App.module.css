@@ -1,0 +1,5 @@
+/* Main content styles */
+.mainContent {
+    transition: margin-left var(--transition-speed);
+    overflow-y: auto;
+}

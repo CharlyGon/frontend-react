@@ -9,13 +9,9 @@ import {
     faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { SidebarProps } from "../../interfaces/interfaces";
 
 import styles from "./Sidebar.module.css";
-
-interface SidebarProps {
-    isOpen: boolean;
-    toggleSidebar: () => void;
-}
 
 /**
  * Sidebar component that provides navigation links to different sections of the app.

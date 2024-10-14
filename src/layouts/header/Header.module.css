@@ -1,0 +1,70 @@
+/* General Header styles */
+.header {
+    height: 60px;
+    background-color: var(--card-background-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    transition: width var(--transition-speed), margin-left var(--transition-speed);
+    z-index: 100;
+    border-bottom: 1px solid var(--card-border);
+    width: 100%;
+}
+
+/* Header when sidebar is open */
+.headerSidebarOpen {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+}
+
+/* Header when sidebar is closed */
+.headerSidebarClosed {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+}
+
+/* Logo container */
+.logoContainer {
+    display: flex;
+    align-items: center;
+}
+
+/* Logo style */
+.companyLogo {
+    height: 55px;
+}
+
+/* User info styles */
+.userInfo {
+    display: flex;
+    align-items: center;
+}
+
+/* User icon style */
+.userIcon {
+    font-size: 32px;
+}
+
+/* User name style */
+.userName {
+    margin-left: 10px;
+    font-size: var(--font-size-title);
+    font-weight: 500;
+}
+
+/* Responsive behavior for small screens */
+@media (max-width: 768px) {
+    .header {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .headerSidebarOpen,
+    .headerSidebarClosed {
+        margin-left: 0;
+        width: 100%;
+    }
+}

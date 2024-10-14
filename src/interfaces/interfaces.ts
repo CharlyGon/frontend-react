@@ -138,3 +138,12 @@ export interface UseInitialLoadingResult {
     initialLoading: boolean;
     showError: string | null;
 }
+
+export interface SidebarProps {
+    isOpen: boolean;
+    toggleSidebar: () => void;
+}
+
+export interface HeaderProps {
+    isSidebarOpen: boolean;
+}

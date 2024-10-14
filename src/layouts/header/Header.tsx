@@ -1,13 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import "./Header.css";
 import logoPellegrini from "../../assets/logoPellegrini.png";
 import { Link } from "react-router-dom";
+import { HeaderProps } from "../../interfaces/interfaces";
 
-interface HeaderProps {
-    isSidebarOpen: boolean;
-}
+import styles from "./Header.module.css";
 
 /**
  * Header component that displays user information and adjusts its layout
@@ -17,26 +15,26 @@ interface HeaderProps {
  * @returns {JSX.Element} Header component with user information.
  */
 const Header: React.FC<HeaderProps> = ({ isSidebarOpen }: HeaderProps): JSX.Element => {
-    const userName = "Gonzalo Fernandez"; // Name of the logged-in user
+    const userName = "Gonzalo Fernandez"; // Nombre del usuario conectado
 
     return (
-        <header className={`header ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
-            <div className="logo-container">
+        <header className={`${styles.header} ${isSidebarOpen ? styles.headerSidebarOpen : styles.headerSidebarClosed}`}>
+            <div className={styles.logoContainer}>
                 <Link to="/">
                     <img
                         src={logoPellegrini}
                         alt="Company Logo"
-                        className="company-logo"
+                        className={styles.companyLogo}
                     />
                 </Link>
             </div>
 
-            <div className="user-info">
+            <div className={styles.userInfo}>
                 <FontAwesomeIcon
                     icon={faUserCircle}
-                    className="user-icon"
+                    className={styles.userIcon}
                 />
-                <span className="user-name">
+                <span className={styles.userName}>
                     {userName}
                 </span>
             </div>

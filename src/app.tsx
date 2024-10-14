@@ -9,6 +9,8 @@ import Logs from "./components/Logs/Logs";
 import TransactionSearch from "./components/TransactionSearch/TransactionSearch";
 import Dashboard from "./components/Dashboard/Dashboard";
 
+import styles from "./App.module.css";
+
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
@@ -18,7 +20,7 @@ const App: React.FC = () => {
 
     return (
         <Router>
-            <div className="app">
+            <div className={styles.app}>
                 <Sidebar
                     isOpen={isSidebarOpen}
                     toggleSidebar={toggleSidebar}
@@ -27,7 +29,7 @@ const App: React.FC = () => {
                     isSidebarOpen={isSidebarOpen}
                 />
                 <div
-                    className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
+                    className={styles.mainContent}
                 >
                     <Body>
                         <Routes>

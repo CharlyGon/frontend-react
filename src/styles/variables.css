@@ -21,13 +21,13 @@
     --input-focus-border: #0a21a0;
 
     /*sidebar*/
-    --sidebar-background: #f4f4f4; /* Fondo del sidebar */
-    --sidebar-toggle-background: #f9f9f9; /* Fondo del botón de toggle en el sidebar */
-    --sidebar-border: #ddd; /* Borde del toggle en el sidebar */
-    --sidebar-icon-hover-color: #0a21a0; /* Color del ícono del sidebar al hacer hover */
-    --highlight-background: #e0f0ff; /* Fondo al hacer hover sobre un elemento del menú */
-    --highlight-border-left: 4px solid var(--primary-color); /* Borde izquierdo en el hover del menú */
-    --font-size-icon: 28px; /* Tamaño de los íconos del sidebar */
-    --overlay-background: rgba(0, 0, 0, 0.5); /* Fondo para el overlay */
-    --transition-speed: 0.3s ease; /* Duración de las transiciones */
+    --sidebar-background: #f4f4f4;
+    --sidebar-toggle-background: #f9f9f9;
+    --sidebar-border: #ddd;
+    --sidebar-icon-hover-color: #0a21a0;
+    --highlight-background: #e0f0ff;
+    --highlight-border-left: 4px solid var(--primary-color);
+    --font-size-icon: 28px;
+    --overlay-background: rgba(0, 0, 0, 0.5);
+    --transition-speed: 0.3s ease;
 }
