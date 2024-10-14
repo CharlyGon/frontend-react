@@ -12,8 +12,8 @@
     padding: 15px;
     border-radius: 5px;
     white-space: pre-wrap;
-    font-family: 'Courier New', monospace; /* Puede convertirse en variable específica si prefieres */
-    font-size: 14px; /* Podría convertirse en una variable */
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
     color: var(--font-color);
     border: var(--card-border);
     overflow-x: auto;
@@ -30,14 +30,14 @@
     margin-top: 10px;
 }
 
-/* Download button with modern design */
+/* Download button */
 .downloadButton {
     background-color: var(--primary-color);
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 50px; /* Podría ser una variable */
-    font-size: 16px; /* Podría ser una variable */
+    border-radius: 50px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     display: flex;
