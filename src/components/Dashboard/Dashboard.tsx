@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Dashboard.css";
+import styles from "./Dashboard.module.css";
 import { HealthStatusService } from "../../interfaces/interfaces";
 import { fetchHealthData } from "../../services/healthService";
 import ServiceCard from "./ServiceCard";
@@ -33,17 +33,17 @@ const Dashboard: React.FC = (): JSX.Element => {
 
   if (error) {
     return (
-      <div className="dashboard-container">
-        <h2 className="dashboard-title">System Health Dashboard</h2>
-        <div className="error-message">{error}</div>
+      <div className={styles.dashboardContainer}>
+        <h2 className={styles.dashboardTitle}>System Health Dashboard</h2>
+        <div className={styles.errorMessage}>{error}</div>
       </div>
     );
   }
 
   if (!healthData) {
     return (
-      <div className="dashboard-container">
-        <h2 className="dashboard-title">System Health Dashboard</h2>
+      <div className={styles.dashboardContainer}>
+        <h2 className={styles.dashboardTitle}>System Health Dashboard</h2>
         <div className="loading-message">Retrieving system health status, please hold on...</div>
       </div>
     );
@@ -57,17 +57,15 @@ const Dashboard: React.FC = (): JSX.Element => {
   };
 
   return (
-    <div className="dashboard-container">
-      <h2 className="dashboard-title">System Health Dashboard</h2>
+    <div className={styles.dashboardContainer}>
+      <h2 className={styles.dashboardTitle}>System Health Dashboard</h2>
 
-      {/* Display general system health status */}
-      <div className={`status-box ${healthData.status.toLowerCase()}`}>
+      <div className={`${styles.statusBox} ${healthData.status === "Healthy" ? styles.statusBoxHealthy : styles.statusBoxUnhealthy}`}>
         <h3>General Status: {healthData.status}</h3>
         <p>Total Duration: {healthData.totalDuration}</p>
       </div>
 
-      {/* Display health status for each service */}
-      <div className="services-container">
+      <div className={styles.servicesContainer}>
         {Object.keys(healthData.entries).map((entryKey) => {
           const { status, duration, description } = healthData.entries[entryKey];
           return (

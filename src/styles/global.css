@@ -6,7 +6,8 @@
 }
 
 body {
-    font-family: sans-serif;
+    font-family: var(--font-family);
+    background-color: var(--background-color);
 }
 
 /* Main application structure */
@@ -19,44 +20,41 @@ body {
 .main-content {
     flex-grow: 1;
     transition: margin-left 0.3s ease;
-    padding: 20px;
-    background-color: #f9f9f9;
     overflow-y: auto;
 }
 
-/* Adjust when the sidebar is open */
+/* Ajustes cuando la barra lateral está abierta o cerrada */
 .sidebar-open .main-content {
     margin-left: 200px;
 }
 
-/* Adjust when the sidebar is closed */
 .sidebar-closed .main-content {
     margin-left: 80px;
 }
 
-/* Global title styles for consistent positioning */
+/* Global title styles */
 h2 {
-    font-size: 28px;
-    color: #333;
+    font-size: var(--font-size-title--);
+    color: var(--font-color);
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
-  .main-content {
-    margin-left: 0;
-  }
+    .main-content {
+        margin-left: 0;
+    }
 
-  .sidebar.closed ~ .main-content {
-    margin-left: 0;
-  }
+    .sidebar.closed~.main-content {
+        margin-left: 0;
+    }
 }
 
-/* Styling for the loading message */
+/* Mensaje de carga */
 .loading-message {
     color: #666;
     text-align: center;
     font-style: italic;
     margin-top: 20px;
-  }
+}

@@ -3,6 +3,7 @@ import { HealthState, ServiceCardProps } from "../../interfaces/interfaces";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { getDurationColor, getDurationWidth, getStatusColor } from "./utils";
+import styles from "./ServiceCard.module.css";
 
 //Returns a FontAwesome icon based on the service health status.
 const getStatusIcon = (status: HealthState): JSX.Element => (
@@ -32,19 +33,28 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
     isExpanded,
     toggleExpand,
 }: ServiceCardProps): JSX.Element => (
-    <div className={`service-card ${status === HealthState.Unhealthy && isExpanded ? "error-expanded" : ""}`}>
-        <h4>{entryKey}</h4>
-        <p>Status: <span
-            style={{ color: getStatusColor(status) }}
-        >
-            {status} {getStatusIcon(status as HealthState)}
-        </span></p>
-        <p>Duration: {duration}</p>
+    <div
+        className={
+            `${styles.serviceCard}
+            ${status === HealthState.Unhealthy && isExpanded ? styles.errorExpanded : ""}`
+        }
+    >
+        <h4 className={styles.serviceCardTitle}>{entryKey}</h4>
+        <p className={styles.serviceCardParagraph}>
+            Status:{" "}
+            <span
+                className={styles.serviceCardSpan}
+                style={{ color: getStatusColor(status) }}
+            >
+                {status} {getStatusIcon(status as HealthState)}
+            </span>
+        </p>
+        <p className={styles.serviceCardParagraph}>Duration: {duration}</p>
 
         {/* Only show the button if there's an error description available */}
         {status === HealthState.Unhealthy && description && (
             <button
-                className="expand-button"
+                className={styles.expandButton}
                 onClick={toggleExpand}
             >
                 {isExpanded ? "Hide details" : "Show details"}
@@ -53,19 +63,17 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
         {/* Show error details only when expanded and when the service is unhealthy */}
         {isExpanded && status === HealthState.Unhealthy && description && (
-            <div className="error-details">
-                <p>
-                    <strong>
-                        Error Description:
-                    </strong>
+            <div className={styles.errorDetails}>
+                <p className={styles.errorDetailsParagraph}>
+                    <strong>Error Description: </strong>
                     {description}
                 </p>
             </div>
         )}
 
-        <div className="duration-container">
+        <div className={styles.durationContainer}>
             <div
-                className="duration-bar"
+                className={styles.durationBar}
                 style={{
                     width: `${getDurationWidth(duration)}px`,
                     backgroundColor: getDurationColor(duration),
