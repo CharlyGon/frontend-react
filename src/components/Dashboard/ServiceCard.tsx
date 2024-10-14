@@ -3,7 +3,7 @@ import { HealthState, ServiceCardProps } from "../../interfaces/interfaces";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { getDurationColor, getDurationWidth, getStatusColor } from "./utils";
-import styles from "./ServiceCard.module.css";
+import styles from "./styles/ServiceCard.module.css";
 
 //Returns a FontAwesome icon based on the service health status.
 const getStatusIcon = (status: HealthState): JSX.Element => (

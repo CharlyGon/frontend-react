@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Dashboard.module.css";
 import { HealthStatusService } from "../../interfaces/interfaces";
 import { fetchHealthData } from "../../services/healthService";
 import ServiceCard from "./ServiceCard";
+
+import styles from "./styles/Dashboard.module.css";
 
 /**
  * Dashboard component for displaying the health status of multiple services.

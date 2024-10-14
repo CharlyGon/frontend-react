@@ -1,5 +1,4 @@
 import React from "react";
-import "./Body.css";
 
 interface BodyProps {
     children: React.ReactNode;
