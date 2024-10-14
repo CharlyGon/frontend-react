@@ -12,12 +12,12 @@
     padding: 15px;
     border-radius: 5px;
     white-space: pre-wrap;
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    color: #333;
-    border: 1px solid #e0e0e0;
+    font-family: 'Courier New', monospace; /* Puede convertirse en variable específica si prefieres */
+    font-size: 14px; /* Podría convertirse en una variable */
+    color: var(--font-color);
+    border: var(--card-border);
     overflow-x: auto;
-    background-color: #f4f4f4;
+    background-color: var(--file-background-color);
     max-height: 500px;
     overflow-y: auto;
 }
@@ -36,15 +36,15 @@
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 50px;
-    font-size: 16px;
+    border-radius: 50px; /* Podría ser una variable */
+    font-size: 16px; /* Podría ser una variable */
     font-weight: bold;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--box-shadow);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -53,13 +53,8 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Download button icon */
-.downloadButtonIcon {
-    font-size: 18px;
-}
-
 /* Loading indicator style */
 .loadingIndicator {
-    font-size: 12px;
-    color: #666;
+    font-size: var(--loading-font-size);
+    color: var(--font-color-muted);
 }

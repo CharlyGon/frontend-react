@@ -9,7 +9,7 @@
 /* Loading message style */
 .loadingMessage {
     font-size: 16px;
-    color: #666;
+    color: var(--font-color-muted);
     text-align: center;
     margin-bottom: 20px;
 }
@@ -22,8 +22,8 @@
     margin-bottom: 20px;
 }
 
-.fondoManagerTitle{
-    font-size: 28px;
+.fondoManagerTitle {
+    font-size: var(--font-size-title);
     text-align: center;
     margin-bottom: 20px;
     color: #1e293b;

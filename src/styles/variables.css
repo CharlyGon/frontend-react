@@ -13,6 +13,10 @@
     --font-family: 'sans-serif';
     --card-background-color: #ffffff;
     --card-border: 1px solid #e0e0e0;
+    --card-hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --font-color-muted: #666;
+    --file-background-color: #f4f4f4;
+    --detail-label-color: #2b3da5;
+    --loading-font-size: 12px;
+    --input-focus-border: #0a21a0;
 }
-
-
