@@ -8,8 +8,9 @@ import {
     faSearch,
     faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Sidebar.css";
 import { Link } from "react-router-dom";
+
+import styles from "./Sidebar.module.css";
 
 interface SidebarProps {
     isOpen: boolean;
@@ -28,65 +29,65 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }: SidebarProps): JSX.Element => {
     return (
         <>
-            <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+            <div className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : styles.sidebarClosed}`}>
                 <div>
                     <button
-                        className="toggle-button"
+                        className={styles.toggleButton}
                         onClick={toggleSidebar}
                     >
                         <FontAwesomeIcon
                             icon={isOpen ? faTimes : faBars}
-                            className={`icon-toggle ${isOpen ? 'rotate' : ''}`}
+                            className={`${styles.iconToggle} ${isOpen ? styles.iconRotate : ""}`}
                         />
                     </button>
                 </div>
 
-                <ul>
-                    <li>
-                        <Link to="/dashboard">
-                            <FontAwesomeIcon icon={faTachometerAlt} />
-                            {isOpen && <span>Dashboard</span>}
+                <ul className={styles.menuList}>
+                    <li className={styles.menuItem}>
+                        <Link to="/dashboard" className={styles.menuLink}>
+                            <FontAwesomeIcon
+                                icon={faTachometerAlt}
+                                className={styles.menuIcon}
+                            />
+                            {isOpen && <span className={styles.menuText}>Dashboard</span>}
                         </Link>
                     </li>
 
-                    <li>
-                        <Link to="/funds">
-                            <FontAwesomeIcon icon={faPiggyBank} />
-                            {isOpen && <span>Funds</span>}
+                    <li className={styles.menuItem}>
+                        <Link to="/funds" className={styles.menuLink}>
+                            <FontAwesomeIcon
+                                icon={faPiggyBank}
+                                className={styles.menuIcon}
+                            />
+                            {isOpen && <span className={styles.menuText}>Funds</span>}
                         </Link>
                     </li>
 
-                    <li>
-                        <Link to="/logs">
+                    <li className={styles.menuItem}>
+                        <Link to="/logs" className={styles.menuLink}>
                             <FontAwesomeIcon
                                 icon={faClipboardList}
-                                className="menu-logs"
+                                className={styles.menuLogs}
                             />
-                            {isOpen && <span className="span-logs">Logs</span>}
+                            {isOpen && <span className={styles.menuText}>Logs</span>}
                         </Link>
                     </li>
 
-                    <li>
-                        <Link to="/search-transactions">
-                            <FontAwesomeIcon icon={faSearch} />
-                            {isOpen && <span >Search<br />Transactions</span>}
+                    <li className={styles.menuItem}>
+                        <Link to="/search-transactions" className={styles.menuLink}>
+                            <FontAwesomeIcon
+                                icon={faSearch}
+                                className={styles.menuIcon}
+                            />
+                            {isOpen && <span className={styles.menuText}>Search<br />Transactions</span>}
                         </Link>
                     </li>
-
-                    {/*This settings link is currently commented out but will be used in future updates when settings functionality is implemented. */}
-                    {/* <li className="settings">
-                            <Link to="/settings">
-                                <FontAwesomeIcon icon={faCog} />
-                                {isOpen && <span>Settings</span>}
-                            </Link>
-                        </li> */}
                 </ul>
             </div>
 
-            {/* Show overlay only on small screens */}
             {isOpen && window.innerWidth <= 768 && (
                 <button
-                    className="overlay"
+                    className={styles.overlay}
                     onClick={toggleSidebar}
                 ></button>
             )}

@@ -1,0 +1,189 @@
+/* Sidebar style */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 100vh;
+    background-color: var(--sidebar-background);
+    transition: width var(--transition-speed);
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+
+.sidebarClosed {
+    width: 80px;
+}
+
+/* Menu list styles */
+.toggleButton {
+    font-size: 32px;
+    padding: 1px;
+    cursor: pointer;
+    text-align: center;
+    background-color: var(--sidebar-toggle-background);
+    border: none;
+    border-bottom: 1px solid var(--sidebar-border);
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+/* Settings for icon rotation */
+.iconToggle {
+    transition: transform 0.5s ease;
+}
+
+.iconRotate {
+    transform: rotate(180deg);
+}
+
+.menuList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    position: relative;
+    transition: background-color var(--transition-speed);
+}
+
+/* Hover effect */
+.menuItem:hover {
+    background-color: var(--highlight-background);
+    border-left: var(--highlight-border-left);
+}
+
+/* Hover effect for icons and text */
+.menuItem:hover i,
+.menuItem:hover span {
+    color: var(--sidebar-icon-hover-color);
+    font-weight: bold;
+}
+
+/* Menu link styles */
+.menuLink {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    min-height: 40px;
+    gap: 15px;
+}
+
+/* Icon styles */
+.menuIcon {
+    font-size: var(--font-size-icon);
+    transition: transform var(--transition-speed);
+    line-height: var(--font-size-icon);
+}
+
+/* Text transitions when opening/closing the sidebar */
+.menuText {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity var(--transition-speed), transform var(--transition-speed);
+    display: inline-block;
+    line-height: 1.2;
+}
+
+
+/* Text hidden when the sidebar is closed */
+.sidebarClosed .menuText {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity var(--transition-speed), transform var(--transition-speed);
+}
+
+/* Hover effect when the sidebar is closed */
+.sidebarClosed .menuItem:hover .menuIcon {
+    color: var(--sidebar-icon-hover-color);
+}
+
+/* Change the color of the icon when hovering while the sidebar is closed */
+.sidebarClosed .menuItem:hover i {
+    color: var(--sidebar-icon-hover-color);
+}
+
+/* Style for the "Settings" item*/
+.settings {
+    margin-top: auto;
+}
+
+/* Custom styles specifically for the "Logs" menu item. */
+.menuLogs {
+    font-size: var(--font-size-icon);
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* Responsive styles for the sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        transition: left var(--transition-speed), width var(--transition-speed);
+    }
+
+    .sidebarClosed {
+        left: -12%;
+    }
+
+    .sidebarClosed:hover {
+        left: 0;
+    }
+
+    /* Prevent hover effect when the sidebar is open */
+    .sidebarOpen {
+        left: 0;
+        pointer-events: auto;
+    }
+
+    .mainContent {
+        margin-left: 0;
+        transition: margin-left var(--transition-speed);
+    }
+
+    /* Show overlay when the sidebar is open */
+    .sidebarOpen+.overlay {
+        display: block;
+        opacity: 1;
+        transition: opacity var(--transition-speed);
+    }
+}
+
+/* Overlay to darken the background when the sidebar is open */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--overlay-background);
+    z-index: 9998;
+    display: none;
+    opacity: 0;
+    transition: opacity var(--transition-speed);
+}
+
+/* Show overlay when the sidebar is open */
+.sidebarOpen+.overlay {
+    display: block;
+    opacity: 1;
+    transition: opacity var(--transition-speed);
+}
