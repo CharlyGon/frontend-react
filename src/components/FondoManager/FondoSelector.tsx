@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { FondoSelectorProps } from "../../interfaces/interfaces";
 
+import styles from "./styles/FondoSelector.module.css";
+
 /**
  * Component for selecting a fondo from a list.
  * Displays a dropdown menu that allows the user to select a fondo by its identifier.
@@ -37,15 +39,14 @@ const FondoSelector: React.FC<FondoSelectorProps> = ({
     };
 
     return (
-        <div className="fondo-selector-container">
+        <div className={styles.fondoSelectorContainer}>
             <select
-                className="custom-dropdown"
+                className={styles.customDropdown}
                 onChange={handleChange}
                 value={selectedFondo}
                 size={3}
                 ref={dropdownRef}
             >
-
                 {fondos.map((fondo) => (
                     <option
                         key={fondo.id}
@@ -56,8 +57,8 @@ const FondoSelector: React.FC<FondoSelectorProps> = ({
                 ))}
             </select>
 
-            <div className="fondo-actions">
-                <p className="loading-indicator">
+            <div className={styles.fondoActions}>
+                <p className={styles.loadingIndicator}>
                     {loadingFondos ? "Cargando fondos..." : <>&nbsp;</>}
                 </p>
             </div>

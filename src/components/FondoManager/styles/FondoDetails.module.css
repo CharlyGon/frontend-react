@@ -1,16 +1,17 @@
-.fund-details-container {
+/* Container for fondo details */
+.fundDetailsContainer {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
-    font-family: Arial, sans-serif;
+    font-family: var(--font-family);
     max-width: 40%;
     align-self: flex-start;
     transition: all 0.3s ease;
 }
 
 @media (max-width: 768px) {
-    .fund-details-container {
+    .fundDetailsContainer {
         max-width: 90%;
         margin-left: auto;
         margin-right: auto;
@@ -18,35 +19,39 @@
 }
 
 @media (max-width: 1080px) {
-    .fund-details-container {
+    .fundDetailsContainer {
         max-width: 95%;
         margin-left: 10px;
         margin-right: 10px;
     }
 }
 
-.fund-detail-item {
+/* Each item inside the fondo details container */
+.fundDetailItem {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
     font-size: 16px;
 }
 
-.fund-detail-label {
+/* Label for each detail item */
+.fundDetailLabel {
     font-weight: bold;
     margin-right: 8px;
-    color: #0a21a0;
+    color: #2b3da5;
     flex-shrink: 0;
     min-width: 150px;
 }
 
-.fund-detail-value {
+/* Value for each detail item */
+.fundDetailValue {
     color: #555;
     flex-grow: 1;
 }
 
-.loading-message,
-.fallback-message {
+/* Loading and fallback messages */
+.loadingMessage,
+.fallbackMessage {
     text-align: center;
     color: #888;
     font-size: 16px;

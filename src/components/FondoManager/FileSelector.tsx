@@ -6,6 +6,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { FileSelectorProps } from "../../interfaces/interfaces";
 import dayjs from "dayjs";
 
+import styles from "./styles/FileSelector.module.css";
+
 /**
  * Component for selecting a file from a list of files.
  * Displays a dropdown menu allowing the user to select a file associated with the selected fondo.
@@ -41,12 +43,12 @@ const FileSelector: React.FC<FileSelectorProps> = (
     };
 
     return (
-        <div className="file-selector-container">
+        <div className={styles.fileSelectorContainer}>
 
             {/* Search button and input together */}
-            <div className="search-wrapper">
+            <div className={styles.searchWrapper}>
                 <button
-                    className="search-button"
+                    className={styles.searchButton}
                     onClick={() => setShowSearch(!showSearch)}
                     aria-label="Search file"
                 >
@@ -56,7 +58,7 @@ const FileSelector: React.FC<FileSelectorProps> = (
                 {showSearch && (
                     <input
                         type="text"
-                        className="search-input"
+                        className={styles.searchInput}
                         placeholder="Buscar archivo..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -65,10 +67,9 @@ const FileSelector: React.FC<FileSelectorProps> = (
             </div>
 
             {/* Calendar icon and date input together */}
-            <div className="calendar-date-wrapper">
+            <div className={styles.calendarDateWrapper}>
                 <button
-                   className={`calendar-button ${showSearch ? "highlight-calendar" : ""}`}
-
+                    className={`${styles.calendarButton} ${showSearch ? styles.highlightCalendar : ""}`}
                     onClick={toggleCalendar}
                     aria-label="open calendar"
                 >
@@ -79,14 +80,17 @@ const FileSelector: React.FC<FileSelectorProps> = (
                     type="text"
                     value={formattedDate}
                     readOnly
-                    className="selected-date-input"
+                    className={styles.selectedDateInput}
                     aria-label="Selected date"
                 />
             </div>
 
             {/* Calendar component that appears when clicking the calendar button */}
             {showCalendar && (
-                <div className={`calendar-container ${showCalendar ? 'show-calendar' : ''}`}>
+                <div className={`
+                    ${styles.calendarContainer}
+                    ${showCalendar ? styles.showCalendar : ""}`}
+                >
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateCalendar
                             value={dayjs(selectedDate)}
@@ -107,11 +111,11 @@ const FileSelector: React.FC<FileSelectorProps> = (
             <select
                 onChange={(e) => onSelect(e.target.value)}
                 value={selectedFile}
-                className="custom-dropdown"
+                className={styles.customDropdown}
             >
                 <option
                     value=""
-                    className="default-option"
+                    className={styles.defaultOption}
                 >
                     --- Selecciona un archivo ---
                 </option>
@@ -123,9 +127,9 @@ const FileSelector: React.FC<FileSelectorProps> = (
             </select>
 
             {/* Display message when no files are found */}
-            <div className="no-files-message-wrapper">
+            <div className={styles.noFilesMessageWrapper}>
                 {!loading && files.length === 0 && (
-                    <p className="no-files-message">
+                    <p className={styles.noFilesMessage}>
                         No se encontraron archivos para este fondo.
                     </p>
                 )}

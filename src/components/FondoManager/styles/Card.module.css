@@ -1,0 +1,23 @@
+/* General style for the cards */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--box-shadow);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Title inside the cards */
+.cardTitle {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+    color: #0a21a0;
+    margin-bottom: 10px;
+}

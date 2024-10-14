@@ -1,0 +1,65 @@
+/* General container for file content */
+.fileContentContainer {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* Preformatted text style for the file content */
+.fileContentPre {
+    padding: 15px;
+    border-radius: 5px;
+    white-space: pre-wrap;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    overflow-x: auto;
+    background-color: #f4f4f4;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Container style for actions (download button and loading message) */
+.fileContentActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Download button with modern design */
+.downloadButton {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.downloadButton:hover {
+    background-color: var(--primary-hover-color);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Download button icon */
+.downloadButtonIcon {
+    font-size: 18px;
+}
+
+/* Loading indicator style */
+.loadingIndicator {
+    font-size: 12px;
+    color: #666;
+}

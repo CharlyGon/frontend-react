@@ -6,14 +6,16 @@ import FileContent from "./FileContent";
 import { useFondos } from "../hooks/useFondos";
 import { useFiles } from "../hooks/useFiles";
 import { useFileContent } from "../hooks/useFileContent";
-import "./FondoManager.css";
-import "./FileSelector.css";
 import { Fondo } from "../../interfaces/interfaces";
 import { downloadFile } from "../../services/fileService";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { Config } from "../../config";
 import { useInitialLoading } from "../hooks/useInitialLoading";
 import dayjs from "dayjs";
+
+import styles from "./styles/FondoManager.module.css";
+import cardStyles from "./styles/Card.module.css";
+
 
 /**
  * FondoManager component
@@ -41,7 +43,7 @@ const FondoManager: React.FC = (): JSX.Element => {
     const { fondos, loadingFondos, hasMoreFondos, setPage, errorFondos } = useFondos();
     const [selectedFondo, setSelectedFondo] = useState<Fondo | null>(null);
     const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
-      //const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format("YYYY-MM-DD"));
+    //const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format("YYYY-MM-DD"));
     const [selectedDate, setSelectedDate] = useState<string | null>("2024-10-09"); //! Mantener para pruebas
 
     const { files, loadingFiles } = useFiles(selectedFondo ? selectedFondo.identificadorFondo : null, selectedDate);
@@ -70,7 +72,7 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     const renderInitialLoading = () => (
         initialLoading && (
-            <div className="loading-message">
+            <div className={styles.loadingMessage}>
                 Loading investment funds, please wait...
             </div>
         )
@@ -78,7 +80,7 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     const renderError = () => (
         showError && (
-            <div className="error-message">
+            <div className={styles.errorMessage}>
                 {showError}
             </div>
         )
@@ -86,8 +88,8 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     const renderFondoSelector = () => (
         !initialLoading && !showError && (
-            <div className="card">
-                <h4 className="card-title">Selecciona un fondo</h4>
+            <div className={cardStyles.card}>
+                <h4 className={cardStyles.cardTitle}>Selecciona un fondo</h4>
                 <FondoSelector
                     fondos={fondos}
                     onSelect={(fondoId: number) => {
@@ -105,8 +107,8 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     const renderFondoDetails = () => (
         selectedFondo && (
-            <div className="card">
-                <h4 className="card-title">Detalles del Fondo</h4>
+            <div className={cardStyles.card}>
+                <h4 className={cardStyles.cardTitle}>Detalles del Fondo</h4>
                 <FondoDetails fondoDetails={selectedFondo} loading={false} />
             </div>
         )
@@ -114,8 +116,8 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     const renderFileSelector = () => (
         selectedFondo && (
-            <div className="card">
-                <h4 className="card-title">Selecciona un Archivo</h4>
+            <div className={cardStyles.card}>
+                <h4 className={cardStyles.cardTitle}>Selecciona un Archivo</h4>
                 <FileSelector
                     files={files}
                     onSelect={setSelectedFile}
@@ -130,8 +132,8 @@ const FondoManager: React.FC = (): JSX.Element => {
 
     const renderFileContent = () => (
         selectedFile && (
-            <div className="card">
-                <h4 className="file-content-title">Contenido del Archivo</h4>
+            <div className={cardStyles.card}>
+                <h4 className={cardStyles.cardTitle}>Contenido del Archivo</h4>
                 <FileContent
                     fileContent={fileContent ? fileContent.join("\n") : null}
                     selectedFile={selectedFile}
@@ -144,8 +146,8 @@ const FondoManager: React.FC = (): JSX.Element => {
     );
 
     return (
-        <div className="fondo-manager-container">
-            <h2 className="fondo-manager-title">Gestión de Fondos</h2>
+        <div className={styles.fondoManagerContainer}>
+            <h2 className={styles.fondoManagerTitle}>Gestión de Fondos</h2>
             {renderInitialLoading()}
             {renderError()}
             {renderFondoSelector()}

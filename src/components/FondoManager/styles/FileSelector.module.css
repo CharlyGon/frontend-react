@@ -1,8 +1,8 @@
 /* General container for the entire file selector */
-.file-selector-container {
+.fileSelectorContainer {
     position: relative;
     max-width: 40%;
-    margin: 20px 0 20px 0;
+    margin: 20px 0;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 12px;
@@ -16,7 +16,7 @@
 }
 
 @media (max-width: 768px) {
-    .file-selector-container {
+    .fileSelectorContainer {
         max-width: 90%;
         margin-left: auto;
         margin-right: auto;
@@ -24,7 +24,7 @@
 }
 
 @media (max-width: 1080px) {
-    .file-selector-container {
+    .fileSelectorContainer {
         max-width: 95%;
         margin-left: 10px;
         margin-right: 10px;
@@ -32,7 +32,7 @@
 }
 
 /* Wrapper for search button and search input */
-.search-wrapper {
+.searchWrapper {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -41,8 +41,8 @@
 }
 
 /* Style for the search button */
-.search-button {
-    background-color: #007bff;
+.searchButton {
+    background-color: var(--primary-color);
     margin-top: 20px;
     color: white;
     border: none;
@@ -56,8 +56,8 @@
     justify-content: center;
 }
 
-.search-button:hover {
-    background-color: #0056b3;
+.searchButton:hover {
+    background-color: var(--primary-hover-color);
     transform: scale(1.05);
 }
 
@@ -75,7 +75,7 @@
 }
 
 /* Search input next to search button */
-.search-input {
+.searchInput {
     padding: 10px;
     margin-top: 20px;
     font-size: 16px;
@@ -87,18 +87,18 @@
     animation: placeholderFade 1s ease-in-out;
 }
 
-.search-input:focus {
+.searchInput:focus {
     border-color: #0a21a0;
     outline: none;
     box-shadow: 0 0 6px rgba(10, 33, 160, 0.5);
 }
 
-.search-input::placeholder {
+.searchInput::placeholder {
     animation: placeholderFade 1.5s ease-in-out;
 }
 
 /* Wrapper for calendar button and selected date input */
-.calendar-date-wrapper {
+.calendarDateWrapper {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -106,8 +106,8 @@
 }
 
 /* Style for the calendar button */
-.calendar-button {
-    background-color: #007bff;
+.calendarButton {
+    background-color: var(--primary-color);
     color: white;
     border: none;
     padding: 16px;
@@ -120,13 +120,13 @@
     justify-content: center;
 }
 
-.calendar-button:hover {
-    background-color: #0056b3;
+.calendarButton:hover {
+    background-color: var(--primary-hover-color);
     transform: scale(1.05);
 }
 
 /* Input field for the selected date aligned next to calendar button */
-.selected-date-input {
+.selectedDateInput {
     padding: 10px;
     font-size: 16px;
     border-radius: 8px;
@@ -138,7 +138,7 @@
     transition: all 0.3s ease;
 }
 
-.selected-date-input:focus {
+.selectedDateInput:focus {
     border-color: #ccc;
     outline: none;
     box-shadow: none;
@@ -158,7 +158,7 @@
 }
 
 /* General Calendar container style */
-.calendar-container {
+.calendarContainer {
     position: absolute;
     top: 47%;
     transform: translateY(-50%);
@@ -173,7 +173,7 @@
 }
 
 /* Style for the dropdown (selector) */
-.custom-dropdown {
+.customDropdown {
     padding: 12px;
     font-size: 16px;
     border-radius: 8px;
@@ -186,8 +186,8 @@
     box-sizing: border-box;
 }
 
-.custom-dropdown:hover,
-.custom-dropdown:focus {
+.customDropdown:hover,
+.customDropdown:focus {
     border-color: #0a21a0;
     background-color: #ffffff;
     outline: none;
@@ -195,7 +195,7 @@
 }
 
 /* Wrapper for the "no files" message */
-.no-files-message-wrapper {
+.noFilesMessageWrapper {
     height: 20px;
     display: flex;
     align-items: center;
@@ -204,16 +204,15 @@
 }
 
 /* Message displayed when no files are found */
-.no-files-message {
+.noFilesMessage {
     color: #444;
     font-size: 14px;
-    margin-top: 20px;
     text-align: center;
     width: 100%;
 }
 
 /* Center only the default option */
-.default-option {
+.defaultOption {
     text-align: center;
 }
 
@@ -232,6 +231,6 @@
     }
 }
 
-.highlight-calendar {
+.highlightCalendar {
     animation: pulseHighlight 1.5s ease-in-out infinite;
 }

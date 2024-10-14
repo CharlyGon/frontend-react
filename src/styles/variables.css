@@ -11,5 +11,8 @@
     --border-radius: 8px;
     --font-size-title: 28px;
     --font-family: 'sans-serif';
-  }
+    --card-background-color: #ffffff;
+    --card-border: 1px solid #e0e0e0;
+}
+
 

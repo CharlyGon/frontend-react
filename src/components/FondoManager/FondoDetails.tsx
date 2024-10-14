@@ -1,6 +1,7 @@
 import React from "react";
 import { FondoDetailsProps } from "../../interfaces/interfaces";
-import "./FondoDetails.css";
+
+import styles from "./styles/FondoDetails.module.css";
 
 /**
  * Component for displaying the details of a selected fondo.
@@ -19,26 +20,26 @@ const FondoDetails: React.FC<FondoDetailsProps> = (
     }: FondoDetailsProps): JSX.Element => {
 
     if (loading) {
-        return <p className="loading-message">Cargando detalles del fondo...</p>;
+        return <p className={styles.loadingMessage}>Cargando detalles del fondo...</p>;
     }
 
     if (!fondoDetails) {
-        return <p className="fallback-message">No se encontraron detalles para este fondo.</p>;
+        return <p className={styles.fallbackMessage}>No se encontraron detalles para este fondo.</p>;
     }
 
     return (
-        <div className="fund-details-container">
-            <div className="fund-detail-item">
-                <span className="fund-detail-label">Identificador Fondo:</span>
-                <span className="fund-detail-value">{fondoDetails.identificadorFondo}</span>
+        <div className={styles.fundDetailsContainer}>
+            <div className={styles.fundDetailItem}>
+                <span className={styles.fundDetailLabel}>Identificador Fondo:</span>
+                <span className={styles.fundDetailValue}>{fondoDetails.identificadorFondo}</span>
             </div>
-            <div className="fund-detail-item">
-                <span className="fund-detail-label">Tipo de Rescate:</span>
-                <span className="fund-detail-value">{fondoDetails.tipoRescate}</span>
+            <div className={styles.fundDetailItem}>
+                <span className={styles.fundDetailLabel}>Tipo de Rescate:</span>
+                <span className={styles.fundDetailValue}>{fondoDetails.tipoRescate}</span>
             </div>
-            <div className="fund-detail-item">
-                <span className="fund-detail-label">Código de Interfaz:</span>
-                <span className="fund-detail-value">{fondoDetails.codigoInterfaz}</span>
+            <div className={styles.fundDetailItem}>
+                <span className={styles.fundDetailLabel}>Código de Interfaz:</span>
+                <span className={styles.fundDetailValue}>{fondoDetails.codigoInterfaz}</span>
             </div>
         </div>
     );

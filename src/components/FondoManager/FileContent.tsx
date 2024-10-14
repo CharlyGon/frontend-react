@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { FileContentProps } from "../../interfaces/interfaces";
 
+import styles from "./styles/FileContent.module.css";
+
 /**
  * Component for displaying the content of a selected file.
  * It shows the file content in a preformatted block and allows the user to download the file.
@@ -30,28 +32,28 @@ const FileContent: React.FC<FileContentProps> = (
     }
 
     return (
-        <div className="file-content-container">
+        <div className={styles.fileContentContainer}>
             <pre
-                className="file-content-pre"
+                className={styles.fileContentPre}
                 ref={fileContentRef}
             >
                 {fileContent}
             </pre>
 
-            <div className="file-content-actions">
+            <div className={styles.fileContentActions}>
                 <button
-                    className="download-button"
+                    className={styles.downloadButton}
                     onClick={onDownload}
                 >
                     <FontAwesomeIcon
                         icon={faDownload}
-                        className="download-button-icon"
+                        className={styles.downloadButtonIcon}
                     />
                     Descargar archivo
                 </button>
 
                 {loading && (
-                    <p className="loading-indicator">
+                    <p className={styles.loadingIndicator}>
                         Cargando contenido...
                     </p>
                 )}
