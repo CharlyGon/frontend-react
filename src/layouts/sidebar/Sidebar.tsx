@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { SidebarProps } from "../../interfaces/interfaces";
 
-import styles from "./Sidebar.module.css";
+import styles from "./styles/Sidebar.module.css";
 
 /**
  * Sidebar component that provides navigation links to different sections of the app.

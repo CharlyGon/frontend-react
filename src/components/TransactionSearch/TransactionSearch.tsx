@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./TransactionSearch.css";
 
+import styles from "./styles/TransactionSearch.module.css";
 /**
  * Component to search for transactions.
  * This component allows the user to search for transactions by entering an identifier.
@@ -23,45 +23,46 @@ const TransactionSearch: React.FC = (): JSX.Element => {
     };
 
     return (
-        <div className="main-container">
-            <h2 className="transaction-search-title">Buscar Transacciones</h2>
+        <div className={styles.mainContainer}>
+            <h2 className={styles.transactionSearchTitle}>Buscar Transacciones</h2>
 
-              {/* Wrapper for the operation number input and search button */}
-            <div className="operation-number-wrapper">
-                <div className="operation-number-container">
+            {/* Wrapper for the operation number input and search button */}
+            <div className={styles.operationNumberWrapper}>
+                <div className={styles.operationNumberContainer}>
                     <input
                         type="text"
                         placeholder="Ingrese el ID o descripción de la transacción"
                         value={searchTerm}
                         onChange={handleInputChange}
-                        className="transaction-search-input"
+                        className={styles.transactionSearchInput}
                     />
                     <button
                         onClick={handleSearch}
-                        className="transaction-search-button">
+                        className={styles.transactionSearchButton}
+                    >
                         Buscar
                     </button>
                 </div>
             </div>
 
-              {/* Wrapper for the search results and additional details containers */}
-            <div className="results-wrapper">
-                <div className="result-container">
+            {/* Wrapper for the search results and additional details containers */}
+            <div className={styles.resultsWrapper}>
+                <div className={styles.resultContainer}>
                     <h3>Resultado Obtenido</h3>
-                    <div className="result-content">
+                    <div className={styles.resultContent}>
                         {/* se agregarán los resultados */}
                     </div>
                 </div>
 
-                  {/* Containers displaying additional details on the right side */}
-                <div className="right-containers">
-                    <div className="file-info-container">
+                {/* Containers displaying additional details on the right side */}
+                <div className={styles.rightContainers}>
+                    <div className={styles.fileInfoContainer}>
                         <h4>Nombre Archivo</h4>
                         <p>Día:</p>
                         <p>Fondo:</p>
                     </div>
 
-                    <div className="details-container">
+                    <div className={styles.detailsContainer}>
                         <h4>Detalles del Fondo</h4>
                         <p>Entidad Acreditar:</p>
                         <p>Sucursal Acreditar:</p>

@@ -5,7 +5,7 @@ import logoPellegrini from "../../assets/logoPellegrini.png";
 import { Link } from "react-router-dom";
 import { HeaderProps } from "../../interfaces/interfaces";
 
-import styles from "./Header.module.css";
+import styles from "./styles/Header.module.css";
 
 /**
  * Header component that displays user information and adjusts its layout
