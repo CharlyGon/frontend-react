@@ -24,33 +24,45 @@ export const useFileContent = (
     const [filePage, setFilePage] = useState(1);
     const [hasMoreFileContent, setHasMoreFileContent] = useState(true);
 
-    const loadFileContent = useCallback(async (page: number) => {
-        if (!selectedFile) return;
+    const loadFileContent = useCallback(
+        async (page: number) => {
+            if (!selectedFile) return;
 
-        setLoadingFileContent(true);
+            setLoadingFileContent(true);
 
-        try {
-            const fileContentData = await fetchFileContentById(selectedFile, selectedDate ?? undefined, pageSize, page);
-            if (fileContentData.length > 0) {
+            try {
+                const fileContentData = await fetchFileContentById(
+                    selectedFile,
+                    selectedDate ?? undefined,
+                    pageSize,
+                    page
+                );
                 setFileContent((prevContent) => [...prevContent, ...fileContentData]);
-            } else {
-                setHasMoreFileContent(false);
+                setHasMoreFileContent(fileContentData.length > 0);
+            } catch (error) {
+                console.error("Error fetching file content:", error);
+            } finally {
+                setLoadingFileContent(false);
             }
-        } catch (error) {
-            console.error("Error fetching file content:", error);
-        } finally {
-            setLoadingFileContent(false);
-        }
-    }, [selectedFile, selectedDate, pageSize]);
+        },
+        [selectedFile, selectedDate, pageSize]
+    );
 
+    /**
+     * Resets the file content and loads the first page when the selected file or date changes.
+     */
     useEffect(() => {
         if (selectedFile) {
             setFileContent([]);
             setFilePage(1);
+            setHasMoreFileContent(true);
             loadFileContent(1);
         }
-    }, [selectedFile, loadFileContent]);
+    }, [selectedFile, selectedDate, loadFileContent]);
 
+    /**
+     * Loads more content when the filePage changes.
+     */
     useEffect(() => {
         if (filePage > 1) {
             loadFileContent(filePage);
