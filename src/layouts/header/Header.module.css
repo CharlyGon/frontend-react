@@ -51,7 +51,7 @@
 /* User name style */
 .userName {
     margin-left: 10px;
-    font-size: var(--font-size-title);
+    font-size: 18px;
     font-weight: 500;
 }
 
