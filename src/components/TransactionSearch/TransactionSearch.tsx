@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useSearchTransaction } from "../hooks/useSearchTransaction";
 
 import styles from "./styles/TransactionSearch.module.css";
+
 /**
  * Component to search for transactions.
  * This component allows the user to search for transactions by entering an identifier.
@@ -9,6 +11,7 @@ import styles from "./styles/TransactionSearch.module.css";
  */
 const TransactionSearch: React.FC = (): JSX.Element => {
     const [searchTerm, setSearchTerm] = useState<string>("");
+    const { transactions, searchTransactions, loading, error } = useSearchTransaction();
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
@@ -16,14 +19,14 @@ const TransactionSearch: React.FC = (): JSX.Element => {
 
     const handleSearch = () => {
         if (searchTerm.trim() !== "") {
-            console.log(`Buscando transacciones con el término: ${searchTerm}`);
+            searchTransactions(searchTerm);
         } else {
             console.log("Ingrese un término de búsqueda válido.");
         }
     };
 
     return (
-        <div className={styles.mainContainer}>
+        <div className={styles.mainContainerTransactionSearch}>
             <h2 className={styles.transactionSearchTitle}>Buscar Transacciones</h2>
 
             {/* Wrapper for the operation number input and search button */}
@@ -45,12 +48,27 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                 </div>
             </div>
 
+            {/* Display loading state */}
+            {loading && <p className={styles.loadingMessage}>Cargando transacciones...</p>}
+
+            {/* Display error message */}
+            {error && <p className={styles.errorMessage}>{error}</p>}
+
             {/* Wrapper for the search results and additional details containers */}
             <div className={styles.resultsWrapper}>
                 <div className={styles.resultContainer}>
                     <h3>Resultado Obtenido</h3>
                     <div className={styles.resultContent}>
-                        {/* se agregarán los resultados */}
+                        {transactions.length > 0 ? (
+                            transactions.map((transaction, index) => (
+                                <div key={index} className={styles.transactionItem}>
+                                    <p>ID Archivo: {transaction.idArchivo}</p>
+                                    <p>Linea: {transaction.linea}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No se encontraron transacciones.</p>
+                        )}
                     </div>
                 </div>
 

@@ -147,3 +147,23 @@ export interface SidebarProps {
 export interface HeaderProps {
     isSidebarOpen: boolean;
 }
+
+export interface Transaction {
+    idArchivo: string;
+    linea: string;
+}
+
+export interface TransactionSearchResponse {
+    count: number;
+    pageSize: number;
+    pageIndex: number;
+    data: Transaction[];
+    pageCount: number;
+}
+
+export interface UseSearchTransactionResponse {
+    transactions: Transaction[];
+    searchTransactions: (searchTerm: string) => Promise<void>;
+    loading: boolean;
+    error: string | null;
+}

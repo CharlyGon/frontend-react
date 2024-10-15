@@ -1,9 +1,8 @@
 /* Container for the entire dashboard */
 .dashboardContainer {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
-    background-color:var(--background-color);
 }
 
 /* Title styling for the dashboard */

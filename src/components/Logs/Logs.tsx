@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import useWebSocket from '../hooks/useWebSocket';
 import './Logs.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { useWebSocket } from '../hooks/useWebSocket';
 
 interface Log {
   id: string;

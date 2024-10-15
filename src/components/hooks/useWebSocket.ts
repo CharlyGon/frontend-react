@@ -12,7 +12,7 @@ interface WebSocketMessage {
  * @param {string} url - WebSocket server URL.
  * @returns {Object[]} logs - Array of log messages.
  */
-const useWebSocket = (url: string): object[] => {
+export const useWebSocket = (url: string): object[] => {
   const [logs, setLogs] = useState<{ id: string; message: string }[]>([]);
 
   const handleHistoryLogs = (data: { message: string; }[]) => {
@@ -62,5 +62,3 @@ const useWebSocket = (url: string): object[] => {
 
   return logs;
 };
-
-export default useWebSocket;
