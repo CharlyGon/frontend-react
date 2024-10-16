@@ -1,0 +1,29 @@
+.resultContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.transactionItem {
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transactionItem:hover {
+    background-color: #e6e6e6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selectedTransaction {
+    background-color: #d1e7ff;
+    border-color: #0a21a0;
+}
+
+.noTransactionsMessage {
+    font-size: 16px;
+    color: #666;
+}

@@ -184,3 +184,9 @@ export interface FileInfoProps {
 export interface FileDetailsWithFetchProps extends FileInfoProps {
     getFileDetails: (idArchivo: string) => Promise<void>;
 }
+
+export interface TransactionListProps {
+    transactions: Transaction[];
+    selectedTransaction: Transaction | null;
+    onSelectTransaction: (transaction: Transaction) => void;
+}

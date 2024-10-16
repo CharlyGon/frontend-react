@@ -6,6 +6,7 @@ import { TransactionDetails } from "./TransactionDetails";
 import styles from "./styles/SearchTransaction.module.css";
 import { FileInfo } from "./TransactionFile";
 import { useFileDetails } from "../hooks/useFileDetails";
+import TransactionList from "./TransactionList";
 
 /**
  * Component to search for transactions.
@@ -72,35 +73,21 @@ const TransactionSearch: React.FC = (): JSX.Element => {
             {loading && <p className={styles.loadingMessage}>Cargando transacciones...</p>}
 
             {/* Display error message */}
-            { error && (
+            {error && (
                 <p className={styles.errorMessage}>No se encontraron transacciones. Por favor, intente nuevamente.</p>
             )}
 
             {/* Wrapper for the search results and additional details containers */}
             <div className={styles.resultsWrapper}>
                 <div className={styles.resultContainer}>
-                    <h3>Resultado Obtenido</h3>
-                    <div className={styles.resultContent}>
-                        {transactions.length > 0 ? (
-                            transactions.map((transaction) => (
-                                <button
-                                    key={transaction.idArchivo}
-                                    className={`${styles.transactionItem} ${selectedTransaction?.idArchivo === transaction.idArchivo ? styles.selectedTransaction : ""}`}
-                                    onClick={() => handleTransactionSelect(transaction)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                            handleTransactionSelect(transaction);
-                                        }
-                                    }}
-                                >
-                                    <p>ID Archivo: {transaction.idArchivo}</p>
-                                    <p>Linea: {transaction.linea}</p>
-                                </button>
-                            ))
-                        ) : (
-                            <p>No se encontraron transacciones.</p>
-                        )}
-                    </div>
+                    <h3 className={styles.resultContainerTitle}>Resultado Obtenido</h3>
+
+                    {/* Use the TransactionList component */}
+                    <TransactionList
+                        transactions={transactions}
+                        selectedTransaction={selectedTransaction}
+                        onSelectTransaction={handleTransactionSelect}
+                    />
                 </div>
 
                 {/* Containers displaying additional details on the right side */}
@@ -112,8 +99,9 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                         />
                     )}
 
-                    <TransactionDetails selectedTransaction={selectedTransaction} />
-
+                    {selectedTransaction && (
+                        <TransactionDetails selectedTransaction={selectedTransaction} />
+                    )}
                 </div>
             </div>
         </div>
