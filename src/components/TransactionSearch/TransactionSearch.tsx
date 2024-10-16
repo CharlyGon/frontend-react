@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useSearchTransaction } from "../hooks/useSearchTransaction";
+import { Transaction } from "../../interfaces/interfaces";
+import { TransactionDetails } from "./TransactionDetails";
 
-import styles from "./styles/TransactionSearch.module.css";
+import styles from "./styles/SearchTransaction.module.css";
+import { FileInfo } from "./TransactionFile";
+import { useFileDetails } from "../hooks/useFileDetails";
 
 /**
  * Component to search for transactions.
@@ -12,18 +16,29 @@ import styles from "./styles/TransactionSearch.module.css";
 const TransactionSearch: React.FC = (): JSX.Element => {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const { transactions, searchTransactions, loading, error } = useSearchTransaction();
+    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+    const { fileDetails, getFileDetails, loading: loadingDetails } = useFileDetails();
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Handle input change
+    const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
-    };
+    }, []);
 
-    const handleSearch = () => {
+    // Handle search button click
+    const handleSearch = useCallback(() => {
         if (searchTerm.trim() !== "") {
             searchTransactions(searchTerm);
         } else {
             console.log("Ingrese un término de búsqueda válido.");
         }
-    };
+    }, [searchTerm, searchTransactions]);
+
+    // Handle transaction selection
+    const handleTransactionSelect = useCallback((transaction: Transaction) => {
+        setSelectedTransaction(transaction);
+        getFileDetails(transaction.idArchivo);
+    }, [getFileDetails]);
+
 
     return (
         <div className={styles.mainContainerTransactionSearch}>
@@ -33,11 +48,16 @@ const TransactionSearch: React.FC = (): JSX.Element => {
             <div className={styles.operationNumberWrapper}>
                 <div className={styles.operationNumberContainer}>
                     <input
+                        className={styles.transactionSearchInput}
                         type="text"
-                        placeholder="Ingrese el ID o descripción de la transacción"
+                        placeholder="Ingrese el ID de la transacción"
                         value={searchTerm}
                         onChange={handleInputChange}
-                        className={styles.transactionSearchInput}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                handleSearch();
+                            }
+                        }}
                     />
                     <button
                         onClick={handleSearch}
@@ -52,7 +72,9 @@ const TransactionSearch: React.FC = (): JSX.Element => {
             {loading && <p className={styles.loadingMessage}>Cargando transacciones...</p>}
 
             {/* Display error message */}
-            {error && <p className={styles.errorMessage}>{error}</p>}
+            { error && (
+                <p className={styles.errorMessage}>No se encontraron transacciones. Por favor, intente nuevamente.</p>
+            )}
 
             {/* Wrapper for the search results and additional details containers */}
             <div className={styles.resultsWrapper}>
@@ -60,11 +82,20 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                     <h3>Resultado Obtenido</h3>
                     <div className={styles.resultContent}>
                         {transactions.length > 0 ? (
-                            transactions.map((transaction, index) => (
-                                <div key={index} className={styles.transactionItem}>
+                            transactions.map((transaction) => (
+                                <button
+                                    key={transaction.idArchivo}
+                                    className={`${styles.transactionItem} ${selectedTransaction?.idArchivo === transaction.idArchivo ? styles.selectedTransaction : ""}`}
+                                    onClick={() => handleTransactionSelect(transaction)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            handleTransactionSelect(transaction);
+                                        }
+                                    }}
+                                >
                                     <p>ID Archivo: {transaction.idArchivo}</p>
                                     <p>Linea: {transaction.linea}</p>
-                                </div>
+                                </button>
                             ))
                         ) : (
                             <p>No se encontraron transacciones.</p>
@@ -74,30 +105,15 @@ const TransactionSearch: React.FC = (): JSX.Element => {
 
                 {/* Containers displaying additional details on the right side */}
                 <div className={styles.rightContainers}>
-                    <div className={styles.fileInfoContainer}>
-                        <h4>Nombre Archivo</h4>
-                        <p>Día:</p>
-                        <p>Fondo:</p>
-                    </div>
+                    {selectedTransaction && (
+                        <FileInfo
+                            fileDetails={fileDetails}
+                            loading={loadingDetails}
+                        />
+                    )}
 
-                    <div className={styles.detailsContainer}>
-                        <h4>Detalles del Fondo</h4>
-                        <p>Entidad Acreditar:</p>
-                        <p>Sucursal Acreditar:</p>
-                        <p>Digito CBU:</p>
-                        <p>Bloque CBU Cuenta Acreditar:</p>
-                        <p>Importe:</p>
-                        <p>Referencia Univoca:</p>
-                        <p>Identificador Cliente:</p>
-                        <p>Clase Documento:</p>
-                        <p>Tipo Documento:</p>
-                        <p>Numero Documento:</p>
-                        <p>Estado:</p>
-                        <p>Identificador Prestamo:</p>
-                        <p>Numero Operacion Link:</p>
-                        <p>Filler:</p>
-                        <p>Observaciones:</p>
-                    </div>
+                    <TransactionDetails selectedTransaction={selectedTransaction} />
+
                 </div>
             </div>
         </div>

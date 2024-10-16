@@ -1,0 +1,15 @@
+.fileInfoContainer {
+    padding: 20px;
+    background-color: var(--background-color);
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.detailsContainer h4 {
+    margin-bottom: 10px;
+}
+
+.detailsContainer p {
+    margin: 5px 0;
+}

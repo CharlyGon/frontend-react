@@ -1,4 +1,4 @@
-import { FileResponse } from "../interfaces/interfaces";
+import { FileDetailsResponse, FileResponse } from "../interfaces/interfaces";
 
 /**
  * Download a file
@@ -113,6 +113,30 @@ export const fetchFileContentById = async (
         return data.data.map((item: { linea: string }) => item.linea);
     } catch (error) {
         console.error("Error fetching file content:", error);
+        throw error;
+    }
+};
+
+/**
+ * Service to get details of a file by its ID.
+ * @param {string} idArchivo - The ID of the file to fetch details for.
+ * @returns {Promise<FileDetailsResponse>} - The response containing file details.
+ * @throws {Error} - Throws an error if the request fails.
+ */
+export const fetchFileDetailsService = async (idArchivo: string): Promise<FileDetailsResponse> => {
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/Archivo/id?Id=${encodeURIComponent(idArchivo)}`
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const data: FileDetailsResponse = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching file details:", error);
         throw error;
     }
 };

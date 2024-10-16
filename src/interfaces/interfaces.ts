@@ -167,3 +167,20 @@ export interface UseSearchTransactionResponse {
     loading: boolean;
     error: string | null;
 }
+
+export interface FileDetailsResponse {
+    id: string;
+    identificadorFondo: string;
+    fecha: string;
+    nombre: string;
+    orden: number;
+}
+
+export interface FileInfoProps {
+    fileDetails: FileDetailsResponse | null;
+    loading: boolean;
+}
+
+export interface FileDetailsWithFetchProps extends FileInfoProps {
+    getFileDetails: (idArchivo: string) => Promise<void>;
+}

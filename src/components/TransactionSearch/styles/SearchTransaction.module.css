@@ -90,17 +90,3 @@
     flex-direction: column;
     gap: 20px;
 }
-
-/* Information from the Archive */
-.fileInfoContainer,
-.detailsContainer {
-    padding: 20px;
-    background-color: var(--background-color);
-    border: 1px solid #ccc;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-}
-
-.detailsContainer p {
-    margin: 5px 0;
-}
