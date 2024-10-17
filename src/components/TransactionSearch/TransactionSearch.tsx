@@ -103,7 +103,7 @@ const TransactionSearch: React.FC = (): JSX.Element => {
 
             {/* Wrapper for the search results and additional details containers */}
             {searchAttempted && (
-                <div className={`${styles.resultsWrapper} ${selectedTransaction ? styles.resultsWithDetails : ""}`}>
+                 <div className={`${styles.resultsWrapper} ${selectedTransaction ? styles.resultsWithDetails : styles.resultsOnlyCentered}`}>
                     <div className={styles.resultContainer}>
                         <h3 className={styles.resultContainerTitle}>Resultado Obtenido</h3>
 
