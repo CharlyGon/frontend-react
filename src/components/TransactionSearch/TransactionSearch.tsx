@@ -2,11 +2,33 @@ import React, { useCallback, useState } from "react";
 import { useSearchTransaction } from "../hooks/useSearchTransaction";
 import { Transaction } from "../../interfaces/interfaces";
 import { TransactionDetails } from "./TransactionDetails";
-
-import styles from "./styles/SearchTransaction.module.css";
 import { FileInfo } from "./TransactionFile";
 import { useFileDetails } from "../hooks/useFileDetails";
 import TransactionList from "./TransactionList";
+
+import styles from "./styles/SearchTransaction.module.css";
+
+/**
+ * Mock transaction details for testing purposes.
+ * !DO NOT USE IN PRODUCTION!
+ */
+const selectedTransactionDetails = {
+    entidadAcreditar: "Banco de la Nación Argentina",
+    sucursalAcreditar: "Sucursal 1",
+    digitoCBU: "1",
+    bloqueCBU: "1234567890123456789012",
+    importe: "1000",
+    referenciaUnivoca: "123456",
+    identificadorCliente: "123456",
+    claseDocumento: "DNI",
+    tipoDocumento: "Documento Nacional de Identidad",
+    numeroDocumento: "12345678",
+    estado: "Aprobado",
+    identificadorPrestamo: "123456",
+    numeroOperacionLink: "123456",
+    filler: "123456",
+    observaciones: "Observaciones especiales relacionadas con la transacción.",
+};
 
 /**
  * Component to search for transactions.
@@ -100,7 +122,7 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                     )}
 
                     {selectedTransaction && (
-                        <TransactionDetails selectedTransaction={selectedTransaction} />
+                        <TransactionDetails selectedTransactionDetails={selectedTransactionDetails} />
                     )}
                 </div>
             </div>

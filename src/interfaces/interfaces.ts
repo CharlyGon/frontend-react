@@ -190,3 +190,21 @@ export interface TransactionListProps {
     selectedTransaction: Transaction | null;
     onSelectTransaction: (transaction: Transaction) => void;
 }
+
+export interface TransactionDetailsProps {
+    entidadAcreditar: string;
+    sucursalAcreditar: string;
+    digitoCBU: string;
+    bloqueCBU: string;
+    importe: string;
+    referenciaUnivoca: string;
+    identificadorCliente: string;
+    claseDocumento: string;
+    tipoDocumento: string;
+    numeroDocumento: string;
+    estado: string;
+    identificadorPrestamo: string;
+    numeroOperacionLink: string;
+    filler: string;
+    observaciones: string;
+}

@@ -1,5 +1,6 @@
 import React from "react";
-import { Transaction, TransactionListProps } from "../../interfaces/interfaces";
+import { TransactionListProps } from "../../interfaces/interfaces";
+
 import styles from "./styles/ListTransaction.module.css";
 
 /**
@@ -20,10 +21,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
                 transactions.map((transaction) => (
                     <button
                         key={transaction.idArchivo}
-                        className={`${styles.transactionItem} ${selectedTransaction?.idArchivo === transaction.idArchivo
-                            ? styles.selectedTransaction
-                            : ""
-                            }`}
+                        className={`${styles.transactionItem}
+                        ${selectedTransaction?.idArchivo === transaction.idArchivo ? styles.selectedTransaction : ""}`}
                         onClick={() => onSelectTransaction(transaction)}
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
