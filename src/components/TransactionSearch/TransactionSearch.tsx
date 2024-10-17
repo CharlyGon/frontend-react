@@ -41,6 +41,7 @@ const TransactionSearch: React.FC = (): JSX.Element => {
     const { transactions, searchTransactions, loading, error } = useSearchTransaction();
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
     const { fileDetails, getFileDetails, loading: loadingDetails } = useFileDetails();
+    const [searchAttempted, setSearchAttempted] = useState<boolean>(false);
 
     // Handle input change
     const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +52,7 @@ const TransactionSearch: React.FC = (): JSX.Element => {
     const handleSearch = useCallback(() => {
         if (searchTerm.trim() !== "") {
             searchTransactions(searchTerm);
+            setSearchAttempted(true);
         } else {
             console.log("Ingrese un término de búsqueda válido.");
         }
@@ -100,32 +102,34 @@ const TransactionSearch: React.FC = (): JSX.Element => {
             )}
 
             {/* Wrapper for the search results and additional details containers */}
-            <div className={styles.resultsWrapper}>
-                <div className={styles.resultContainer}>
-                    <h3 className={styles.resultContainerTitle}>Resultado Obtenido</h3>
+            {searchAttempted && (
+                <div className={`${styles.resultsWrapper} ${selectedTransaction ? styles.resultsWithDetails : ""}`}>
+                    <div className={styles.resultContainer}>
+                        <h3 className={styles.resultContainerTitle}>Resultado Obtenido</h3>
 
-                    {/* Use the TransactionList component */}
-                    <TransactionList
-                        transactions={transactions}
-                        selectedTransaction={selectedTransaction}
-                        onSelectTransaction={handleTransactionSelect}
-                    />
-                </div>
-
-                {/* Containers displaying additional details on the right side */}
-                <div className={styles.rightContainers}>
-                    {selectedTransaction && (
-                        <FileInfo
-                            fileDetails={fileDetails}
-                            loading={loadingDetails}
+                        {/* Use the TransactionList component */}
+                        <TransactionList
+                            transactions={transactions}
+                            selectedTransaction={selectedTransaction}
+                            onSelectTransaction={handleTransactionSelect}
                         />
-                    )}
+                    </div>
 
-                    {selectedTransaction && (
-                        <TransactionDetails selectedTransactionDetails={selectedTransactionDetails} />
-                    )}
+                    {/* Containers displaying additional details on the right side */}
+                    <div className={styles.rightContainers}>
+                        {selectedTransaction && (
+                            <FileInfo
+                                fileDetails={fileDetails}
+                                loading={loadingDetails}
+                            />
+                        )}
+
+                        {selectedTransaction && (
+                            <TransactionDetails selectedTransactionDetails={selectedTransactionDetails} />
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

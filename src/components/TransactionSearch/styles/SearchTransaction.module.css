@@ -8,6 +8,7 @@
     padding: 20px;
 }
 
+/* Wrapper for the input and button */
 .operationNumberWrapper {
     display: flex;
     flex-direction: column;
@@ -21,6 +22,7 @@
     margin-bottom: 10px;
 }
 
+/* Container for the search input and button */
 .operationNumberContainer {
     display: flex;
     flex-direction: column;
@@ -33,6 +35,7 @@
     box-sizing: border-box;
 }
 
+/* Input field for the transaction ID */
 .transactionSearchInput {
     width: 100%;
     padding: 10px;
@@ -42,6 +45,7 @@
     border-radius: var(--border-radius);
 }
 
+/* Search button styling */
 .transactionSearchButton {
     width: 100%;
     padding: 10px;
@@ -61,15 +65,24 @@
 /* Group the results and containers on the right */
 .resultsWrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: stretch;
     width: 100%;
     margin-top: 30px;
     gap: 20px;
 }
 
+/* When there are details to show, align them side-by-side */
+.resultsWithDetails {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 /* Result Container */
 .resultContainer {
-    flex-basis: 60%;
+    flex: 1;
+    width: 100%;
+    max-width: 800px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: var(--border-radius);
