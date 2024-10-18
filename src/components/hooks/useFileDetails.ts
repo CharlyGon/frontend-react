@@ -10,7 +10,7 @@ import { FileDetailsResponse, FileDetailsWithFetchProps } from "../../interfaces
  */
 export const useFileDetails = (): FileDetailsWithFetchProps => {
     const [fileDetails, setFileDetails] = useState<FileDetailsResponse | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [fileLoading, setFileLoading] = useState(false);
 
     const getFileDetails = useCallback(async (idArchivo: string) => {
         if (!idArchivo) {
@@ -18,7 +18,7 @@ export const useFileDetails = (): FileDetailsWithFetchProps => {
             return;
         }
 
-        setLoading(true);
+        setFileLoading(true);
 
         try {
             const response = await fetchFileDetailsService(idArchivo);
@@ -26,13 +26,13 @@ export const useFileDetails = (): FileDetailsWithFetchProps => {
         } catch (err) {
             console.error("Error fetching file details: ", err);
         } finally {
-            setLoading(false);
+            setFileLoading(false);
         }
     }, []);
 
     return {
         fileDetails,
         getFileDetails,
-        loading,
+        fileLoading,
     };
 };

@@ -1,0 +1,50 @@
+.skeletonContainer {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    min-height: 800px;
+    box-sizing: border-box;
+}
+
+.skeletonContainer:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.skeletonHeader {
+    width: 60%;
+    height: 24px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    animation: shimmer 1.5s infinite linear;
+}
+
+.skeletonContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.skeletonLine {
+    height: 20px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    animation: shimmer 1.5s infinite linear;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Shimmer animation for better visual indication of loading */
+@keyframes shimmer {
+    0% {
+        background-position: -468px 0;
+    }
+    100% {
+        background-position: 468px 0;
+    }
+}

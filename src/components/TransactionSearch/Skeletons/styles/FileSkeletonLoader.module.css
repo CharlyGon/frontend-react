@@ -1,0 +1,44 @@
+/* Skeleton loader container */
+.skeletonLoaderContainer {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    box-sizing: border-box;
+}
+
+/* Skeleton header to simulate a title */
+.skeletonHeader {
+    height: 20px;
+    width: 60%;
+    background: #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Skeleton lines to simulate paragraphs */
+.skeletonLine {
+    height: 15px;
+    width: 100%;
+    background: #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Keyframes for the pulse effect */
+@keyframes pulse {
+    0% {
+        background-color: #e0e0e0;
+    }
+    50% {
+        background-color: #d3d3d3;
+    }
+    100% {
+        background-color: #e0e0e0;
+    }
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { FileInfoProps } from "../../interfaces/interfaces";
 
 import styles from "./styles/FileTransaction.module.css";
+import SkeletonLoader from "./Skeletons/FileSkeletonLoader";
 
 /**
  * Component to display basic information about the selected file.
@@ -11,12 +12,10 @@ import styles from "./styles/FileTransaction.module.css";
  */
 export const FileInfo: React.FC<FileInfoProps> = ({
     fileDetails,
-    loading,
+    fileLoading,
 }: FileInfoProps): JSX.Element => {
-    if (loading) {
-        return <p className={styles.loadingMessage}>
-            Cargando detalles del archivo...
-        </p>;
+    if (fileLoading) {
+        return <SkeletonLoader />;
     }
 
     if (!fileDetails) {

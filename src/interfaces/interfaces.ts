@@ -178,7 +178,7 @@ export interface FileDetailsResponse {
 
 export interface FileInfoProps {
     fileDetails: FileDetailsResponse | null;
-    loading: boolean;
+    fileLoading: boolean;
 }
 
 export interface FileDetailsWithFetchProps extends FileInfoProps {
