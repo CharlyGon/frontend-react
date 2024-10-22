@@ -1,0 +1,39 @@
+/* Skeleton line items */
+.skeletonItem {
+    height: 20px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Animation for a pulsing effect to make it look like loading */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Skeleton header style, similar to skeleton items but with a different width */
+.skeletonHeader {
+    height: 25px;
+    width: 60%;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Ensures consistent spacing */
+.skeletonSpacing {
+    margin-bottom: 15px;
+}

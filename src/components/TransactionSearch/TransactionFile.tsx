@@ -2,7 +2,7 @@ import React from "react";
 import { FileInfoProps } from "../../interfaces/interfaces";
 
 import styles from "./styles/FileTransaction.module.css";
-import SkeletonLoader from "./Skeletons/FileSkeletonLoader";
+import { SkeletonLoader } from "./Skeletons/FileSkeletonLoader";
 
 /**
  * Component to display basic information about the selected file.
@@ -36,5 +36,3 @@ export const FileInfo: React.FC<FileInfoProps> = ({
         </div>
     );
 };
-
-export default FileInfo;

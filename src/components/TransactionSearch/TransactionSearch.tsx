@@ -7,6 +7,7 @@ import { useFileDetails } from "../hooks/useFileDetails";
 import TransactionList from "./TransactionList";
 
 import styles from "./styles/SearchTransaction.module.css";
+import { ListSkeletonOperation } from "./Skeletons/ListSkeletonLoader";
 
 /**
  * Mock transaction details for testing purposes.
@@ -68,13 +69,32 @@ const TransactionSearch: React.FC = (): JSX.Element => {
         mockGetTransactionDetails(transaction.idArchivo);
     }, [getFileDetails]);
 
+    let content;
+
+    if (loading) {
+        content = <ListSkeletonOperation />;
+    } else if (transactions.length > 0) {
+        content = (
+            <TransactionList
+                transactions={transactions}
+                selectedTransaction={selectedTransaction}
+                onSelectTransaction={handleTransactionSelect}
+            />
+        );
+    } else {
+        content = (
+            <p className={styles.noTransactionsMessage}>
+                No se encontraron transacciones.
+            </p>
+        );
+    }
 
     //! Mock function to simulate fetching file details.
     const mockGetTransactionDetails = (transactionId: string) => {
-        setTransactionDetailsLoading(true); // Iniciar el estado de carga.
+        setTransactionDetailsLoading(true);
         setTimeout(() => {
-            setSelectedTransactionDetails(selectedTransactionDetailsMock); // Aquí asignamos los detalles después de la carga.
-            setTransactionDetailsLoading(false); // Finalizar el estado de carga.
+            setSelectedTransactionDetails(selectedTransactionDetailsMock);
+            setTransactionDetailsLoading(false);
         }, 2000);
     };
 
@@ -107,28 +127,18 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                 </div>
             </div>
 
-            {/* Display loading state */}
-            {loading && <p className={styles.loadingMessage}>Cargando transacciones...</p>}
-
-            {/* Display error message */}
-            {error && (
-                <p className={styles.errorMessage}>No se encontraron transacciones. Por favor, intente nuevamente.</p>
-            )}
-
             {/* Wrapper for the search results and additional details containers */}
             {searchAttempted && (
                 <div className={`${styles.resultsWrapper} ${selectedTransaction ? styles.resultsWithDetails : styles.resultsOnlyCentered}`}>
                     <div className={styles.resultContainer}>
-                        <h3 className={styles.resultContainerTitle}>Resultado Obtenido</h3>
+                        {/* Mostrar el título solo cuando no está cargando */}
+                        {!loading && (
+                            <h3 className={styles.resultContainerTitle}>Resultado Obtenido</h3>
+                        )}
 
-                        {/* Use the TransactionList component */}
-                        <TransactionList
-                            transactions={transactions}
-                            selectedTransaction={selectedTransaction}
-                            onSelectTransaction={handleTransactionSelect}
-                        />
+                        {/* Use the TransactionList or TransactionListSkeleton component */}
+                        {content}
                     </div>
-
                     {/* Containers displaying additional details on the right side */}
                     <div className={styles.rightContainers}>
                         {selectedTransaction && (

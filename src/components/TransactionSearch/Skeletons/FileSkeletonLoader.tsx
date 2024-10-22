@@ -7,7 +7,7 @@ import styles from "./styles/FileSkeletonLoader.module.css";
  *
  * @returns {JSX.Element} Skeleton loader component.
  */
-const SkeletonLoader: React.FC = (): JSX.Element => {
+export const SkeletonLoader: React.FC = (): JSX.Element => {
     return (
         <div className={styles.skeletonLoaderContainer}>
             <div className={styles.skeletonHeader}></div>
@@ -18,5 +18,3 @@ const SkeletonLoader: React.FC = (): JSX.Element => {
         </div>
     );
 };
-
-export default SkeletonLoader;
