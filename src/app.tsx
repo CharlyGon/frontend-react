@@ -6,7 +6,7 @@ import Header from "./layouts/header/Header";
 import Body from "./components/Body";
 import SupportWidget from "./components/widget/Widget";
 import Logs from "./components/Logs/Logs";
-import TransactionSearch from "./components/TransactionSearch/TransactionSearch";
+import TransactionSearch from "./components/TransactionSearch/Componets/TransactionSearch";
 import Dashboard from "./components/Dashboard/Dashboard";
 
 import styles from "./App.module.css";

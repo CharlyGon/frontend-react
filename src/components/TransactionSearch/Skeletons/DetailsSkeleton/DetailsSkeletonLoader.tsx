@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles/DetailsSkeletonLoader.module.css";
+import styles from "./DetailsSkeletonLoader.module.css";
 
 /**
  * SkeletonLoader for TransactionDetails component.

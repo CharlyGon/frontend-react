@@ -1,35 +1,14 @@
 import React, { useCallback, useState } from "react";
-import { useSearchTransaction } from "../hooks/useSearchTransaction";
-import { Transaction, TransactionDetailsProps } from "../../interfaces/interfaces";
+import { useSearchTransaction } from "../Hooks/useSearchTransaction";
+import { Transaction } from "../../../interfaces/interfaces";
 import { TransactionDetails } from "./TransactionDetails";
 import { FileInfo } from "./TransactionFile";
-import { useFileDetails } from "../hooks/useFileDetails";
+import { useFileDetails } from "../Hooks/useFileDetails";
 import TransactionList from "./TransactionList";
 
-import styles from "./styles/SearchTransaction.module.css";
-import { ListSkeletonOperation } from "./Skeletons/ListSkeletonLoader";
-
-/**
- * Mock transaction details for testing purposes.
- * !DO NOT USE IN PRODUCTION!
- */
-const selectedTransactionDetailsMock = {
-    entidadAcreditar: "Banco de la Nación Argentina",
-    sucursalAcreditar: "Sucursal 1",
-    digitoCBU: "1",
-    bloqueCBU: "1234567890123456789012",
-    importe: "1000",
-    referenciaUnivoca: "123456",
-    identificadorCliente: "123456",
-    claseDocumento: "DNI",
-    tipoDocumento: "Documento Nacional de Identidad",
-    numeroDocumento: "12345678",
-    estado: "Aprobado",
-    identificadorPrestamo: "123456",
-    numeroOperacionLink: "123456",
-    filler: "123456",
-    observaciones: "Observaciones especiales relacionadas con la transacción.",
-};
+import styles from "../styles/SearchTransaction.module.css";
+import { ListSkeletonOperation } from "../Skeletons/ListSkeletonLoader/ListSkeletonLoader";
+import { useOperationDetails } from "../Hooks/useOperationDetails";
 
 /**
  * Component to search for transactions.
@@ -39,13 +18,11 @@ const selectedTransactionDetailsMock = {
  */
 const TransactionSearch: React.FC = (): JSX.Element => {
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const { transactions, searchTransactions, loading, error } = useSearchTransaction();
+    const { transactions, searchTransactions, loading } = useSearchTransaction();
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
     const { fileDetails, getFileDetails, fileLoading: fileloading } = useFileDetails();
     const [searchAttempted, setSearchAttempted] = useState<boolean>(false);
-    const [transactionDetailsLoading, setTransactionDetailsLoading] = useState<boolean>(false);
-    const [selectedTransactionDetails, setSelectedTransactionDetails] = useState<TransactionDetailsProps | null>(null);
-
+    const { transactionDetails, loading: transactionDetailsLoading, getOperationDetails, } = useOperationDetails();
 
     // Handle input change
     const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,8 +43,8 @@ const TransactionSearch: React.FC = (): JSX.Element => {
     const handleTransactionSelect = useCallback((transaction: Transaction) => {
         setSelectedTransaction(transaction);
         getFileDetails(transaction.idArchivo);
-        mockGetTransactionDetails(transaction.idArchivo);
-    }, [getFileDetails]);
+        getOperationDetails(transaction.idRegistroIndividual);
+    }, [getFileDetails, getOperationDetails]);
 
     let content;
 
@@ -88,16 +65,6 @@ const TransactionSearch: React.FC = (): JSX.Element => {
             </p>
         );
     }
-
-    //! Mock function to simulate fetching file details.
-    const mockGetTransactionDetails = (transactionId: string) => {
-        setTransactionDetailsLoading(true);
-        setTimeout(() => {
-            setSelectedTransactionDetails(selectedTransactionDetailsMock);
-            setTransactionDetailsLoading(false);
-        }, 2000);
-    };
-
 
     return (
         <div className={styles.mainContainerTransactionSearch}>
@@ -150,7 +117,7 @@ const TransactionSearch: React.FC = (): JSX.Element => {
 
                         {selectedTransaction && (
                             <TransactionDetails
-                                selectedTransactionDetails={selectedTransactionDetails}
+                                selectedTransactionDetails={transactionDetails}
                                 loading={transactionDetailsLoading}
                             />
                         )}

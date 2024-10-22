@@ -27,9 +27,7 @@ export const searchTransactionService = async (
 
         const data: TransactionSearchResponse = await response.json();
 
-        //!ahora trae id el id   "idRegistroIndividual": 0
         return data;
-
     } catch (error) {
         console.error("Failed to fetch transactions:", error);
         throw error; // Re-throw the error after logging it

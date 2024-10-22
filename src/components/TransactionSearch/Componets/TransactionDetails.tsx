@@ -1,8 +1,8 @@
 import React from "react";
-import { TransactionDetailsProps } from "../../interfaces/interfaces";
+import { TransactionDetailsProps } from "../../../interfaces/interfaces";
 
-import styles from "./styles/DetailsTransaction.module.css";
-import TransactionDetailsSkeleton from "./Skeletons/DetailsSkeletonLoader";
+import styles from "../styles/DetailsTransaction.module.css";
+import TransactionDetailsSkeleton from "../Skeletons/DetailsSkeleton/DetailsSkeletonLoader";
 
 /**
  * Component to display the details of the selected transaction.

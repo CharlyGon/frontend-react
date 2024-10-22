@@ -1,7 +1,7 @@
 import React from "react";
-import { TransactionListProps } from "../../interfaces/interfaces";
+import { TransactionListProps } from "../../../interfaces/interfaces";
 
-import styles from "./styles/ListTransaction.module.css";
+import styles from "../styles/ListTransaction.module.css";
 
 /**
  * Component to display a list of transactions.

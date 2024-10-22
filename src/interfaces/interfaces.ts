@@ -151,6 +151,7 @@ export interface HeaderProps {
 export interface Transaction {
     idArchivo: string;
     linea: string;
+    idRegistroIndividual: number;
 }
 
 export interface TransactionSearchResponse {
@@ -207,4 +208,11 @@ export interface TransactionDetailsProps {
     numeroOperacionLink: string;
     filler: string;
     observaciones: string;
+}
+
+export interface UseOperationDetailsProps {
+    transactionDetails: TransactionDetailsProps | null;
+    loading: boolean;
+    error: string | null;
+    getOperationDetails: (transactionId: number) => Promise<void>;
 }

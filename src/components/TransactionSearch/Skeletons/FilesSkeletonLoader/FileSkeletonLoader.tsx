@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles/FileSkeletonLoader.module.css";
+import styles from "./FileSkeletonLoader.module.css";
 
 /**
  * SkeletonLoader component for displaying a loading animation.

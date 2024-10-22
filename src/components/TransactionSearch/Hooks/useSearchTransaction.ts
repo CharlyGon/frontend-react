@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import { searchTransactionService } from "../../services/searchTransactionService";
-import { Transaction, UseSearchTransactionResponse } from "../../interfaces/interfaces";
+import { searchTransactionService } from "../../../services/searchTransactionService";
+import { Transaction, UseSearchTransactionResponse } from "../../../interfaces/interfaces";
 
 /**
  * Custom hook for searching transactions.

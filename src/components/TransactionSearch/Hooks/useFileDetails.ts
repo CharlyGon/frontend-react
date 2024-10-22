@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import { fetchFileDetailsService } from "../../services/fileService";
-import { FileDetailsResponse, FileDetailsWithFetchProps } from "../../interfaces/interfaces";
+import { fetchFileDetailsService } from "../../../services/fileService";
+import { FileDetailsResponse, FileDetailsWithFetchProps } from "../../../interfaces/interfaces";
 
 /**
  * Custom hook for fetching file details by file ID.
