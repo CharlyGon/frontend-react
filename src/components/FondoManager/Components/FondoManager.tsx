@@ -10,7 +10,7 @@ import { Fondo } from "../../../interfaces/interfaces";
 import { downloadFile } from "../../../services/fileService";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { Config } from "../../../config";
-import { useInitialLoading } from "../../hooks/useInitialLoading";
+import { useInitialLoading } from "../Hooks/useInitialLoading";
 import dayjs from "dayjs";
 
 import styles from "../styles/FondoManager.module.css";

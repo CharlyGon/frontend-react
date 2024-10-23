@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Fondo, UseInitialLoadingResult } from "../../interfaces/interfaces";
+import { Fondo, UseInitialLoadingResult } from "../../../interfaces/interfaces";
 
 /**
  * Custom hook to manage the initial loading state and handle potential errors.
