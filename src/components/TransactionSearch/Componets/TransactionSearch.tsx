@@ -97,8 +97,10 @@ const TransactionSearch: React.FC = (): JSX.Element => {
             {/* Wrapper for the search results and additional details containers */}
             {searchAttempted && (
                 <div className={`${styles.resultsWrapper} ${selectedTransaction ? styles.resultsWithDetails : styles.resultsOnlyCentered}`}>
+
                     <div className={styles.resultContainer}>
-                        {/* Mostrar el título solo cuando no está cargando */}
+
+                        {/* Show title only when not loading */}
                         {!loading && (
                             <h3 className={styles.resultContainerTitle}>Resultado Obtenido</h3>
                         )}
@@ -106,6 +108,7 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                         {/* Use the TransactionList or TransactionListSkeleton component */}
                         {content}
                     </div>
+
                     {/* Containers displaying additional details on the right side */}
                     <div className={styles.rightContainers}>
                         {selectedTransaction && (

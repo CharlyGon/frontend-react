@@ -20,21 +20,18 @@ const TransactionList: React.FC<TransactionListProps> = ({
             {transactions.length > 0 ? (
                 transactions.map((transaction, index) => (
                     <button
-                    key={`${transaction.idArchivo}-${index}`} // Usar transaction.idArchivo combinado con index
-                    className={`${styles.transactionItem} ${
-                      selectedTransaction?.idArchivo === transaction.idArchivo
-                        ? styles.selectedTransaction
-                        : ""
-                    }`}
-                    onClick={() => onSelectTransaction(transaction)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        onSelectTransaction(transaction);
-                      }
-                    }}
-                  >
-                    <p>Linea: {transaction.linea}</p>
-                  </button>
+                        key={`${transaction.idArchivo}-${index}`}
+                        className={`${styles.transactionItem} ${selectedTransaction?.idArchivo === transaction.idArchivo
+                            ? styles.selectedTransaction : ""}`}
+                        onClick={() => onSelectTransaction(transaction)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                onSelectTransaction(transaction);
+                            }
+                        }}
+                    >
+                        <p>Linea: {transaction.linea}</p>
+                    </button>
                 ))
             ) : (
                 <p className={styles.noTransactionsMessage}>
