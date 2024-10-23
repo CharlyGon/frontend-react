@@ -6,8 +6,9 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    height: auto;
+    min-height: 250px;
     box-sizing: border-box;
+    border: 1px solid #e0e0e0;
 }
 
 /* Skeleton header to simulate a title */
