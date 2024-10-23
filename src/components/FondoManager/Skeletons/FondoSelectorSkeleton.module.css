@@ -1,0 +1,53 @@
+.skeletonItemContainer {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.skeletonItemContainer:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Skeleton Header with Degraded Effect */
+.skeletonHeader {
+    width: 50%;
+    height: 24px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Container for each skeleton item */
+.skeletonList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.skeletonLine {
+    height: 20px;
+    width: 100%;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 8px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* Keyframes for shimmer animation */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}

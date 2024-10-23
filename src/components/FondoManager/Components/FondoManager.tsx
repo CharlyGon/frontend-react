@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 
 import styles from "../styles/FondoManager.module.css";
 import cardStyles from "../styles/Card.module.css";
+import { FondoSkeletonLoader } from "../Skeletons/FondoSelectorSkeleton";
 
 
 /**
@@ -70,11 +71,7 @@ const FondoManager: React.FC = (): JSX.Element => {
     }, [selectedFile, fileContent]);
 
     const renderInitialLoading = () => (
-        initialLoading && (
-            <div className={styles.loadingMessage}>
-                Loading investment funds, please wait...
-            </div>
-        )
+        initialLoading && <FondoSkeletonLoader />
     );
 
     const renderError = () => (
