@@ -3,18 +3,18 @@ import FondoSelector from "./FondoSelector";
 import FondoDetails from "./FondoDetails";
 import FileSelector from "./FileSelector";
 import FileContent from "./FileContent";
-import { useFondos } from "../hooks/useFondos";
-import { useFiles } from "../hooks/useFiles";
-import { useFileContent } from "../hooks/useFileContent";
-import { Fondo } from "../../interfaces/interfaces";
-import { downloadFile } from "../../services/fileService";
-import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
-import { Config } from "../../config";
-import { useInitialLoading } from "../hooks/useInitialLoading";
+import { useFondos } from "../Hooks/useFondos";
+import { useFiles } from "../Hooks/useFiles";
+import { useFileContent } from "../Hooks/useFileContent";
+import { Fondo } from "../../../interfaces/interfaces";
+import { downloadFile } from "../../../services/fileService";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import { Config } from "../../../config";
+import { useInitialLoading } from "../../hooks/useInitialLoading";
 import dayjs from "dayjs";
 
-import styles from "./styles/FondoManager.module.css";
-import cardStyles from "./styles/Card.module.css";
+import styles from "../styles/FondoManager.module.css";
+import cardStyles from "../styles/Card.module.css";
 
 
 /**
@@ -43,8 +43,7 @@ const FondoManager: React.FC = (): JSX.Element => {
     const { fondos, loadingFondos, hasMoreFondos, setPage, errorFondos } = useFondos();
     const [selectedFondo, setSelectedFondo] = useState<Fondo | null>(null);
     const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
-    //const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format("YYYY-MM-DD"));
-    const [selectedDate, setSelectedDate] = useState<string | null>("2024-10-09"); //! Mantener para pruebas
+    const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format("YYYY-MM-DD"));
 
     const { files, loadingFiles } = useFiles(selectedFondo ? selectedFondo.identificadorFondo : null, selectedDate);
     const {

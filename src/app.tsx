@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import FondoManager from "./components/FondoManager/FondoManager";
+import FondoManager from "./components/FondoManager/Components/FondoManager";
 import Sidebar from "./layouts/sidebar/Sidebar";
 import Header from "./layouts/header/Header";
 import Body from "./components/Body";

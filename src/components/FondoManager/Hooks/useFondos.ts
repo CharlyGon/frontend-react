@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { Fondo, UseFondosResult } from "../../interfaces/interfaces";
-import { fetchFondos } from "../../services/fondoService";
+import { Fondo, UseFondosResult } from "../../../interfaces/interfaces";
+import { fetchFondos } from "../../../services/fondoService";
 
 const isFondoDuplicate = (existingFondos: Fondo[], newFondo: Fondo): boolean => {
     return existingFondos.some((fondo) => fondo.id === newFondo.id);

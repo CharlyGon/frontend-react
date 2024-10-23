@@ -1,7 +1,7 @@
 import React from "react";
-import { FondoDetailsProps } from "../../interfaces/interfaces";
+import { FondoDetailsProps } from "../../../interfaces/interfaces";
 
-import styles from "./styles/FondoDetails.module.css";
+import styles from "../styles/FondoDetails.module.css";
 
 /**
  * Component for displaying the details of a selected fondo.

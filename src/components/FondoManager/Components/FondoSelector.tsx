@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
-import { FondoSelectorProps } from "../../interfaces/interfaces";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import { FondoSelectorProps } from "../../../interfaces/interfaces";
 
-import styles from "./styles/FondoSelector.module.css";
+import styles from "../styles/FondoSelector.module.css";
 
 /**
  * Component for selecting a fondo from a list.

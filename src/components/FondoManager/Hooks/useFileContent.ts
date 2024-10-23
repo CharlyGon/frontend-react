@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { fetchFileContentById } from "../../services/fileService";
-import { UseFileContentResult } from "../../interfaces/interfaces";
+import { fetchFileContentById } from "../../../services/fileService";
+import { UseFileContentResult } from "../../../interfaces/interfaces";
 
 /**
  * Custom hook to manage file content fetching and pagination.

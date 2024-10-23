@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { fetchFilesForFondo } from "../../services/fileService";
-import { FondoFile, UseFilesResult } from "../../interfaces/interfaces";
+import { fetchFilesForFondo } from "../../../services/fileService";
+import { FondoFile, UseFilesResult } from "../../../interfaces/interfaces";
 
 /**
  * Custom hook to fetch and manage files related to a selected fondo and date.

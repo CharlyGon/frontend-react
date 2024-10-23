@@ -1,9 +1,9 @@
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { FileContentProps } from "../../interfaces/interfaces";
+import { FileContentProps } from "../../../interfaces/interfaces";
 
-import styles from "./styles/FileContent.module.css";
+import styles from "../styles/FileContent.module.css";
 
 /**
  * Component for displaying the content of a selected file.

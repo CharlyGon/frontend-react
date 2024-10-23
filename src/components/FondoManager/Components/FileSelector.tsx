@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import React, { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { FileSelectorProps } from "../../interfaces/interfaces";
+import { FileSelectorProps } from "../../../interfaces/interfaces";
 import dayjs from "dayjs";
 
-import styles from "./styles/FileSelector.module.css";
+import styles from "../styles/FileSelector.module.css";
 
 /**
  * Component for selecting a file from a list of files.
