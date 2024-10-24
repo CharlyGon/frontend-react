@@ -5,6 +5,9 @@ export interface Fondo {
     identificadorFondo: string;
     tipoRescate: string;
     codigoInterfaz: string;
+    bloqueCBUEmpresa: string;
+    codigoConvenio: string;
+    identificadorEmpresa: string;
 }
 
 export interface FileContent {
@@ -16,6 +19,9 @@ export interface FondoDetails {
     identificadorFondo: string;
     tipoRescate: string;
     codigoInterfaz: string;
+    bloqueCBUEmpresa: string;
+    codigoConvenio: string;
+    identificadorEmpresa: string;
 }
 
 export interface FondoDetailsProps {
