@@ -1,8 +1,6 @@
 import { Config } from "../config";
 import { TransactionSearchResponse } from "../interfaces/interfaces";
 
-const BASE_URL = Config.API_BASE_URL;
-
 /**
  * Service to search transactions based on a given search term.
  * @param {string} searchTerm - The term to search transactions for.
@@ -18,7 +16,7 @@ export const searchTransactionService = async (
 
     try {
         const response = await fetch(
-            `${BASE_URL}/ContenidoArchivo/GetByOperacion?Search=${encodeURIComponent(searchTerm)}`
+            `${Config.API_BASE_URL}/ContenidoArchivo/GetByOperacion?Search=${encodeURIComponent(searchTerm)}&PageSize=${Config.DEFAULT_PAGE_SIZE}`
         );
 
         if (!response.ok) {
