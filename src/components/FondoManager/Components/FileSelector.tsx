@@ -57,6 +57,8 @@ const FileSelector: React.FC<FileSelectorProps> = (
             setHighlight(true);
             const timer = setTimeout(() => setHighlight(false), 2000);
             return () => clearTimeout(timer);
+        } else {
+            setHighlight(false);
         }
     }, [files, selectedFile]);
 
