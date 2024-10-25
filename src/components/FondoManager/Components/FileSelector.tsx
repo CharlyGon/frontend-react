@@ -43,7 +43,7 @@ const FileSelector: React.FC<FileSelectorProps> = (
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const formattedDate = selectedDate ?? dayjs().format("YYYY-MM-DD");
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLSelectElement>(null);
 
     const toggleCalendar = () => {
         setShowCalendar(prev => !prev);
@@ -68,6 +68,10 @@ const FileSelector: React.FC<FileSelectorProps> = (
         hasMore: hasMoreFiles,
         loading,
     });
+
+    const noFilesMessage = files.length === 0
+        ? "No se encontraron archivos"
+        : "--- Selecciona un archivo ---";
 
     return (
         <div
@@ -135,47 +139,53 @@ const FileSelector: React.FC<FileSelectorProps> = (
                 </div>
             )}
 
-            {/* Botón del selector  */}
+            {/* Dropdown selector button */}
             <div className={styles.selectButtonWrapper}>
-                <div
+
+                {/* Button to toggle the dropdown list */}
+                <button
                     className={styles.selectButton}
                     onClick={toggleDropdown}
                     tabIndex={0}
-                    role="button"
                     aria-haspopup="listbox"
                     aria-expanded={isDropdownOpen}
                 >
                     {selectedFile
                         ? files.find((file) => file.id === selectedFile)?.nombre
-                        : files.length === 0
-                            ? "No se encontraron archivos"
-                            : "--- Selecciona un archivo ---"}
+                        : noFilesMessage}
                     <span className={styles.arrowDown}>▼</span>
-                </div>
+                </button>
 
-                {/* Lista desplegable */}
+                {/* Dropdown list to select a file */}
                 {isDropdownOpen && (
-                    <div ref={dropdownRef} className={styles.dropdownList} role="listbox">
+                    <select
+                        ref={dropdownRef}
+                        className={styles.dropdownList}
+                        size={files.length}
+                        onChange={(e) => handleSelect(e.target.value)}
+                        value={selectedFile ?? ""}
+                    >
+                        {/* List of available files to select */}
                         {files.map((file) => (
-                            <div
+                            <option
                                 key={file.id}
-                                onClick={() => handleSelect(file.id)}
+                                value={file.id}
                                 className={styles.dropdownItem}
-                                role="option"
                             >
                                 {file.nombre}
-                            </div>
+                            </option>
                         ))}
 
+                        {/* Message displayed when there are no files available */}
                         {!loading && files.length === 0 && (
-                            <div className={styles.noFilesMessage}>
-                                No se encontraron archivos para este fondo.
-                            </div>
+                            <option className={styles.noFilesMessage} disabled>
+                                No files available for this fund.
+                            </option>
                         )}
-                    </div>
+                    </select>
                 )}
-
             </div>
+
             {loading && (
                 <div className={styles.loadingMessage}>Cargando archivos...</div>
             )}
