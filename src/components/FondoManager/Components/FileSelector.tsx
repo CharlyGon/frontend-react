@@ -70,7 +70,10 @@ const FileSelector: React.FC<FileSelectorProps> = (
         newValue: SingleValue<{ value: string; label: string }>,
     ) => {
         if (newValue) {
-            onSelect(newValue.value);
+            const selectedFile = files.find(file => file.id === newValue.value);
+            if (selectedFile) {
+                onSelect(selectedFile);
+            }
         }
     };
 

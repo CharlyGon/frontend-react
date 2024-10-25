@@ -7,15 +7,16 @@ import { useFondos } from "../Hooks/useFondos";
 import { useFiles } from "../Hooks/useFiles";
 import { useFileContent } from "../Hooks/useFileContent";
 import { Fondo } from "../../../interfaces/interfaces";
-import { downloadFile } from "../../../services/fileService";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { Config } from "../../../config";
 import { useInitialLoading } from "../Hooks/useInitialLoading";
 import dayjs from "dayjs";
+import { saveAs } from 'file-saver';
 
 import styles from "../styles/FondoManager.module.css";
 import cardStyles from "../styles/Card.module.css";
 import { FondoSkeletonLoader } from "../Skeletons/FondoSelectorSkeleton";
+
 
 
 /**
@@ -43,7 +44,7 @@ import { FondoSkeletonLoader } from "../Skeletons/FondoSelectorSkeleton";
 const FondoManager: React.FC = (): JSX.Element => {
     const { fondos, loadingFondos, hasMoreFondos, setPage, errorFondos } = useFondos();
     const [selectedFondo, setSelectedFondo] = useState<Fondo | null>(null);
-    const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
+    const [selectedFile, setSelectedFile] = useState<{ id: string; nombre: string } | undefined>(undefined);
     const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format("YYYY-MM-DD"));
 
     const {
@@ -58,7 +59,7 @@ const FondoManager: React.FC = (): JSX.Element => {
         loadingFileContent,
         hasMoreFileContent,
         setFilePage,
-    } = useFileContent(selectedFile, selectedDate, Config.DEFAULT_PAGE_SIZE);
+    } = useFileContent(selectedFile?.id, selectedDate, Config.DEFAULT_PAGE_SIZE);
     const fileContentRef = useRef<HTMLPreElement>(null);
 
     const { initialLoading, showError } = useInitialLoading(loadingFondos, fondos, errorFondos);
@@ -70,11 +71,42 @@ const FondoManager: React.FC = (): JSX.Element => {
         loading: loadingFileContent,
     });
 
-    const handleDownload = useCallback(() => {
-        if (selectedFile && fileContent.length > 0) {
-            downloadFile(fileContent.join("\n"), `${selectedFile}.txt`, "text/plain");
+    //! Manejar la descarga del archivo completo desacoplar la lógica de descarga del archivo en una función separada
+    // Función para manejar la descarga del archivo completo usando fetch
+    const handleDownload = useCallback(async () => {
+        if (!selectedFile) {
+            console.error("No se ha seleccionado ningún archivo para descargar.");
+            return;
         }
-    }, [selectedFile, fileContent]);
+
+        try {
+            const response = await fetch(`http://theroomsoftware.ddns.net:5000/api/v1/ContenidoArchivo/GetAll?IdArchivo=${selectedFile.id}`);
+
+            if (!response.ok) {
+                throw new Error("Error al obtener el contenido del archivo");
+            }
+
+            const responseData = await response.json();
+
+            const lines = responseData.map((item: { linea: string }) => item.linea);
+
+            const fileContent = lines.join("\n");
+
+            if (!fileContent) {
+                throw new Error("No se encontró el contenido del archivo");
+            }
+
+            const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+
+            const fileName = selectedFile.nombre.includes('.') ? selectedFile.nombre : `${selectedFile.nombre}.txt`;
+
+            saveAs(blob, fileName);
+        } catch (error) {
+            console.error("Error descargando el archivo:", error);
+        }
+    }, [selectedFile]);
+
+    //!-----------------------------------------------------------------------------------------------------------------------
 
     // Memorizar selectedFondo basado en fondos.
     const currentSelectedFondo = useMemo(
@@ -131,7 +163,7 @@ const FondoManager: React.FC = (): JSX.Element => {
                     files={files}
                     onSelect={setSelectedFile}
                     loading={loadingFiles}
-                    selectedFile={selectedFile}
+                    selectedFile={selectedFile?.id}
                     selectedDate={selectedDate}
                     setSelectedDate={setSelectedDate}
                     loadMoreFiles={loadMoreFiles}
@@ -148,7 +180,7 @@ const FondoManager: React.FC = (): JSX.Element => {
                 <h4 className={cardStyles.cardTitle}>Contenido del Archivo</h4>
                 <FileContent
                     fileContent={fileContent ? fileContent.join("\n") : null}
-                    selectedFile={selectedFile}
+                    selectedFile={selectedFile?.id}
                     loading={loadingFileContent}
                     onDownload={handleDownload}
                     fileContentRef={fileContentRef}

@@ -48,8 +48,8 @@ export interface FondoSelectorProps {
 
 export interface FileSelectorProps {
     files: Array<{ id: string; nombre: string }>;
-    onSelect: (fileId: string) => void;
-    loading: boolean;
+   onSelect: (file: { id: string; nombre: string }) => void;
+   loading: boolean;
     selectedFile?: string;
     selectedDate: string | null;
     setSelectedDate: React.Dispatch<React.SetStateAction<string | null>>;
