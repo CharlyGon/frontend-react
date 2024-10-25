@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { FondoSelectorProps } from "../../../interfaces/interfaces";
+import Select, { SingleValue } from 'react-select';
 
 import styles from "../styles/FondoSelector.module.css";
 
@@ -26,6 +27,7 @@ const FondoSelector: React.FC<FondoSelectorProps> = ({
     loadingFondos,
 }: FondoSelectorProps): JSX.Element => {
     const dropdownRef = useRef<HTMLSelectElement>(null);
+    const [highlight, setHighlight] = useState(false);
 
     useInfiniteScroll({
         containerRef: dropdownRef,
@@ -34,28 +36,61 @@ const FondoSelector: React.FC<FondoSelectorProps> = ({
         loading: loadingFondos,
     });
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        onSelect(Number(event.target.value));
+    // Convertir fondos a un formato que sea compatible con react-select
+    const options = fondos.map((fondo) => ({
+        value: fondo.id.toString(),
+        label: fondo.identificadorFondo,
+    }));
+
+    const handleChange = (selectedOption: SingleValue<{ value: string; label: string }>) => {
+        if (selectedOption) {
+            onSelect(Number(selectedOption.value));
+        }
     };
+
+    useEffect(() => {
+        if (fondos.length > 0 && !selectedFondo) {
+            setHighlight(true);
+            const timer = setTimeout(() => setHighlight(false), 2000);
+            return () => clearTimeout(timer);
+        } else {
+            setHighlight(false);
+        }
+    }, [fondos, selectedFondo]);
 
     return (
         <div className={styles.fondoSelectorContainer}>
-            <select
-                className={styles.customDropdown}
+            <Select
+                options={options}
                 onChange={handleChange}
-                value={selectedFondo}
-                size={3}
-                ref={dropdownRef}
-            >
-                {fondos.map((fondo) => (
-                    <option
-                        key={fondo.id}
-                        value={fondo.id}
-                    >
-                        {fondo.identificadorFondo}
-                    </option>
-                ))}
-            </select>
+                value={options.find(option => option.value === selectedFondo?.toString()) ?? null}
+                placeholder={fondos.length > 0 ? "--- Selecciona un fondo ---" : "No se encontraron fondos"}
+                isLoading={loadingFondos}
+                className={`${styles.selectButton}`}
+                classNamePrefix="react-select"
+                onMenuScrollToBottom={loadMoreFondos}
+                menuPortalTarget={document.body}
+                menuPlacement="auto"
+                styles={{
+                    control: (base) => ({
+                        ...base,
+                        width: "100%",
+                        minHeight: "40px",
+                        textAlign: "center",
+                    }),
+                    placeholder: (base) => ({
+                        ...base,
+                        textAlign: "center",
+                        color: highlight ? "rgba(0, 56, 145, 0.7)" : base.color,
+                        fontWeight: highlight ? "bold" : base.fontWeight,
+                        transition: "color 0.3s ease, font-weight 0.3s ease",
+                    }),
+                    menu: (base) => ({
+                        ...base,
+                        zIndex: 1000,
+                    }),
+                }}
+            />
 
             <div className={styles.fondoActions}>
                 <p className={styles.loadingIndicator}>

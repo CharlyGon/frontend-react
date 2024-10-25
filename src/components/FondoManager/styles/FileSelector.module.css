@@ -239,7 +239,7 @@
     animation: pulseHighlight 1.5s ease-in-out infinite;
 }
 
-/* Estilo del botón desplegable */
+/* Drop-down button style */
 .selectButton {
     width: 100%;
     border: 1px solid #e0e0e0;
@@ -253,7 +253,7 @@
     position: relative;
 }
 
-/* Animación inicial de resaltado */
+/* Initial highlighting animation */
 @keyframes highlight {
     0% {
         box-shadow: 0 0 10px 5px rgba(0, 123, 255, 0.5);
@@ -263,7 +263,11 @@
     }
 }
 
-/* Clase para aplicar la animación inicial */
+/* Class to apply the initial animation */
 .highlight {
     animation: highlight 2s ease-in-out 0.5s forwards;
+}
+
+.selectButton:hover {
+    box-shadow: 0 0 10px 5px rgba(0, 56, 145, 0.5);
 }

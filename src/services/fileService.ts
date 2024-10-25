@@ -1,6 +1,6 @@
 import { Config } from "../config";
 import { FileDetailsResponse, FileResponse } from "../interfaces/interfaces";
-import { fetchFilesForFondoTest } from "../Mock/apiFileForFondo";
+import { fetchFilesForFondoTest } from "../Mock/apiFileForFondoTest";
 
 /**
  * Download a file
