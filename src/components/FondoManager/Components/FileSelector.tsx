@@ -165,6 +165,11 @@ const FileSelector: React.FC<FileSelectorProps> = (
                         ...base,
                         width: "100%", // Take the full width like the button
                         minHeight: "40px", // Keep the height similar to button height
+                        textAlign: "center", // Align the text to the left
+                    }),
+                    placeholder: (base) => ({
+                        ...base,
+                        textAlign: "center", // Align the placeholder text to the center
                     }),
                     menu: (base) => ({
                         ...base,
