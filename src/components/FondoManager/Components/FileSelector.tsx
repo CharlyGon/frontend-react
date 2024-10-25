@@ -1,12 +1,13 @@
 import { faCalendarAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { FileSelectorProps } from "../../../interfaces/interfaces";
 import dayjs from "dayjs";
 
 import styles from "../styles/FileSelector.module.css";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 
 /**
  * Component for selecting a file from a list of files.
@@ -20,6 +21,8 @@ import styles from "../styles/FileSelector.module.css";
  *   - selectedFile: The currently selected file (optional).
  *   - selectedDate: The currently selected date.
  *   - setSelectedDate: Function to update the selected date.
+ *   - loadMoreFiles: Function to load more files.
+ *   - hasMoreFiles: Boolean indicating if more files are available.
  * @returns {JSX.Element} The file selector component.
  */
 const FileSelector: React.FC<FileSelectorProps> = (
@@ -30,20 +33,45 @@ const FileSelector: React.FC<FileSelectorProps> = (
         selectedFile,
         selectedDate,
         setSelectedDate,
+        loadMoreFiles,
+        hasMoreFiles,
     }: FileSelectorProps): JSX.Element => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showSearch, setShowSearch] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const formattedDate = selectedDate ?? dayjs().format("YYYY-MM-DD");
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const toggleCalendar = () => {
         setShowCalendar(prev => !prev);
     };
 
+    const toggleDropdown = useCallback(() => {
+        setIsDropdownOpen((prev) => !prev);
+    }, []);
+
+    const handleSelect = (fileId: string) => {
+        onSelect(fileId);
+    };
+
+    // Infinite scroll hook
+    useInfiniteScroll({
+        containerRef: dropdownRef,
+        loadMore: () => {
+            if (!loading && hasMoreFiles) {
+                loadMoreFiles();
+            }
+        },
+        hasMore: hasMoreFiles,
+        loading,
+    });
+
     return (
-        <div className={styles.fileSelectorContainer}>
+        <div
+            className={styles.fileSelectorContainer}>
 
             {/* Search button and input together */}
             <div className={styles.searchWrapper}>
@@ -107,33 +135,50 @@ const FileSelector: React.FC<FileSelectorProps> = (
                 </div>
             )}
 
-            {/* File selection dropdown */}
-            <select
-                onChange={(e) => onSelect(e.target.value)}
-                value={selectedFile}
-                className={styles.customDropdown}
-            >
-                <option
-                    value=""
-                    className={styles.defaultOption}
+            {/* Botón del selector  */}
+            <div className={styles.selectButtonWrapper}>
+                <div
+                    className={styles.selectButton}
+                    onClick={toggleDropdown}
+                    tabIndex={0}
+                    role="button"
+                    aria-haspopup="listbox"
+                    aria-expanded={isDropdownOpen}
                 >
-                    --- Selecciona un archivo ---
-                </option>
-                {files.map((file) => (
-                    <option key={file.id} value={file.id}>
-                        {file.nombre}
-                    </option>
-                ))}
-            </select>
+                    {selectedFile
+                        ? files.find((file) => file.id === selectedFile)?.nombre
+                        : files.length === 0
+                            ? "No se encontraron archivos"
+                            : "--- Selecciona un archivo ---"}
+                    <span className={styles.arrowDown}>▼</span>
+                </div>
 
-            {/* Display message when no files are found */}
-            <div className={styles.noFilesMessageWrapper}>
-                {!loading && files.length === 0 && (
-                    <p className={styles.noFilesMessage}>
-                        No se encontraron archivos para este fondo.
-                    </p>
+                {/* Lista desplegable */}
+                {isDropdownOpen && (
+                    <div ref={dropdownRef} className={styles.dropdownList} role="listbox">
+                        {files.map((file) => (
+                            <div
+                                key={file.id}
+                                onClick={() => handleSelect(file.id)}
+                                className={styles.dropdownItem}
+                                role="option"
+                            >
+                                {file.nombre}
+                            </div>
+                        ))}
+
+                        {!loading && files.length === 0 && (
+                            <div className={styles.noFilesMessage}>
+                                No se encontraron archivos para este fondo.
+                            </div>
+                        )}
+                    </div>
                 )}
+
             </div>
+            {loading && (
+                <div className={styles.loadingMessage}>Cargando archivos...</div>
+            )}
         </div>
     );
 };

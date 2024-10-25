@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useMemo } from "react";
 import FondoSelector from "./FondoSelector";
 import FondoDetails from "./FondoDetails";
 import FileSelector from "./FileSelector";
@@ -46,7 +46,13 @@ const FondoManager: React.FC = (): JSX.Element => {
     const [selectedFile, setSelectedFile] = useState<string | undefined>(undefined);
     const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format("YYYY-MM-DD"));
 
-    const { files, loadingFiles } = useFiles(selectedFondo ? selectedFondo.identificadorFondo : null, selectedDate);
+    const {
+        files,
+        loadingFiles,
+        hasMoreFiles,
+        loadMoreFiles,
+    } = useFiles(selectedFondo ? selectedFondo.identificadorFondo : null, selectedDate);
+
     const {
         fileContent,
         loadingFileContent,
@@ -70,6 +76,12 @@ const FondoManager: React.FC = (): JSX.Element => {
         }
     }, [selectedFile, fileContent]);
 
+    // Memorizar selectedFondo basado en fondos.
+    const currentSelectedFondo = useMemo(
+        () => fondos.find((f) => f.id === selectedFondo?.id) || null,
+        [fondos, selectedFondo]
+    );
+
     const renderInitialLoading = () => (
         initialLoading && <FondoSkeletonLoader />
     );
@@ -91,6 +103,7 @@ const FondoManager: React.FC = (): JSX.Element => {
                     onSelect={(fondoId: number) => {
                         const fondo = fondos.find((f) => f.id === fondoId) || null;
                         setSelectedFondo(fondo);
+                        setSelectedFile(undefined);
                     }}
                     selectedFondo={selectedFondo ? selectedFondo.id : undefined}
                     loadMoreFondos={() => setPage((prevPage) => prevPage + 1)}
@@ -102,16 +115,16 @@ const FondoManager: React.FC = (): JSX.Element => {
     );
 
     const renderFondoDetails = () => (
-        selectedFondo && (
+        currentSelectedFondo && (
             <div className={cardStyles.card}>
                 <h4 className={cardStyles.cardTitle}>Detalles del Fondo</h4>
-                <FondoDetails fondoDetails={selectedFondo} loading={false} />
+                <FondoDetails fondoDetails={currentSelectedFondo} loading={false} />
             </div>
         )
     );
 
     const renderFileSelector = () => (
-        selectedFondo && (
+        currentSelectedFondo && (
             <div className={cardStyles.card}>
                 <h4 className={cardStyles.cardTitle}>Selecciona un Archivo</h4>
                 <FileSelector
@@ -121,6 +134,9 @@ const FondoManager: React.FC = (): JSX.Element => {
                     selectedFile={selectedFile}
                     selectedDate={selectedDate}
                     setSelectedDate={setSelectedDate}
+                    loadMoreFiles={loadMoreFiles}
+                    hasMoreFiles={hasMoreFiles}
+
                 />
             </div>
         )

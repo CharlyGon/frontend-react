@@ -53,6 +53,8 @@ export interface FileSelectorProps {
     selectedFile?: string;
     selectedDate: string | null;
     setSelectedDate: React.Dispatch<React.SetStateAction<string | null>>;
+    loadMoreFiles: () => void;
+    hasMoreFiles: boolean;
 }
 
 export interface FileContentProps {
@@ -104,6 +106,8 @@ export interface UseFondosResult {
 export interface UseFilesResult {
     files: Array<{ id: string; nombre: string }>;
     loadingFiles: boolean;
+    hasMoreFiles: boolean;
+    loadMoreFiles: () => void;
 }
 
 export interface UseFileContentResult {
