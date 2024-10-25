@@ -1,7 +1,7 @@
 import { faCalendarAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { FileSelectorProps } from "../../../interfaces/interfaces";
 import dayjs from "dayjs";
@@ -50,6 +50,15 @@ const FileSelector: React.FC<FileSelectorProps> = (
         value: file.id,
         label: file.nombre,
     }));
+    const [highlight, setHighlight] = useState(false);
+
+    useEffect(() => {
+        if (files.length > 0 && !selectedFile) {
+            setHighlight(true);
+            const timer = setTimeout(() => setHighlight(false), 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [files, selectedFile]);
 
     const toggleCalendar = () => {
         setShowCalendar(prev => !prev);
@@ -155,7 +164,7 @@ const FileSelector: React.FC<FileSelectorProps> = (
                 value={options.find(option => option.value === selectedFile) ?? null}
                 placeholder={options.length > 0 ? "--- Selecciona un archivo ---" : "No se encontraron archivos"}
                 isLoading={loading}
-                className={`${styles.selectButton}`}
+                className={`${styles.selectButton} ${highlight ? styles.highlight : ""}`}
                 classNamePrefix="react-select"
                 onMenuScrollToBottom={handleMenuScrollToBottom}
                 menuPortalTarget={document.body}  // to render the dropdown above all other elements
@@ -170,6 +179,9 @@ const FileSelector: React.FC<FileSelectorProps> = (
                     placeholder: (base) => ({
                         ...base,
                         textAlign: "center", // Align the placeholder text to the center
+                        color: highlight ? "rgba(0, 56, 145, 0.7)" : base.color, // Cambiar color si está resaltado (ejemplo: un tono naranja)
+                        fontWeight: highlight ? "bold" : base.fontWeight, // Hacerlo negrita cuando esté resaltado
+                        transition: "color 0.3s ease, font-weight 0.3s ease", // Transición suave para el cambio de estilo
                     }),
                     menu: (base) => ({
                         ...base,
