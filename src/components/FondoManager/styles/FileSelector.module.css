@@ -238,17 +238,9 @@
     animation: pulseHighlight 1.5s ease-in-out infinite;
 }
 
-/* Contenedor del botón desplegable */
-.selectButtonWrapper {
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-
 /* Estilo del botón desplegable */
 .selectButton {
     width: 100%;
-    padding: 10px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     background-color: #ffffff;
@@ -260,50 +252,6 @@
     position: relative;
 }
 
-/* Flecha hacia abajo en el botón desplegable */
-.arrowDown {
-    margin-left: 10px;
-    position: absolute;
-    right: 15px;
-    color: #333;
-}
-
-/* Estilo de la lista desplegable */
-.dropdownList {
-    width: 100%;
-    max-height: 200px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    position: absolute;
-    /* Asegura que se muestre bajo el botón */
-    z-index: 1000;
-    box-sizing: border-box;
-    margin-top: 5px;
-}
-
-.dropdownItem {
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
 .dropdownItem:hover {
     background-color: #f0f0f0;
-}
-
-/* Mensaje de carga */
-.loadingMessage {
-    position: absolute;
-    right: -600px;
-    top: 100%;
-    transform: translateY(-50%);
-    color: #0a21a0;
-    background-color: #ffffff;
-    padding: 5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    z-index: 2000;
 }

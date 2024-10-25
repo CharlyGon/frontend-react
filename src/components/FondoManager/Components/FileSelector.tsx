@@ -1,10 +1,12 @@
 import { faCalendarAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { FileSelectorProps } from "../../../interfaces/interfaces";
 import dayjs from "dayjs";
+import Select, { SingleValue } from 'react-select';
+
 
 import styles from "../styles/FileSelector.module.css";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
@@ -40,21 +42,25 @@ const FileSelector: React.FC<FileSelectorProps> = (
     const [searchTerm, setSearchTerm] = useState("");
     const [showSearch, setShowSearch] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const formattedDate = selectedDate ?? dayjs().format("YYYY-MM-DD");
-    const dropdownRef = useRef<HTMLSelectElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const options = files.map(file => ({
+        value: file.id,
+        label: file.nombre,
+    }));
 
     const toggleCalendar = () => {
         setShowCalendar(prev => !prev);
     };
 
-    const toggleDropdown = useCallback(() => {
-        setIsDropdownOpen((prev) => !prev);
-    }, []);
-
-    const handleSelect = (fileId: string) => {
-        onSelect(fileId);
+    const handleSelect = (
+        newValue: SingleValue<{ value: string; label: string }>,
+    ) => {
+        if (newValue) {
+            onSelect(newValue.value);
+        }
     };
 
     // Infinite scroll hook
@@ -69,9 +75,12 @@ const FileSelector: React.FC<FileSelectorProps> = (
         loading,
     });
 
-    const noFilesMessage = files.length === 0
-        ? "No se encontraron archivos"
-        : "--- Selecciona un archivo ---";
+    // Load additional files when scrolling to the bottom of the menu
+    const handleMenuScrollToBottom = () => {
+        if (hasMoreFiles && !loading) {
+            loadMoreFiles();
+        }
+    };
 
     return (
         <div
@@ -139,57 +148,34 @@ const FileSelector: React.FC<FileSelectorProps> = (
                 </div>
             )}
 
-            {/* Dropdown selector button */}
-            <div className={styles.selectButtonWrapper}>
-
-                {/* Button to toggle the dropdown list */}
-                <button
-                    className={styles.selectButton}
-                    onClick={toggleDropdown}
-                    tabIndex={0}
-                    aria-haspopup="listbox"
-                    aria-expanded={isDropdownOpen}
-                >
-                    {selectedFile
-                        ? files.find((file) => file.id === selectedFile)?.nombre
-                        : noFilesMessage}
-                    <span className={styles.arrowDown}>▼</span>
-                </button>
-
-                {/* Dropdown list to select a file */}
-                {isDropdownOpen && (
-                    <select
-                        ref={dropdownRef}
-                        className={styles.dropdownList}
-                        size={files.length}
-                        onChange={(e) => handleSelect(e.target.value)}
-                        value={selectedFile ?? ""}
-                    >
-                        {/* List of available files to select */}
-                        {files.map((file) => (
-                            <option
-                                key={file.id}
-                                value={file.id}
-                                className={styles.dropdownItem}
-                            >
-                                {file.nombre}
-                            </option>
-                        ))}
-
-                        {/* Message displayed when there are no files available */}
-                        {!loading && files.length === 0 && (
-                            <option className={styles.noFilesMessage} disabled>
-                                No files available for this fund.
-                            </option>
-                        )}
-                    </select>
-                )}
-            </div>
-
+            {/* Botón del selector file list */}
+            <Select
+                options={options}
+                onChange={handleSelect}
+                value={options.find(option => option.value === selectedFile) ?? null}
+                placeholder={options.length > 0 ? "--- Selecciona un archivo ---" : "No se encontraron archivos"}
+                isLoading={loading}
+                className={`${styles.selectButton}`}
+                classNamePrefix="react-select"
+                onMenuScrollToBottom={handleMenuScrollToBottom}
+                menuPortalTarget={document.body}  // to render the dropdown above all other elements
+                menuPlacement="auto"
+                styles={{
+                    control: (base) => ({
+                        ...base,
+                        width: "100%", // Take the full width like the button
+                        minHeight: "40px", // Keep the height similar to button height
+                    }),
+                    menu: (base) => ({
+                        ...base,
+                        zIndex: 1000, // Make sure the dropdown menu appears above other elements
+                    }),
+                }}
+            />
             {loading && (
                 <div className={styles.loadingMessage}>Cargando archivos...</div>
             )}
-        </div>
+        </div >
     );
 };
 
