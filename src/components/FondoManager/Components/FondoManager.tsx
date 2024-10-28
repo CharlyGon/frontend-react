@@ -11,13 +11,12 @@ import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { Config } from "../../../config";
 import { useInitialLoading } from "../Hooks/useInitialLoading";
 import dayjs from "dayjs";
-import { saveAs } from 'file-saver';
+import { fetchDownloadFileContentD } from "../../../services/fileService";
+import { downloadFileContent } from "../downloadUtils";
 
 import styles from "../styles/FondoManager.module.css";
 import cardStyles from "../styles/Card.module.css";
 import { FondoSkeletonLoader } from "../Skeletons/FondoSelectorSkeleton";
-
-
 
 /**
  * FondoManager component
@@ -71,8 +70,7 @@ const FondoManager: React.FC = (): JSX.Element => {
         loading: loadingFileContent,
     });
 
-    //! Manejar la descarga del archivo completo desacoplar la lógica de descarga del archivo en una función separada
-    // Función para manejar la descarga del archivo completo usando fetch
+    //Fuction for handling the download of the complete file using fetch
     const handleDownload = useCallback(async () => {
         if (!selectedFile) {
             console.error("No se ha seleccionado ningún archivo para descargar.");
@@ -80,35 +78,15 @@ const FondoManager: React.FC = (): JSX.Element => {
         }
 
         try {
-            const response = await fetch(`http://theroomsoftware.ddns.net:5000/api/v1/ContenidoArchivo/GetAll?IdArchivo=${selectedFile.id}`);
+            const lines = await fetchDownloadFileContentD(selectedFile.id);
 
-            if (!response.ok) {
-                throw new Error("Error al obtener el contenido del archivo");
-            }
-
-            const responseData = await response.json();
-
-            const lines = responseData.map((item: { linea: string }) => item.linea);
-
-            const fileContent = lines.join("\n");
-
-            if (!fileContent) {
-                throw new Error("No se encontró el contenido del archivo");
-            }
-
-            const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
-
-            const fileName = selectedFile.nombre.includes('.') ? selectedFile.nombre : `${selectedFile.nombre}.txt`;
-
-            saveAs(blob, fileName);
+            downloadFileContent(lines, selectedFile.nombre);
         } catch (error) {
             console.error("Error descargando el archivo:", error);
         }
     }, [selectedFile]);
 
-    //!-----------------------------------------------------------------------------------------------------------------------
-
-    // Memorizar selectedFondo basado en fondos.
+    //Memoize selectedFondo based on fondos.
     const currentSelectedFondo = useMemo(
         () => fondos.find((f) => f.id === selectedFondo?.id) || null,
         [fondos, selectedFondo]

@@ -1,5 +1,5 @@
 import { Config } from "../config";
-import { FileDetailsResponse, FileResponse } from "../interfaces/interfaces";
+import { FileContentLine, FileDetailsResponse, FileResponse } from "../interfaces/interfaces";
 import { fetchFilesForFondoTest } from "../Mock/apiFileForFondoTest";
 
 /**
@@ -92,6 +92,7 @@ export const fetchFileById = async (fileId: string): Promise<any> => {
 
 /**
  * Fetch the content of a file by its ID with pagination, filtered by date.
+ *
  * @param {string} fileId - The ID of the file.
  * @param {string} [date] - Optional date to filter the file content.
  * @param {number} [pageSize=DEFAULT_PAGE_SIZE] - The number of records per page.
@@ -119,7 +120,7 @@ export const fetchFileContentById = async (
         }
 
         const data = await response.json();
-        return data.data.map((item: { linea: string }) => item.linea);
+        return data.data.map((item: FileContentLine) => item.linea);
     } catch (error) {
         console.error("Error fetching file content:", error);
         throw error;
@@ -127,7 +128,8 @@ export const fetchFileContentById = async (
 };
 
 /**
- * Service to get details of a file by its ID.
+ * This function fetches the details of a file based on its unique identifier.
+ *
  * @param {string} idArchivo - The ID of the file to fetch details for.
  * @returns {Promise<FileDetailsResponse>} - The response containing file details.
  * @throws {Error} - Throws an error if the request fails.
@@ -146,6 +148,31 @@ export const fetchFileDetailsService = async (idArchivo: string): Promise<FileDe
         return data;
     } catch (error) {
         console.error("Error fetching file details:", error);
+        throw error;
+    }
+};
+
+/**
+ Fetches the content of a file by its ID from the specified API endpoint.
+ * This function retrieves the file content as an array of strings, where each string represents a line in the file.
+ *
+ * @param {string} fileId - The unique identifier of the file to be fetched.
+ * @returns {Promise<string[]>} - A promise that resolves to an array of strings representing the file content.
+ * @throws {Error} - Throws an error if the request fails.
+ */
+export const fetchDownloadFileContentD = async (fileId: string): Promise<string[]> => {
+    try {
+        const response = await fetch(`${Config.API_BASE_URL}/ContenidoArchivo/GetAll?IdArchivo=${fileId}`);
+
+        if (!response.ok) {
+            throw new Error("Error al obtener el contenido del archivo");
+        }
+
+        const responseData = await response.json();
+
+        return responseData.map((item: FileContentLine) => item.linea);
+    } catch (error) {
+        console.error("Error fetching file content:", error);
         throw error;
     }
 };

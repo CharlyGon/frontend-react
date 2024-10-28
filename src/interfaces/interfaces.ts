@@ -226,3 +226,7 @@ export interface UseOperationDetailsProps {
     error: string | null;
     getOperationDetails: (transactionId: number) => Promise<void>;
 }
+
+export interface FileContentLine {
+    linea: string;
+}
