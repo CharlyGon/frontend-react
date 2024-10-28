@@ -5,6 +5,9 @@ export interface Fondo {
     identificadorFondo: string;
     tipoRescate: string;
     codigoInterfaz: string;
+    bloqueCBUEmpresa: string;
+    codigoConvenio: string;
+    identificadorEmpresa: string;
 }
 
 export interface FileContent {
@@ -16,6 +19,9 @@ export interface FondoDetails {
     identificadorFondo: string;
     tipoRescate: string;
     codigoInterfaz: string;
+    bloqueCBUEmpresa: string;
+    codigoConvenio: string;
+    identificadorEmpresa: string;
 }
 
 export interface FondoDetailsProps {
@@ -42,11 +48,13 @@ export interface FondoSelectorProps {
 
 export interface FileSelectorProps {
     files: Array<{ id: string; nombre: string }>;
-    onSelect: (fileId: string) => void;
-    loading: boolean;
+   onSelect: (file: { id: string; nombre: string }) => void;
+   loading: boolean;
     selectedFile?: string;
     selectedDate: string | null;
     setSelectedDate: React.Dispatch<React.SetStateAction<string | null>>;
+    loadMoreFiles: () => void;
+    hasMoreFiles: boolean;
 }
 
 export interface FileContentProps {
@@ -98,6 +106,8 @@ export interface UseFondosResult {
 export interface UseFilesResult {
     files: Array<{ id: string; nombre: string }>;
     loadingFiles: boolean;
+    hasMoreFiles: boolean;
+    loadMoreFiles: () => void;
 }
 
 export interface UseFileContentResult {

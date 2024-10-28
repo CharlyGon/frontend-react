@@ -1,4 +1,6 @@
+import { Config } from "../config";
 import { FileDetailsResponse, FileResponse } from "../interfaces/interfaces";
+import { fetchFilesForFondoTest } from "../Mock/apiFileForFondoTest";
 
 /**
  * Download a file
@@ -14,9 +16,6 @@ export const downloadFile = (content: string, fileName: string, fileType: string
     link.click();
 };
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const DEFAULT_PAGE_SIZE = parseInt(process.env.REACT_APP_DEFAULT_PAGE_SIZE ?? "50", 10);
-
 /**
  * Fetches the files for a given fondo on a specific date and optionally by file name.
  * Constructs the API URL dynamically based on the parameters provided.
@@ -30,20 +29,29 @@ const DEFAULT_PAGE_SIZE = parseInt(process.env.REACT_APP_DEFAULT_PAGE_SIZE ?? "5
 export const fetchFilesForFondo = async (
     date: string,
     identifyingFond: string,
+    page: number,
     fileName?: string
 ): Promise<FileResponse> => {
+
+    const isTesting = false;
+    if (isTesting) {
+        return fetchFilesForFondoTest(identifyingFond, page);
+    }
+
     try {
-        //!agrgegar el ordenDesc /cantoidad de registros por pagina
         const queryParams = new URLSearchParams({
             Fecha: date,
             IdentificadorFondo: identifyingFond,
+            Sort: 'ordenDesc',
+            PageSize: Config.DEFAULT_PAGE_SIZE.toString(),
+            PageIndex: page.toString(),
         });
 
         if (fileName) {
             queryParams.append("Nombre", fileName);
         }
 
-        const url = `${API_BASE_URL}/Archivo/pagination?${queryParams.toString()}`;
+        const url = `${Config.API_BASE_URL}/Archivo/pagination?${queryParams.toString()}`;
 
         // Fetch the data from the constructed URL
         const response = await fetch(url);
@@ -69,7 +77,7 @@ export const fetchFilesForFondo = async (
 export const fetchFileById = async (fileId: string): Promise<any> => {
 
     try {
-        const response = await fetch(`${API_BASE_URL}/Archivo/id?Id=${fileId}`);
+        const response = await fetch(`${Config.API_BASE_URL}/Archivo/id?Id=${fileId}`);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch file by ID: ${fileId}. Status: ${response.status}`);
@@ -93,12 +101,12 @@ export const fetchFileById = async (fileId: string): Promise<any> => {
 export const fetchFileContentById = async (
     fileId: string,
     date?: string,
-    pageSize: number = DEFAULT_PAGE_SIZE,
+    pageSize: number = Config.DEFAULT_PAGE_SIZE,
     pageIndex: number = 1
 ): Promise<string[]> => {
     try {
         // Construct URL with optional date parameter
-        let url = `${API_BASE_URL}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`;
+        let url = `${Config.API_BASE_URL}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`;
 
         // Add date to URL if provided
         if (date) {
@@ -127,7 +135,7 @@ export const fetchFileContentById = async (
 export const fetchFileDetailsService = async (idArchivo: string): Promise<FileDetailsResponse> => {
     try {
         const response = await fetch(
-            `${API_BASE_URL}/Archivo/id?Id=${encodeURIComponent(idArchivo)}`
+            `${Config.API_BASE_URL}/Archivo/id?Id=${encodeURIComponent(idArchivo)}`
         );
 
         if (!response.ok) {

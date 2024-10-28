@@ -2,6 +2,7 @@
 .fileSelectorContainer {
     position: relative;
     max-width: 40%;
+    height: 320px;
     margin: 20px 0;
     padding: 20px;
     background-color: var(--card-background-color);
@@ -10,7 +11,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -222,10 +223,12 @@
         transform: scale(1);
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
+
     50% {
         transform: scale(1.05);
         box-shadow: 0 0 25px rgba(0, 123, 255, 0.7);
     }
+
     100% {
         transform: scale(1);
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
@@ -234,4 +237,37 @@
 
 .highlightCalendar {
     animation: pulseHighlight 1.5s ease-in-out infinite;
+}
+
+/* Drop-down button style */
+.selectButton {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Initial highlighting animation */
+@keyframes highlight {
+    0% {
+        box-shadow: 0 0 10px 5px rgba(0, 123, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+/* Class to apply the initial animation */
+.highlight {
+    animation: highlight 2s ease-in-out 0.5s forwards;
+}
+
+.selectButton:hover {
+    box-shadow: 0 0 10px 5px rgba(0, 56, 145, 0.5);
 }

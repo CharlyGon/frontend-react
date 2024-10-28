@@ -1,12 +1,15 @@
 import { faCalendarAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { FileSelectorProps } from "../../../interfaces/interfaces";
 import dayjs from "dayjs";
+import Select, { SingleValue } from 'react-select';
+
 
 import styles from "../styles/FileSelector.module.css";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 
 /**
  * Component for selecting a file from a list of files.
@@ -20,6 +23,8 @@ import styles from "../styles/FileSelector.module.css";
  *   - selectedFile: The currently selected file (optional).
  *   - selectedDate: The currently selected date.
  *   - setSelectedDate: Function to update the selected date.
+ *   - loadMoreFiles: Function to load more files.
+ *   - hasMoreFiles: Boolean indicating if more files are available.
  * @returns {JSX.Element} The file selector component.
  */
 const FileSelector: React.FC<FileSelectorProps> = (
@@ -30,6 +35,8 @@ const FileSelector: React.FC<FileSelectorProps> = (
         selectedFile,
         selectedDate,
         setSelectedDate,
+        loadMoreFiles,
+        hasMoreFiles,
     }: FileSelectorProps): JSX.Element => {
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -37,13 +44,61 @@ const FileSelector: React.FC<FileSelectorProps> = (
     const [showCalendar, setShowCalendar] = useState(false);
 
     const formattedDate = selectedDate ?? dayjs().format("YYYY-MM-DD");
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const options = files.map(file => ({
+        value: file.id,
+        label: file.nombre,
+    }));
+    const [highlight, setHighlight] = useState(false);
+
+    useEffect(() => {
+        if (files.length > 0 && !selectedFile) {
+            setHighlight(true);
+            const timer = setTimeout(() => setHighlight(false), 2000);
+            return () => clearTimeout(timer);
+        } else {
+            setHighlight(false);
+        }
+    }, [files, selectedFile]);
 
     const toggleCalendar = () => {
         setShowCalendar(prev => !prev);
     };
 
+    const handleSelect = (
+        newValue: SingleValue<{ value: string; label: string }>,
+    ) => {
+        if (newValue) {
+            const selectedFile = files.find(file => file.id === newValue.value);
+            if (selectedFile) {
+                onSelect(selectedFile);
+            }
+        }
+    };
+
+    // Infinite scroll hook
+    useInfiniteScroll({
+        containerRef: dropdownRef,
+        loadMore: () => {
+            if (!loading && hasMoreFiles) {
+                loadMoreFiles();
+            }
+        },
+        hasMore: hasMoreFiles,
+        loading,
+    });
+
+    // Load additional files when scrolling to the bottom of the menu
+    const handleMenuScrollToBottom = () => {
+        if (hasMoreFiles && !loading) {
+            loadMoreFiles();
+        }
+    };
+
     return (
-        <div className={styles.fileSelectorContainer}>
+        <div
+            className={styles.fileSelectorContainer}>
 
             {/* Search button and input together */}
             <div className={styles.searchWrapper}>
@@ -107,34 +162,42 @@ const FileSelector: React.FC<FileSelectorProps> = (
                 </div>
             )}
 
-            {/* File selection dropdown */}
-            <select
-                onChange={(e) => onSelect(e.target.value)}
-                value={selectedFile}
-                className={styles.customDropdown}
-            >
-                <option
-                    value=""
-                    className={styles.defaultOption}
-                >
-                    --- Selecciona un archivo ---
-                </option>
-                {files.map((file) => (
-                    <option key={file.id} value={file.id}>
-                        {file.nombre}
-                    </option>
-                ))}
-            </select>
-
-            {/* Display message when no files are found */}
-            <div className={styles.noFilesMessageWrapper}>
-                {!loading && files.length === 0 && (
-                    <p className={styles.noFilesMessage}>
-                        No se encontraron archivos para este fondo.
-                    </p>
-                )}
-            </div>
-        </div>
+            {/* Botón del selector file list */}
+            <Select
+                options={options}
+                onChange={handleSelect}
+                value={options.find(option => option.value === selectedFile) ?? null}
+                placeholder={options.length > 0 ? "--- Selecciona un archivo ---" : "No se encontraron archivos"}
+                isLoading={loading}
+                className={`${styles.selectButton} ${highlight ? styles.highlight : ""}`}
+                classNamePrefix="react-select"
+                onMenuScrollToBottom={handleMenuScrollToBottom}
+                menuPortalTarget={document.body}  // to render the dropdown above all other elements
+                menuPlacement="auto"
+                styles={{
+                    control: (base) => ({
+                        ...base,
+                        width: "100%", // Take the full width like the button
+                        minHeight: "40px", // Keep the height similar to button height
+                        textAlign: "center", // Align the text to the left
+                    }),
+                    placeholder: (base) => ({
+                        ...base,
+                        textAlign: "center", // Align the placeholder text to the center
+                        color: highlight ? "rgba(0, 56, 145, 0.7)" : base.color, // Cambiar color si está resaltado (ejemplo: un tono naranja)
+                        fontWeight: highlight ? "bold" : base.fontWeight, // Hacerlo negrita cuando esté resaltado
+                        transition: "color 0.3s ease, font-weight 0.3s ease", // Transición suave para el cambio de estilo
+                    }),
+                    menu: (base) => ({
+                        ...base,
+                        zIndex: 1000, // Make sure the dropdown menu appears above other elements
+                    }),
+                }}
+            />
+            {loading && (
+                <div className={styles.loadingMessage}>Cargando archivos...</div>
+            )}
+        </div >
     );
 };
 

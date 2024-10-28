@@ -41,6 +41,18 @@ const FondoDetails: React.FC<FondoDetailsProps> = (
                 <span className={styles.fundDetailLabel}>Código de Interfaz:</span>
                 <span className={styles.fundDetailValue}>{fondoDetails.codigoInterfaz}</span>
             </div>
+            <div className={styles.fundDetailItem}>
+                <span className={styles.fundDetailLabel}>Bloque CBU Empresa:</span>
+                <span className={styles.fundDetailValue}>{fondoDetails.bloqueCBUEmpresa}</span>
+            </div>
+            <div className={styles.fundDetailItem}>
+                <span className={styles.fundDetailLabel}>Código Convenio:</span>
+                <span className={styles.fundDetailValue}>{fondoDetails.codigoConvenio}</span>
+            </div>
+            <div className={styles.fundDetailItem}>
+                <span className={styles.fundDetailLabel}>Identificador Empresa:</span>
+                <span className={styles.fundDetailValue}>{fondoDetails.identificadorEmpresa}</span>
+            </div>
         </div>
     );
 };
