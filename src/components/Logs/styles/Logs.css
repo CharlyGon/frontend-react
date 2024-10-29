@@ -203,9 +203,12 @@
 
 .logs-controls {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .logs-controls input,
@@ -261,6 +264,12 @@
   transition: transform 0.3s ease;
 }
 
+.logs-controls input[type="datetime-local"],
+.logs-controls .log-select {
+  min-width: 200px;
+  flex: 1;
+}
+
 /* Efecto al pasar el mouse */
 .search-button:hover .search-icon {
   transform: scale(1.2);
@@ -306,5 +315,12 @@
 
   50% {
     transform: scale(1.05);
+  }
+}
+
+@media (max-width: 600px) {
+  .log-select {
+    min-width: 100%;
+    padding-left: 10px;
   }
 }
