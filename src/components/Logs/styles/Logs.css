@@ -248,6 +248,7 @@
 
 .search-button:hover {
   background-color: #0056b3;
+  box-shadow: 0 0 10px 5px rgba(0, 56, 145, 0.5);
 }
 
 .search-button:focus {
@@ -263,6 +264,14 @@
 /* Efecto al pasar el mouse */
 .search-button:hover .search-icon {
   transform: scale(1.2);
+}
+
+.date-input:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 56, 145, 0.5);
+}
+
+.log-select:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 56, 145, 0.5);
 }
 
 .bright {

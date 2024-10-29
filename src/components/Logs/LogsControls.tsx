@@ -41,12 +41,13 @@ export const LogsControls: React.FC<LogsControlsProps> = ({
                 value={selectedDate}
                 onChange={handleFechaChange}
                 placeholder="Selecciona una fecha"
-                className={inputAnimation ? "bright" : ""}
+                className={`${inputAnimation ? "bright" : ""} date-input`}
             />
             <Select
                 options={logOptions}
                 onChange={(selectedOption) => handleTipoLogChange(selectedOption?.value ?? "")}
                 value={logOptions.find(option => option.value === selectedLogType)}
+                className="log-select"
                 styles={{
                     control: (base) => ({
                         ...base,
@@ -54,7 +55,7 @@ export const LogsControls: React.FC<LogsControlsProps> = ({
                         boxShadow: "none",
                         "&:hover": {
                             border: "1px solid #0056b3"
-                        }
+                        },
                     })
                 }}
             />
