@@ -1,0 +1,24 @@
+.skeletonWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre los elementos */
+}
+
+.skeletonLog {
+    height: 50px; /* Altura del esqueleto */
+    background-color: #e0e0e0; /* Color de fondo del skeleton */
+    border-radius: 4px; /* Bordes redondeados */
+    animation: pulse 1.5s infinite; /* Animación de pulso */
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #e0e0e0;
+    }
+    50% {
+        background-color: #f0f0f0; /* Color más claro */
+    }
+    100% {
+        background-color: #e0e0e0;
+    }
+}

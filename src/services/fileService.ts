@@ -39,6 +39,10 @@ export const fetchFilesForFondo = async (
     }
 
     try {
+        if (!Config.API_BASE_URL) {
+            throw new Error("API_BASE_URL is not defined");
+        }
+
         const queryParams = new URLSearchParams({
             Fecha: date,
             IdentificadorFondo: identifyingFond,
@@ -51,10 +55,8 @@ export const fetchFilesForFondo = async (
             queryParams.append("Nombre", fileName);
         }
 
-        const url = `${Config.API_BASE_URL}/Archivo/pagination?${queryParams.toString()}`;
-
         // Fetch the data from the constructed URL
-        const response = await fetch(url);
+        const response = await fetch(`${Config.API_BASE_URL}/Archivo/pagination?${queryParams.toString()}`);
         if (!response.ok) {
             throw new Error(`Error fetching files: ${response.statusText}`);
         }
@@ -75,8 +77,11 @@ export const fetchFilesForFondo = async (
  * @throws {Error} - Throws an error if the file fetch fails.
 */
 export const fetchFileById = async (fileId: string): Promise<any> => {
-
     try {
+        if (!Config.API_BASE_URL) {
+            throw new Error("API_BASE_URL is not defined");
+        }
+
         const response = await fetch(`${Config.API_BASE_URL}/Archivo/id?Id=${fileId}`);
 
         if (!response.ok) {
@@ -106,6 +111,10 @@ export const fetchFileContentById = async (
     pageIndex: number = 1
 ): Promise<string[]> => {
     try {
+        if (!Config.API_BASE_URL) {
+            throw new Error("API_BASE_URL is not defined");
+        }
+
         // Construct URL with optional date parameter
         let url = `${Config.API_BASE_URL}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`;
 
@@ -136,6 +145,10 @@ export const fetchFileContentById = async (
  */
 export const fetchFileDetailsService = async (idArchivo: string): Promise<FileDetailsResponse> => {
     try {
+        if (!Config.API_BASE_URL) {
+            throw new Error("API_BASE_URL is not defined");
+        }
+
         const response = await fetch(
             `${Config.API_BASE_URL}/Archivo/id?Id=${encodeURIComponent(idArchivo)}`
         );
@@ -162,6 +175,10 @@ export const fetchFileDetailsService = async (idArchivo: string): Promise<FileDe
  */
 export const fetchDownloadFileContentD = async (fileId: string): Promise<string[]> => {
     try {
+        if (!Config.API_BASE_URL) {
+            throw new Error("API_BASE_URL is not defined");
+        }
+
         const response = await fetch(`${Config.API_BASE_URL}/ContenidoArchivo/GetAll?IdArchivo=${fileId}`);
 
         if (!response.ok) {

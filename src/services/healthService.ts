@@ -19,14 +19,13 @@ const handleApiError = (response: Response) => {
  * @throws {Error} If the API URL is not defined or if the request fails.
  */
 export const fetchHealthData = async (): Promise<HealthStatusService> => {
-    const API_URL = Config.API_URL_HEALTH;
 
-    if (!API_URL) {
+    if (!Config.API_URL_HEALTH) {
         throw new Error('API_URL_HEALTH is not defined');
     }
 
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(Config.API_URL_HEALTH);
 
         handleApiError(response);
 
