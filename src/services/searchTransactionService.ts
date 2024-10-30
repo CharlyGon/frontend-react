@@ -12,7 +12,7 @@ export const searchTransactionService = async (
     searchTerm: string,
     date: string
 ): Promise<TransactionSearchResponse> => {
-    if (!searchTerm.trim() || !date.trim()) { // Asegúrate de que ambos campos son válidos
+    if (!searchTerm.trim() || !date.trim()) {
         throw new Error("Search term or date is empty or invalid.");
     }
 
