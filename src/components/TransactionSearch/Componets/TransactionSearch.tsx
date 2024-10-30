@@ -53,7 +53,6 @@ const TransactionSearch: React.FC = (): JSX.Element => {
         }
     }, [searchTerm, selectedDate, searchTransactions]);
 
-    // Efecto para manejar el brillo
     useEffect(() => {
         if (isInputShining || isCalendarShining) {
             const timer = setTimeout(() => {
@@ -61,7 +60,7 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                 setIsCalendarShining(false);
             }, 2000);
 
-            return () => clearTimeout(timer); // Limpieza del efecto
+            return () => clearTimeout(timer);
         }
     }, [isInputShining, isCalendarShining]);
 
