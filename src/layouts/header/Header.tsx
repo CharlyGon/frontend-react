@@ -15,7 +15,7 @@ import styles from "./styles/Header.module.css";
  * @returns {JSX.Element} Header component with user information.
  */
 const Header: React.FC<HeaderProps> = ({ isSidebarOpen }: HeaderProps): JSX.Element => {
-    const userName = "Gonzalo Fernandez"; // Nombre del usuario conectado
+    const userName = "";
 
     return (
         <header className={`${styles.header} ${isSidebarOpen ? styles.headerSidebarOpen : styles.headerSidebarClosed}`}>
