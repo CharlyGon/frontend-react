@@ -18,6 +18,7 @@ import { useOperationDetails } from "../Hooks/useOperationDetails";
  */
 const TransactionSearch: React.FC = (): JSX.Element => {
     const [searchTerm, setSearchTerm] = useState<string>("");
+    const [selectedDate, setSelectedDate] = useState<string>("");
     const { transactions, searchTransactions, loading } = useSearchTransaction();
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
     const { fileDetails, getFileDetails, fileLoading: fileloading } = useFileDetails();
@@ -29,15 +30,19 @@ const TransactionSearch: React.FC = (): JSX.Element => {
         setSearchTerm(event.target.value);
     }, []);
 
+    const handleDateChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedDate(event.target.value);
+    }, []);
+
     // Handle search button click
     const handleSearch = useCallback(() => {
-        if (searchTerm.trim() !== "") {
-            searchTransactions(searchTerm);
+        if (searchTerm.trim() !== "" && selectedDate.trim() !== "") {
+            searchTransactions(searchTerm, selectedDate);
             setSearchAttempted(true);
         } else {
-            console.log("Ingrese un término de búsqueda válido.");
+            console.log("Ingrese un término de búsqueda y una fecha válidos.");
         }
-    }, [searchTerm, searchTransactions]);
+    }, [searchTerm, selectedDate, searchTransactions]);
 
     // Handle transaction selection
     const handleTransactionSelect = useCallback((transaction: Transaction) => {
@@ -72,11 +77,12 @@ const TransactionSearch: React.FC = (): JSX.Element => {
 
             {/* Wrapper for the operation number input and search button */}
             <div className={styles.operationNumberWrapper}>
+
                 <div className={styles.operationNumberContainer}>
                     <input
                         className={styles.transactionSearchInput}
                         type="text"
-                        placeholder="Ingrese el ID de la transacción"
+                        placeholder="Ingrese Dato a Buscar"
                         value={searchTerm}
                         onChange={handleInputChange}
                         onKeyDown={(e) => {
@@ -85,6 +91,16 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                             }
                         }}
                     />
+
+                    {/* calendar */}
+                    <input
+                        className={styles.transactionSearchInput}
+                        type="date"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        placeholder="Selecciona una fecha"
+                    />
+
                     <button
                         onClick={handleSearch}
                         className={styles.transactionSearchButton}
@@ -105,7 +121,6 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                             <h3 className={styles.resultContainerTitle}>Resultado Obtenido</h3>
                         )}
 
-                        {/* Use the TransactionList or TransactionListSkeleton component */}
                         {content}
                     </div>
 

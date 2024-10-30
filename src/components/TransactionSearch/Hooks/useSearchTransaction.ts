@@ -13,13 +13,14 @@ export const useSearchTransaction = (): UseSearchTransactionResponse => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const searchTransactions = useCallback(async (searchTerm: string) => {
+    const searchTransactions = useCallback(async (searchTerm: string, date: string) => {
         setLoading(true);
         setError(null);
-        try {
-            const response = await searchTransactionService(searchTerm);
-            setTransactions(response.data ?? []);
 
+        try {
+            const response = await searchTransactionService(searchTerm, date);
+
+            setTransactions(response.data ?? []);
         } catch (err) {
             setError("An error occurred while searching for transactions.");
         } finally {

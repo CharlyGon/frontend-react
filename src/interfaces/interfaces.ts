@@ -174,7 +174,7 @@ export interface TransactionSearchResponse {
 
 export interface UseSearchTransactionResponse {
     transactions: Transaction[];
-    searchTransactions: (searchTerm: string) => Promise<void>;
+    searchTransactions: (searchTerm: string, date: string) => Promise<void>;
     loading: boolean;
     error: string | null;
 }
@@ -262,4 +262,4 @@ export interface UseLogsResult {
     loading: boolean;
     error: string | null;
     resetLogs: () => void;
-  }
+}
