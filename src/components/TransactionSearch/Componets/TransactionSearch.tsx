@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSearchTransaction } from "../Hooks/useSearchTransaction";
 import { Transaction } from "../../../interfaces/interfaces";
 import { TransactionDetails } from "./TransactionDetails";
@@ -18,28 +18,53 @@ import { useOperationDetails } from "../Hooks/useOperationDetails";
  */
 const TransactionSearch: React.FC = (): JSX.Element => {
     const [searchTerm, setSearchTerm] = useState<string>("");
+    const [selectedDate, setSelectedDate] = useState<string>("");
     const { transactions, searchTransactions, loading } = useSearchTransaction();
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
     const { fileDetails, getFileDetails, fileLoading: fileloading } = useFileDetails();
     const [searchAttempted, setSearchAttempted] = useState<boolean>(false);
     const { transactionDetails, loading: transactionDetailsLoading, getOperationDetails, } = useOperationDetails();
+    const [isInputShining, setIsInputShining] = useState<boolean>(false);
+    const [isCalendarShining, setIsCalendarShining] = useState<boolean>(false);
 
-    // Handle input change
+
     const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
     }, []);
 
-    // Handle search button click
+    const handleDateChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedDate(event.target.value);
+    }, []);
+
     const handleSearch = useCallback(() => {
-        if (searchTerm.trim() !== "") {
-            searchTransactions(searchTerm);
+        const isSearchTermValid = searchTerm.trim() !== "";
+        const isDateValid = selectedDate.trim() !== "";
+
+        if (isSearchTermValid && isDateValid) {
+            searchTransactions(searchTerm, selectedDate);
             setSearchAttempted(true);
         } else {
-            console.log("Ingrese un término de búsqueda válido.");
+            if (!isSearchTermValid) {
+                setIsInputShining(true);
+            }
+            if (!isDateValid) {
+                setIsCalendarShining(true);
+            }
         }
-    }, [searchTerm, searchTransactions]);
+    }, [searchTerm, selectedDate, searchTransactions]);
 
-    // Handle transaction selection
+    useEffect(() => {
+        if (isInputShining || isCalendarShining) {
+            const timer = setTimeout(() => {
+                setIsInputShining(false);
+                setIsCalendarShining(false);
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [isInputShining, isCalendarShining]);
+
+
     const handleTransactionSelect = useCallback((transaction: Transaction) => {
         setSelectedTransaction(transaction);
         getFileDetails(transaction.idArchivo);
@@ -72,11 +97,12 @@ const TransactionSearch: React.FC = (): JSX.Element => {
 
             {/* Wrapper for the operation number input and search button */}
             <div className={styles.operationNumberWrapper}>
+
                 <div className={styles.operationNumberContainer}>
                     <input
-                        className={styles.transactionSearchInput}
+                        className={`${styles.transactionSearchInput} ${isInputShining ? styles.bright : ''}`}
                         type="text"
-                        placeholder="Ingrese el ID de la transacción"
+                        placeholder="Ingrese Dato a Buscar"
                         value={searchTerm}
                         onChange={handleInputChange}
                         onKeyDown={(e) => {
@@ -85,6 +111,16 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                             }
                         }}
                     />
+
+                    {/* calendar */}
+                    <input
+                        className={`${styles.transactionSearchInput} ${isCalendarShining ? styles.bright : ''}`}
+                        type="date"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        placeholder="Selecciona una fecha"
+                    />
+
                     <button
                         onClick={handleSearch}
                         className={styles.transactionSearchButton}
@@ -105,7 +141,6 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                             <h3 className={styles.resultContainerTitle}>Resultado Obtenido</h3>
                         )}
 
-                        {/* Use the TransactionList or TransactionListSkeleton component */}
                         {content}
                     </div>
 

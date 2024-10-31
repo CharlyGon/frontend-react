@@ -7,7 +7,6 @@ import { FileSelectorProps } from "../../../interfaces/interfaces";
 import dayjs from "dayjs";
 import Select, { SingleValue } from 'react-select';
 
-
 import styles from "../styles/FileSelector.module.css";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 

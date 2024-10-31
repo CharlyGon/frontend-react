@@ -4,7 +4,7 @@ import FondoManager from "./components/FondoManager/Components/FondoManager";
 import Sidebar from "./layouts/sidebar/Sidebar";
 import Header from "./layouts/header/Header";
 import Body from "./components/Body";
-import SupportWidget from "./components/widget/Widget";
+//import SupportWidget from "./components/widget/Widget";
 import Logs from "./components/Logs/Logs";
 import TransactionSearch from "./components/TransactionSearch/Componets/TransactionSearch";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -41,7 +41,9 @@ const App: React.FC = () => {
                         </Routes>
                     </Body>
                 </div>
-                <SupportWidget />
+
+                {/* SupportWidget - Future feature to provide user support and assistance */}
+                {/* <SupportWidget /> */}
             </div>
         </Router>
     );

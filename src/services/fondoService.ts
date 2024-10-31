@@ -17,7 +17,11 @@ const API_BASE_URL = Config.API_BASE_URL;
  */
 export const fetchFondos = async (page: number, pageSize: number = Config.DEFAULT_FONDOS_PAGE_SIZE): Promise<Fondo[]> => {
     try {
-        const response = await fetch(`${API_BASE_URL}/Fondo/pagination?pageIndex=${page}&pageSize=${pageSize}`);
+        if (!Config.API_BASE_URL) {
+            throw new Error("API_BASE_URL is not defined");
+        }
+
+        const response = await fetch(`${Config.API_BASE_URL}/Fondo/pagination?pageIndex=${page}&pageSize=${pageSize}`);
 
         if (!response.ok) {
             throw new Error("Failed to fetch fondos. Server returned an error.");

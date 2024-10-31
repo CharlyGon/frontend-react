@@ -48,8 +48,8 @@ export interface FondoSelectorProps {
 
 export interface FileSelectorProps {
     files: Array<{ id: string; nombre: string }>;
-   onSelect: (file: { id: string; nombre: string }) => void;
-   loading: boolean;
+    onSelect: (file: { id: string; nombre: string }) => void;
+    loading: boolean;
     selectedFile?: string;
     selectedDate: string | null;
     setSelectedDate: React.Dispatch<React.SetStateAction<string | null>>;
@@ -174,7 +174,7 @@ export interface TransactionSearchResponse {
 
 export interface UseSearchTransactionResponse {
     transactions: Transaction[];
-    searchTransactions: (searchTerm: string) => Promise<void>;
+    searchTransactions: (searchTerm: string, date: string) => Promise<void>;
     loading: boolean;
     error: string | null;
 }
@@ -225,4 +225,41 @@ export interface UseOperationDetailsProps {
     loading: boolean;
     error: string | null;
     getOperationDetails: (transactionId: number) => Promise<void>;
+}
+
+export interface FileContentLine {
+    linea: string;
+}
+
+export interface FetchLogsParams {
+    Fecha?: string;
+    Search?: string;
+    TipoLog?: string;
+}
+
+export interface FetchLogsResponse {
+    count: number;
+    pageSize: number;
+    pageIndex: number;
+    data: Array<{
+        fecha: string;
+        tipoLog: string;
+        mensaje: string;
+    }>;
+}
+
+export interface LogsControlsProps {
+    selectedDate: string;
+    selectedLogType: string;
+    handleFechaChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleTipoLogChange: (value: string) => void;
+    handleSearch: () => void;
+    inputAnimation: boolean;
+}
+
+export interface UseLogsResult {
+    logs: FetchLogsResponse | null;
+    loading: boolean;
+    error: string | null;
+    resetLogs: () => void;
 }

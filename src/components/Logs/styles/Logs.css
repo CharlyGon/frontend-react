@@ -1,8 +1,8 @@
 /* General wrapper for logs section */
 .logs-wrapper {
- max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
 }
 
 /* Title styling for logs section, now outside of the logs container */
@@ -27,7 +27,8 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding-bottom: 80px;/* Added padding to make space for the scroll button */
+  padding-bottom: 80px;
+  /* Added padding to make space for the scroll button */
   transition: box-shadow 0.3s ease;
 }
 
@@ -198,4 +199,125 @@
   background-color: #ffffff;
   outline: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logs-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.logs-controls input,
+.logs-controls select,
+.logs-controls button {
+  margin: 0 10px;
+}
+
+/* Style for date input */
+.logs-controls input[type="datetime-local"] {
+  padding: 10px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: border-color 0.3s ease;
+}
+
+/* Efecto en el hover y foco */
+.logs-controls input[type="datetime-local"]:hover,
+.logs-controls input[type="datetime-local"]:focus {
+  border-color: #0056b3;
+  outline: none;
+}
+
+/* Styles for the search button */
+.search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 0 10px 5px rgba(0, 56, 145, 0.5);
+}
+
+.search-button:focus {
+  outline: none;
+}
+
+/* Styles for the search icon */
+.search-icon {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.logs-controls input[type="datetime-local"],
+.logs-controls .log-select {
+  min-width: 200px;
+  flex: 1;
+}
+
+.search-button:hover .search-icon {
+  transform: scale(1.2);
+}
+
+.date-input:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 56, 145, 0.5);
+}
+
+.log-select:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 56, 145, 0.5);
+}
+
+.bright {
+  animation: shine 1.5s forwards, heartbeat 1s infinite;
+}
+
+@keyframes shine {
+  0% {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(0, 123, 255, 1);
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  100% {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@keyframes heartbeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 600px) {
+  .log-select {
+    min-width: 100%;
+    padding-left: 10px;
+  }
 }
