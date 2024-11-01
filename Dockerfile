@@ -1,15 +1,11 @@
 # 1. Construction stage
 FROM node:21 AS build
-ARG API_BASE_URL
-ARG HEALTH_API_URL
-ARG DEFAULT_PAGE_SIZE
-ARG DEFAULT_FONDOS_PAGE_SIZE
 
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
-
+	
 COPY . .
 RUN npm run build
 
