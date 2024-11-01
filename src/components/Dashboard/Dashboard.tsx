@@ -35,7 +35,7 @@ const Dashboard: React.FC = (): JSX.Element => {
   if (error) {
     return (
       <div className={styles.dashboardContainer}>
-        <h2 className={styles.dashboardTitle}>System Health Dashboard</h2>
+        <h2 className={styles.dashboardTitle}>Panel de control</h2>
         <div className={styles.errorMessage}>{error}</div>
       </div>
     );
@@ -44,7 +44,7 @@ const Dashboard: React.FC = (): JSX.Element => {
   if (!healthData) {
     return (
       <div className={styles.dashboardContainer}>
-        <h2 className={styles.dashboardTitle}>System Health Dashboard</h2>
+        <h2 className={styles.dashboardTitle}>Panel de control</h2>
         <div className="loading-message">Retrieving system health status, please hold on...</div>
       </div>
     );
@@ -59,7 +59,7 @@ const Dashboard: React.FC = (): JSX.Element => {
 
   return (
     <div className={styles.dashboardContainer}>
-      <h2 className={styles.dashboardTitle}>System Health Dashboard</h2>
+      <h2 className={styles.dashboardTitle}>Panel de control</h2>
 
       <div className={`${styles.statusBox} ${healthData.status === "Healthy" ? styles.statusBoxHealthy : styles.statusBoxUnhealthy}`}>
         <h3>General Status: {healthData.status}</h3>

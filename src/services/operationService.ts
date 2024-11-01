@@ -7,23 +7,20 @@ import { TransactionDetailsProps } from "../interfaces/interfaces";
  * @returns { Promise<TransactionDetailsProps>} A promise that resolves to an object containing transaction details.
  */
 export const fetchOperationDetails = async (operationId: number): Promise<TransactionDetailsProps> => {
-
-    const url = `${Config.API_BASE_URL}/RegistroIndividual/id?Id=${operationId}`;
-
     try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        if (!Config.API_BASE_URL) {
+            throw new Error("API_BASE_URL is not set");
+        }
+
+        const url = `${Config.API_BASE_URL}/RegistroIndividual/id?Id=${operationId}`;
+
+        const response = await fetch(url);
 
         if (!response.ok) {
             throw new Error(`Error al obtener los detalles de la transacción: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (error) {
         console.error("Error fetching transaction details:", error);
         throw error;

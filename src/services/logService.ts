@@ -12,7 +12,7 @@ export const fetchLogs = async (params: FetchLogsParams): Promise<FetchLogsRespo
     try {
 
         if (!Config.API_BASE_URL) {
-            throw new Error("API_URL_HEALTH is not defined");
+            throw new Error("API_BASE_URL is not defined");
         }
 
         const queryParams: URLSearchParams = new URLSearchParams();
