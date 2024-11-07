@@ -23,7 +23,7 @@ services:
       MiddlewareSettings__UrlBase: "http://demo7874504.mockable.io"
 
   react-pellegrini-frontend:
-    image: frontend-react:latest
+    image: gonzafernandez/react-pellegrini-frontend:latest
     deploy:
       resources:
         limits:
@@ -34,14 +34,26 @@ services:
           memory: 512M
     container_name: pellegrini_frontend
     environment:
-      REACT_APP_DEFAULT_PAGE_SIZE: "50"
-      REACT_APP_DEFAULT_FONDOS_PAGE_SIZE: "5"
-      REACT_APP_HEALTH_API_URL: "http://10.247.181.82:5000/health"
-      REACT_APP_API_BASE_URL: "http://10.247.181.82:5000/api/v1"
+      REACT_APP_API_BASE_URL: "http://10.247.181.82"
     restart: always
     ports:
       - '3000:80'
     entrypoint: ["/bin/sh", "-c", "/usr/local/bin/start.sh"]
+
+sqlserver:
+    container_name: db_sqlserver
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD=MEspagnac2023$
+      ACCEPT_EULA=Y
+    ports:
+      "1433:1433"
+    volumes:
+      sql-server-data:/var/opt/mssql/
+
+volumes:
+  sql-server-data:
+    driver: local
 
 networks:
   default:

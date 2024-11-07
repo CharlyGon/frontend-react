@@ -23,7 +23,9 @@ export const searchTransactionService = async (
     });
 
     try {
-        const response = await fetch(`${Config.API_BASE_URL}/ContenidoArchivo/GetByOperacion?${params.toString()}`);
+        const response = await fetch(
+            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/ContenidoArchivo/GetByOperacion?${params.toString()}`
+        );
 
         if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);

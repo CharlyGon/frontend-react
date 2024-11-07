@@ -20,14 +20,14 @@ const handleApiError = (response: Response) => {
  */
 export const fetchHealthData = async (): Promise<HealthStatusService> => {
 
-    console.log('API_URL_HEALTH:', Config.API_URL_HEALTH);
+    console.log('API_BASE_URL:', Config.API_BASE_URL);
 
-    if (!Config.API_URL_HEALTH) {
-        throw new Error('API_URL_HEALTH is not defined');
+    if (!Config.API_BASE_URL) {
+        throw new Error('API_BASE_URL is not defined');
     }
 
     try {
-        const response = await fetch(Config.API_URL_HEALTH);
+        const response = await fetch(`${Config.API_BASE_URL}:${Config.API_PORT}/health`);
 
         handleApiError(response);
 

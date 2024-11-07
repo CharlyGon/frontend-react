@@ -263,3 +263,9 @@ export interface UseLogsResult {
     error: string | null;
     resetLogs: () => void;
 }
+
+export interface CustomWindow extends Window {
+    _env_: {
+        REACT_APP_API_BASE_URL?: string;
+    };
+}

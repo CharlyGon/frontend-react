@@ -56,7 +56,10 @@ export const fetchFilesForFondo = async (
         }
 
         // Fetch the data from the constructed URL
-        const response = await fetch(`${Config.API_BASE_URL}/Archivo/pagination?${queryParams.toString()}`);
+        const response = await fetch(
+            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/Archivo/pagination?${queryParams.toString()}`
+        );
+
         if (!response.ok) {
             throw new Error(`Error fetching files: ${response.statusText}`);
         }
@@ -82,7 +85,9 @@ export const fetchFileById = async (fileId: string): Promise<any> => {
             throw new Error("API_BASE_URL is not defined");
         }
 
-        const response = await fetch(`${Config.API_BASE_URL}/Archivo/id?Id=${fileId}`);
+        const response = await fetch(
+            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/Archivo/id?Id=${fileId}`
+        );
 
         if (!response.ok) {
             throw new Error(`Failed to fetch file by ID: ${fileId}. Status: ${response.status}`);
@@ -116,7 +121,8 @@ export const fetchFileContentById = async (
         }
 
         // Construct URL with optional date parameter
-        let url = `${Config.API_BASE_URL}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`;
+        let url =
+            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`;
 
         // Add date to URL if provided
         if (date) {
@@ -150,7 +156,7 @@ export const fetchFileDetailsService = async (idArchivo: string): Promise<FileDe
         }
 
         const response = await fetch(
-            `${Config.API_BASE_URL}/Archivo/id?Id=${encodeURIComponent(idArchivo)}`
+            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/Archivo/id?Id=${encodeURIComponent(idArchivo)}`
         );
 
         if (!response.ok) {
@@ -179,7 +185,9 @@ export const fetchDownloadFileContentD = async (fileId: string): Promise<string[
             throw new Error("API_BASE_URL is not defined");
         }
 
-        const response = await fetch(`${Config.API_BASE_URL}/ContenidoArchivo/GetAll?IdArchivo=${fileId}`);
+        const response = await fetch(
+            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/ContenidoArchivo/GetAll?IdArchivo=${fileId}`
+        );
 
         if (!response.ok) {
             throw new Error("Error al obtener el contenido del archivo");

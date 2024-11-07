@@ -19,7 +19,9 @@ export const fetchFondos = async (page: number, pageSize: number = Config.DEFAUL
             throw new Error("API_BASE_URL is not defined");
         }
 
-        const response = await fetch(`${Config.API_BASE_URL}/Fondo/pagination?pageIndex=${page}&pageSize=${pageSize}`);
+        const response = await fetch(
+            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/Fondo/pagination?pageIndex=${page}&pageSize=${pageSize}`
+        );
 
         if (!response.ok) {
             throw new Error("Failed to fetch fondos. Server returned an error.");

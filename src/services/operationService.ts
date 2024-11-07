@@ -12,9 +12,9 @@ export const fetchOperationDetails = async (operationId: number): Promise<Transa
             throw new Error("API_BASE_URL is not set");
         }
 
-        const url = `${Config.API_BASE_URL}/RegistroIndividual/id?Id=${operationId}`;
-
-        const response = await fetch(url);
+        const response = await fetch(
+            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/RegistroIndividual/id?Id=${operationId}`
+        );
 
         if (!response.ok) {
             throw new Error(`Error al obtener los detalles de la transacción: ${response.statusText}`);

@@ -1,25 +1,19 @@
 #!/bin/sh
 
-# Verificar que las variables de entorno estén definidas
+# Verify that the environment variables are defined
 if [ -z "$REACT_APP_API_BASE_URL" ]; then
     echo "Error: REACT_APP_API_BASE_URL is not set."
     exit 1
 fi
 
-# Salida de diagnóstico para las variables de entorno
+# Diagnostic output for environment variables
 echo "Configuración de entorno:"
 echo "REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}"
-echo "REACT_APP_HEALTH_API_URL=${REACT_APP_HEALTH_API_URL}"
-echo "REACT_APP_DEFAULT_PAGE_SIZE=${REACT_APP_DEFAULT_PAGE_SIZE}"
-echo "REACT_APP_DEFAULT_FONDOS_PAGE_SIZE=${REACT_APP_DEFAULT_FONDOS_PAGE_SIZE}"
 
-# Crea el archivo env-config.js
+# Create the env-config.js file
 echo "window._env_ = {
   REACT_APP_API_BASE_URL: '${REACT_APP_API_BASE_URL}',
-  REACT_APP_HEALTH_API_URL: '${REACT_APP_HEALTH_API_URL}',
-  REACT_APP_DEFAULT_PAGE_SIZE: '${REACT_APP_DEFAULT_PAGE_SIZE}',
-  REACT_APP_DEFAULT_FONDOS_PAGE_SIZE: '${REACT_APP_DEFAULT_FONDOS_PAGE_SIZE}'
 };" > /usr/share/nginx/html/env-config.js
 
-# Inicia nginx
+# Starts nginx
 nginx -g 'daemon off;'
