@@ -1,8 +1,6 @@
 import { Fondo } from '../interfaces/interfaces';
 import { Config } from '../config';
 
-const API_BASE_URL = Config.API_BASE_URL;
-
 /**
  * Fetches a paginated list of fondos from the server.
  *

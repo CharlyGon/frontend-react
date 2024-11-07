@@ -20,6 +20,8 @@ const handleApiError = (response: Response) => {
  */
 export const fetchHealthData = async (): Promise<HealthStatusService> => {
 
+    console.log('API_URL_HEALTH:', Config.API_URL_HEALTH);
+
     if (!Config.API_URL_HEALTH) {
         throw new Error('API_URL_HEALTH is not defined');
     }

@@ -1,0 +1,50 @@
+version: "3.9"
+#name: pellegrini-services
+services:
+  netcore-pellegrini-pagosfk-api:
+    image: mespagnac/netcore-pellegrini-pagosfk-api:latest
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '1'
+          memory: 512M
+    container_name: pagosfk-api
+    restart: always
+    ports:
+      - '5000:5000'
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_URLS: "http://+:5000"
+      ConnectionStrings__FKDbConnection: "Data Source=192.168.0.213;Initial Catalog=PagosFK;user id=UserWebKoye;password=EDmPeIdu5mF0j8NTkOzPYvwDkKHDiv;TrustServerCertificate=True;"
+      MiddlewareSettings__Pagos: "Pago"
+      MiddlewareSettings__UrlBase: "http://demo7874504.mockable.io"
+
+  react-pellegrini-frontend:
+    image: frontend-react:latest
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '1'
+          memory: 512M
+    container_name: pellegrini_frontend
+    environment:
+      REACT_APP_DEFAULT_PAGE_SIZE: "50"
+      REACT_APP_DEFAULT_FONDOS_PAGE_SIZE: "5"
+      REACT_APP_HEALTH_API_URL: "http://10.247.181.82:5000/health"
+      REACT_APP_API_BASE_URL: "http://10.247.181.82:5000/api/v1"
+    restart: always
+    ports:
+      - '3000:80'
+    entrypoint: ["/bin/sh", "-c", "/usr/local/bin/start.sh"]
+
+networks:
+  default:
+    external: true
+    #name: bankingNetwork
+    name: bdh-network
