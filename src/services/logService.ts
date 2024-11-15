@@ -29,12 +29,13 @@ export const fetchLogs = async (params: FetchLogsParams): Promise<FetchLogsRespo
         queryParams.append("PageIndex", "1");
 
         const response = await fetch(
-            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/LogInformation/GetAllPage?${queryParams.toString()}`
+            `${Config.API_BASE_URL}/api/${Config.API_VERSION}/LogInformation/GetAllPage?${queryParams.toString()}`
         );
 
         if (!response.ok) {
             throw new Error(`Failed to fetch logs: ${response.status} ${response.statusText}`);
         }
+
         return response.json();
     } catch (error) {
         console.error("Error fetching logs:", error);

@@ -13,7 +13,7 @@ export const fetchOperationDetails = async (operationId: number): Promise<Transa
         }
 
         const response = await fetch(
-            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/RegistroIndividual/id?Id=${operationId}`
+            `${Config.API_BASE_URL}}/api/${Config.API_VERSION}/RegistroIndividual/id?Id=${operationId}`
         );
 
         if (!response.ok) {

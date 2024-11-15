@@ -25,7 +25,6 @@ export const Config = {
     API_BASE_URL: isDev
         ? process.env.REACT_APP_API_BASE_URL
         : window._env_.REACT_APP_API_BASE_URL,
-    API_PORT: 5000,
     API_VERSION: 'v1',
     DEFAULT_PAGE_SIZE: 50,
     DEFAULT_FONDOS_PAGE_SIZE: 5,

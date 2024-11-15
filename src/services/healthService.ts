@@ -27,7 +27,7 @@ export const fetchHealthData = async (): Promise<HealthStatusService> => {
     }
 
     try {
-        const response = await fetch(`${Config.API_BASE_URL}:${Config.API_PORT}/health`);
+        const response = await fetch(`${Config.API_BASE_URL}/health`);
 
         handleApiError(response);
 

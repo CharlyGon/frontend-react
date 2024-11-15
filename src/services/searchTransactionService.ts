@@ -24,16 +24,14 @@ export const searchTransactionService = async (
 
     try {
         const response = await fetch(
-            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/ContenidoArchivo/GetByOperacion?${params.toString()}`
+            `${Config.API_BASE_URL}/api/${Config.API_VERSION}/ContenidoArchivo/GetByOperacion?${params.toString()}`
         );
 
         if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
 
-        const data: TransactionSearchResponse = await response.json();
-
-        return data;
+        return await response.json();
     } catch (error) {
         console.error("Failed to fetch transactions:", error);
         throw error;

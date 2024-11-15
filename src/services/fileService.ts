@@ -57,7 +57,7 @@ export const fetchFilesForFondo = async (
 
         // Fetch the data from the constructed URL
         const response = await fetch(
-            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/Archivo/pagination?${queryParams.toString()}`
+            `${Config.API_BASE_URL}/api/${Config.API_VERSION}/Archivo/pagination?${queryParams.toString()}`
         );
 
         if (!response.ok) {
@@ -86,7 +86,7 @@ export const fetchFileById = async (fileId: string): Promise<any> => {
         }
 
         const response = await fetch(
-            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/Archivo/id?Id=${fileId}`
+            `${Config.API_BASE_URL}/api/${Config.API_VERSION}/Archivo/id?Id=${fileId}`
         );
 
         if (!response.ok) {
@@ -122,7 +122,7 @@ export const fetchFileContentById = async (
 
         // Construct URL with optional date parameter
         let url =
-            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`;
+            `${Config.API_BASE_URL}/api/${Config.API_VERSION}/ContenidoArchivo/pagination?IdArchivo=${fileId}&PageSize=${pageSize}&PageIndex=${pageIndex}`;
 
         // Add date to URL if provided
         if (date) {
@@ -156,15 +156,14 @@ export const fetchFileDetailsService = async (idArchivo: string): Promise<FileDe
         }
 
         const response = await fetch(
-            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/Archivo/id?Id=${encodeURIComponent(idArchivo)}`
+            `${Config.API_BASE_URL}/api/${Config.API_VERSION}/Archivo/id?Id=${encodeURIComponent(idArchivo)}`
         );
 
         if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
 
-        const data: FileDetailsResponse = await response.json();
-        return data;
+        return await response.json();
     } catch (error) {
         console.error("Error fetching file details:", error);
         throw error;
@@ -186,7 +185,7 @@ export const fetchDownloadFileContentD = async (fileId: string): Promise<string[
         }
 
         const response = await fetch(
-            `${Config.API_BASE_URL}:${Config.API_PORT}/api/${Config.API_VERSION}/ContenidoArchivo/GetAll?IdArchivo=${fileId}`
+            `${Config.API_BASE_URL}/api/${Config.API_VERSION}/ContenidoArchivo/GetAll?IdArchivo=${fileId}`
         );
 
         if (!response.ok) {
