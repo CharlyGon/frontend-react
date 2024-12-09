@@ -9,6 +9,7 @@ import TransactionList from "./TransactionList";
 import styles from "../styles/SearchTransaction.module.css";
 import { ListSkeletonOperation } from "../Skeletons/ListSkeletonLoader/ListSkeletonLoader";
 import { useOperationDetails } from "../Hooks/useOperationDetails";
+import dayjs from "dayjs";
 
 /**
  * Component to search for transactions.
@@ -116,7 +117,7 @@ const TransactionSearch: React.FC = (): JSX.Element => {
                     <input
                         className={`${styles.transactionSearchInput} ${isCalendarShining ? styles.bright : ''}`}
                         type="date"
-                        value={selectedDate}
+                        value={selectedDate ? dayjs(selectedDate).format('YYYY-MM-DD') : ''}
                         onChange={handleDateChange}
                         placeholder="Selecciona una fecha"
                     />

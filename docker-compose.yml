@@ -2,7 +2,7 @@ version: "3.9"
 #name: pellegrini-services
 services:
   netcore-pellegrini-pagosfk-api:
-    image: mespagnac/netcore-pellegrini-pagosfk-api:latest
+    image: mespagnac/netcore-pellegrini-pagosfk-api:staging
     deploy:
       resources:
         limits:
@@ -23,7 +23,7 @@ services:
       MiddlewareSettings__UrlBase: "http://demo7874504.mockable.io"
 
   react-pellegrini-frontend:
-    image: gonzafernandez/react-pellegrini-frontend:latest
+    image: gonzafernandez/react-pellegrini-frontend:staging
     deploy:
       resources:
         limits:

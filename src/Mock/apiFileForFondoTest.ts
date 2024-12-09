@@ -2,9 +2,8 @@ import { FileResponse } from "../interfaces/interfaces";
 
 const PAGE_SIZE = 20;
 
-export const fetchFilesForFondoTest =  ( identifyingFond: string, page: number): Promise<FileResponse> => {
-    // Generar datos simulados para pruebas
-    const totalFiles = 100; // Definir la cantidad total de archivos que el mock tiene disponibles
+export const fetchFilesForFondoTest = (identifyingFond: string, page: number): Promise<FileResponse> => {
+    const totalFiles = 100;
     const startIndex = (page - 1) * PAGE_SIZE;
     const endIndex = startIndex + PAGE_SIZE;
     const mockFiles = Array.from({ length: totalFiles }, (_, index) => ({
@@ -26,6 +25,6 @@ export const fetchFilesForFondoTest =  ( identifyingFond: string, page: number):
                 data: data,
                 pageCount: Math.ceil(totalFiles / PAGE_SIZE),
             });
-        }, 1000); // Simular el tiempo de respuesta del servidor con un delay
+        }, 1000);
     });
 }

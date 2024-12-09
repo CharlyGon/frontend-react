@@ -20,7 +20,7 @@ export const fetchFondos = async (page: number, pageSize: number = Config.DEFAUL
         }
 
         const response = await fetch(
-            `${Config.API_BASE_URL}/api/${Config.API_VERSION}/Fondo/pagination?pageIndex=${page}&pageSize=${pageSize}`
+            `${Config.API_BASE_URL}/api/${Config.API_VERSION}/Fondo/GetAllPage?pageIndex=${page}&pageSize=${pageSize}`
         );
 
         if (!response.ok) {

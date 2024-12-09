@@ -18,7 +18,7 @@ export const searchTransactionService = async (
 
     const params = new URLSearchParams({
         Search: searchTerm,
-        Date: date,
+        Fecha: date,
         PageSize: Config.DEFAULT_PAGE_SIZE.toString(),
     });
 

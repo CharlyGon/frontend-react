@@ -1,46 +1,127 @@
-# Getting Started with Create React App
+# Fondo Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Fondo Manager** es una aplicación React que permite gestionar fondos de inversión, explorar archivos relacionados y visualizar su contenido, proporcionando una experiencia sencilla e intuitiva para el usuario.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Funcionalidades
 
-### `npm start`
+1. **Gestión de Fondos**
+   - Selección de fondos desde un listado paginado.
+   - Visualización de los detalles del fondo seleccionado.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. **Gestión de Archivos**
+   - Listado de archivos relacionados con un fondo seleccionado.
+   - Descarga de archivos específicos en formato `.txt`.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+3. **Visualización de Contenido**
+   - Visualización del contenido de un archivo seleccionado con soporte para scroll infinito.
 
-### `npm test`
+4. **Notificaciones y Manejo de Estados**
+   - Indicadores de carga.
+   - Gestión de errores al cargar fondos o archivos.
+   - Mensaje inicial durante la primera carga de fondos.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🛠️ Tecnologías Utilizadas
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Frontend:**
+  - React con TypeScript
+  - Hooks personalizados (useFondos, useFiles, useFileContent)
+  - CSS Modules para estilos personalizados
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Backend/Integración:**
+  - Consumo de APIs REST mediante `fetch`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Despliegue:**
+  - Nginx como servidor web
+  - Docker para contenerización
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## ⚙️ Configuración del Proyecto
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Variables de Entorno
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Configura las siguientes variables en tu archivo `.env`:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```plaintext
+  REACT_APP_API_BASE_URL=http://your-backend-url
+  REACT_APP_DEFAULT_PAGE_SIZE=50
+```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Instalación
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Clona el repositorio:
+
+```
+  git clone https://github.com/your-username/fondo-manager.git
+  cd fondo-manager
+```
+
+2. Instala las dependencias:
+
+```
+  npm install
+```
+
+3. Inicia la aplicación en desarrollo:
+
+```
+  npm start
+```
+La aplicación estará disponible en http://localhost:3000.
+
+---
+
+## 🐳 Dockerización
+
+- Construcción de la imagen Docker:
+
+```
+  docker build -t fondo-manager .
+```
+
+- Ejecutar el contenedor:
+
+```
+docker run -p 3000:80 fondo-manager
+```
+
+---
+
+## Configuración de Nginx
+Asegúrate de tener el siguiente archivo de configuración en nginx.conf para manejar correctamente rutas dinámicas:
+
+```
+  server {
+      listen 80;
+      server_name localhost;
+
+      root /usr/share/nginx/html;
+      index index.html;
+
+      location / {
+          try_files $uri /index.html;
+      }
+
+      error_page 404 /index.html;
+  }
+```
+
+---
+
+## 🧪 Scripts Disponibles
+
+- **npm start**: Inicia la aplicación en modo desarrollo.
+- **npm run build**: Construye la aplicación para producción.
+- **npm test**: Ejecuta pruebas unitarias.
+
+---
+
+## 📜 Licencia
+
+Este proyecto está bajo la licencia MIT.
