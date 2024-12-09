@@ -40,6 +40,83 @@
 
 ---
 
+## Estructura de Carpetas
+
+```plaintext
+.
+├── public
+│   ├── favicon.ico
+│   └── index.html
+├── src
+│   ├── assets
+│   ├── components
+│   │   ├── Dashboard
+│   │   ├── FondoManager
+│   │   │   ├── Components
+│   │   │   │   ├── FileContent.tsx
+│   │   │   │   ├── FileSelector.tsx
+│   │   │   │   ├── FondoDetails.tsx
+│   │   │   │   ├── FondoManager.tsx
+│   │   │   │   └── FondoSelector.tsx
+│   │   │   ├── Hooks
+│   │   │   ├── Skeletons
+│   │   │   └── styles
+│   │   ├── Logs
+│   │   │   ├── Hook
+│   │   │   │   └── useLogData.ts
+│   │   │   ├── skeleton
+│   │   │   ├── styles
+│   │   │   └── LogsControls.tsx
+│   │   ├── TransactionSearch
+│   │   │   ├── Components
+│   │   │   │   ├── TransactionDetails.tsx
+│   │   │   │   ├── TransactionFile.tsx
+│   │   │   │   ├── TransactionList.tsx
+│   │   │   │   └── TransactionSearch.tsx
+│   │   │   ├── Hooks
+│   │   │   │   ├── useFileDetails.ts
+│   │   │   │   ├── useOperationDetails.ts
+│   │   │   │   └── useSearchTransaction.ts
+│   │   │   ├── skeletons
+│   │   │   └── styles
+│   │   └── widget
+│   │       └── Body.tsx
+│   ├── data
+│   │   └── interfaces.ts
+│   ├── layouts
+│   │   ├── header
+│   │   └── sidebar
+│   ├── Mock
+│   │   └── apiFileForFondoTest.ts
+│   ├── models
+│   ├── services
+│   │   ├── fileService.ts
+│   │   ├── fondoService.ts
+│   │   ├── healthService.ts
+│   │   ├── logService.ts
+│   │   ├── operationService.ts
+│   │   └── searchTransactionService.ts
+│   ├── styles
+│   │   ├── Global.css
+│   │   └── variables.css
+│   ├── utils
+│   │   ├── App.module.css
+│   │   ├── app.tsx
+│   │   ├── config.ts
+│   │   └── index.tsx
+├── .dockerignore
+├── .env
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
+├── nginx.conf
+├── package.json
+├── README.md
+└── tsconfig.json
+```
+---
+
 ## ⚙️ Configuración del Proyecto
 
 ### Variables de Entorno
@@ -50,9 +127,6 @@ Configura las siguientes variables en tu archivo `.env`:
   REACT_APP_API_BASE_URL=http://your-backend-url
   REACT_APP_DEFAULT_PAGE_SIZE=50
 ```
-
----
-
 ## Instalación
 
 1. Clona el repositorio:
@@ -75,8 +149,6 @@ Configura las siguientes variables en tu archivo `.env`:
 ```
 La aplicación estará disponible en http://localhost:3000.
 
----
-
 ## 🐳 Dockerización
 
 - Construcción de la imagen Docker:
@@ -90,8 +162,6 @@ La aplicación estará disponible en http://localhost:3000.
 ```
 docker run -p 3000:80 fondo-manager
 ```
-
----
 
 ## Configuración de Nginx
 Asegúrate de tener el siguiente archivo de configuración en nginx.conf para manejar correctamente rutas dinámicas:
@@ -112,15 +182,11 @@ Asegúrate de tener el siguiente archivo de configuración en nginx.conf para ma
   }
 ```
 
----
-
 ## 🧪 Scripts Disponibles
 
 - **npm start**: Inicia la aplicación en modo desarrollo.
 - **npm run build**: Construye la aplicación para producción.
 - **npm test**: Ejecuta pruebas unitarias.
-
----
 
 ## 📜 Licencia
 
